@@ -95,7 +95,7 @@
                         @enderror
                     </label>
 
-                    <label class="form-control w-full" x-data>
+                    <label class="form-control w-full" >
                         <div class="label">
                             <span class="label-text">Telefone (celular)</span>
                         </div>
@@ -113,7 +113,7 @@
                         @enderror
                     </label>
 
-                    <label class="form-control w-full" x-data>
+                    <label class="form-control w-full">
                         <div class="label">
                             <span class="label-text">CPF</span>
                         </div>

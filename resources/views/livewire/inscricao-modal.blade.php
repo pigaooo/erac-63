@@ -50,7 +50,7 @@
                         @error('email') <span class="text-error text-xs mt-1">{{ $message }}</span> @enderror
                     </label>
 
-                    <label class="form-control w-full" x-data>
+                    <label class="form-control w-full" >
                         <div class="label"><span class="label-text">Telefone (celular)</span></div>
                         <input
                             wire:key="telefone-{{ $formKey }}"
@@ -65,7 +65,7 @@
                         @error('telefone') <span class="text-error text-xs mt-1">{{ $message }}</span> @enderror
                     </label>
 
-                    <label class="form-control w-full" x-data>
+                    <label class="form-control w-full" >
                         <div class="label"><span class="label-text">CPF</span></div>
                         <input
                             wire:key="cpf-{{ $formKey }}"
@@ -98,7 +98,7 @@
                     </label>
 
                     <label class="form-control w-full">
-                        <div class="label"><span class="label-text">Loja / Capítulo</span></div>
+                        <div class="label"><span class="label-text">Loja</span></div>
                         @if ($lojas->count())
                             <select
                                 wire:key="loja-{{ $formKey }}"
