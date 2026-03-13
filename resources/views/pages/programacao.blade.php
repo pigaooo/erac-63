@@ -57,7 +57,7 @@
                 <div class="mt-4 grid grid-cols-2 gap-3 text-sm">
                     <div class="rounded-xl bg-base-100/70 border border-base-300 p-3 transition duration-300 hover:scale-[1.02] hover:border-primary/40 hover:shadow-md">
                         <div class="text-base font-semibold">Manhã</div>
-                        <div class="text-xs text-base-content/70">Credenciamento individual, abertura formal, exposição patrocinadores, apresentação dos trabalhos</div>
+                        <div class="text-xs text-base-content/70">Credenciamento individual, abertura formal, exposição de patrocinadores e apresentação dos trabalhos</div>
                     </div>
                     <div class="rounded-xl bg-base-100/70 border border-base-300 p-3 transition duration-300 hover:scale-[1.02] hover:border-primary/40 hover:shadow-md">
                         <div class="text-base font-semibold">Tarde</div>

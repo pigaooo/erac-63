@@ -47,7 +47,7 @@
                 <div class="text-xs font-bold uppercase tracking-[0.2em] text-base-content/60">Check-in</div>
                 <div class="text-lg font-bold">Leve sua confirmação no dia</div>
                 <p class="text-sm text-base-content/70">
-                    A confirmação enviada pela Loja Fonte de Vida agiliza a entrada e organização no evento.
+                    A confirmação enviada pela Loja Fonte de Vida agiliza a entrada e a organização no evento.
                 </p>
             </div>
         </div>
@@ -103,7 +103,7 @@
         </div>
     </section>
 
-    <section id="inscricao-individual" class="rounded-[2rem] border border-base-300 bg-base-100 shadow-sm p-6 md:p-7 space-y-5 transition duration-500 hover:shadow-2xl animate__animated animate__fadeInUp" style="--animate-delay: 0.24s;">
+    <section id="inscricao-individual" class="rounded-[2rem] border border-base-300 bg-base-100 shadow-sm p-6 md:p-7 space-y-5 transition duration-500 hover:shadow-2xl">
         <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-3">
             <div class="space-y-2">
                 <div class="inline-flex items-center gap-2 text-sm uppercase tracking-wide text-primary font-semibold">
@@ -118,7 +118,7 @@
         </div>
 
         <div class="grid gap-4 lg:grid-cols-12">
-            <div class="lg:col-span-5 rounded-[1.75rem] border border-base-300 bg-base-200/50 p-6 flex flex-col gap-4 transition duration-300 hover:-translate-y-1 hover:border-primary/40 hover:bg-base-200/80 hover:shadow-xl">
+            <div class="lg:col-span-5 rounded-[1.75rem] border border-base-300 bg-base-200/50 p-6 flex flex-col gap-4 transition duration-300 hover:border-primary/40 hover:bg-base-200/80 hover:shadow-xl">
                 <div class="flex items-center justify-between">
                     <div class="badge badge-primary badge-outline">Passo 1</div>
                     <span class="text-xs uppercase tracking-wide text-base-content/50">Cadastro</span>
@@ -175,7 +175,7 @@
         </div>
     </section>
 
-    <section id="inscricao-multipla" class="rounded-[2rem] border border-base-300 bg-base-100 shadow-sm p-6 md:p-7 space-y-5 transition duration-500 hover:shadow-2xl animate__animated animate__fadeInUp" style="--animate-delay: 0.32s;">
+    <section id="inscricao-multipla" class="rounded-[2rem] border border-base-300 bg-base-100 shadow-sm p-6 md:p-7 space-y-5 transition duration-500 hover:shadow-2xl">
         <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-3">
             <div class="space-y-2">
                 <div class="inline-flex items-center gap-2 text-sm uppercase tracking-wide text-primary font-semibold">
@@ -190,7 +190,7 @@
         </div>
 
         <div class="grid gap-4 lg:grid-cols-12">
-            <div class="lg:col-span-5 rounded-[1.75rem] border border-base-300 bg-base-200/50 p-6 flex flex-col gap-4 transition duration-300 hover:-translate-y-1 hover:border-primary/40 hover:bg-base-200/80 hover:shadow-xl">
+            <div class="lg:col-span-5 rounded-[1.75rem] border border-base-300 bg-base-200/50 p-6 flex flex-col gap-4 transition duration-300 hover:border-primary/40 hover:bg-base-200/80 hover:shadow-xl">
                 <div class="flex items-center justify-between">
                     <div class="badge badge-primary badge-outline">Passo 1</div>
                     <span class="text-xs uppercase tracking-wide text-base-content/50">Lote</span>

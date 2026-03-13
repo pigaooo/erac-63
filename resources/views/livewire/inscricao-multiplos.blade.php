@@ -15,13 +15,12 @@
                 <div>
                     <h3 class="font-bold text-lg">Inscrição múltipla</h3>
                     <p class="text-sm text-base-content/70">
-                        Escolha a Loja para inserir inscrever de varios participantes, preencha os dados, adicione à
-                        tabela.
+                        Escolha a Loja para inserir vários participantes, preencha os dados e adicione à tabela.
                     </p>
                 </div>
 
                 <button class="btn btn-ghost btn-sm" type="button" wire:click="closeModal">
-                    ✕
+                    ×
                 </button>
             </div>
 
@@ -96,7 +95,7 @@
                         @enderror
                     </label>
 
-                    <label class="form-control w-full">
+                    <label class="form-control w-full" x-data>
                         <div class="label">
                             <span class="label-text">Telefone (celular)</span>
                         </div>
@@ -114,7 +113,7 @@
                         @enderror
                     </label>
 
-                    <label class="form-control w-full">
+                    <label class="form-control w-full" x-data>
                         <div class="label">
                             <span class="label-text">CPF</span>
                         </div>
@@ -232,7 +231,7 @@
                                             class="btn btn-ghost btn-sm"
                                             wire:click="removeRow({{ $index }})"
                                         >
-                                            ✕
+                                            ×
                                         </button>
                                     </td>
                                 </tr>

@@ -9,7 +9,7 @@
         class="btn btn-primary w-full"
         wire:click="openModal"
     >
-        Inscricao individual
+        Inscrição individual
     </button>
 
     <div class="modal {{ $showModal ? 'modal-open' : '' }}" wire:keydown.escape="closeModal">
@@ -17,9 +17,9 @@
             <div class="flex items-start justify-between">
                 <div>
                     <h3 class="font-bold text-lg">Credenciamento</h3>
-                    <p class="text-sm text-base-content/70">Preencha os dados do irmao para o ERAC.</p>
+                    <p class="text-sm text-base-content/70">Preencha os dados do irmão para o ERAC.</p>
                 </div>
-                <button class="btn btn-ghost btn-sm" type="button" wire:click="closeModal">X</button>
+                <button class="btn btn-ghost btn-sm" type="button" wire:click="closeModal">×</button>
             </div>
 
             <form class="space-y-4" wire:submit.prevent="submit">
@@ -30,7 +30,7 @@
                             wire:key="nome-{{ $formKey }}"
                             type="text"
                             class="input input-bordered"
-                            placeholder="Irmao / Aprendiz / Companheiro"
+                            placeholder="Irmão / Aprendiz / Companheiro"
                             wire:model.defer="nome"
                             required
                         >
@@ -81,7 +81,7 @@
                     </label>
 
                     <label class="form-control w-full">
-                        <div class="label"><span class="label-text">Grau masonico</span></div>
+                        <div class="label"><span class="label-text">Grau maçônico</span></div>
                         <select
                             wire:key="grau-{{ $formKey }}"
                             class="select select-bordered"
@@ -89,16 +89,16 @@
                             required
                         >
                             <option value="">Selecione</option>
-                            <option value="AM">A.M.</option>
-                            <option value="CM">C.M.</option>
-                            <option value="MM">M.M.</option>
-                            <option value="MI">M.I.</option>
+                            <option value="AM">A∴M∴</option>
+                            <option value="CM">C∴M∴</option>
+                            <option value="MM">M∴M∴</option>
+                            <option value="MI">M∴I∴</option>
                         </select>
                         @error('grau') <span class="text-error text-xs mt-1">{{ $message }}</span> @enderror
                     </label>
 
                     <label class="form-control w-full">
-                        <div class="label"><span class="label-text">Loja / Capitulo</span></div>
+                        <div class="label"><span class="label-text">Loja / Capítulo</span></div>
                         @if ($lojas->count())
                             <select
                                 wire:key="loja-{{ $formKey }}"
@@ -112,7 +112,7 @@
                                 @endforeach
                             </select>
                         @else
-                            <div class="text-sm text-base-content/70">Nenhuma Loja/Capitulo cadastrada ainda.</div>
+                            <div class="text-sm text-base-content/70">Nenhuma Loja/Capítulo cadastrada ainda.</div>
                         @endif
                         @error('lojaId') <span class="text-error text-xs mt-1">{{ $message }}</span> @enderror
                     </label>
