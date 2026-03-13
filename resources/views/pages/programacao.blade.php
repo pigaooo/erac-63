@@ -1,27 +1,27 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 space-y-10 animate__animated animate__fadeIn">
-    <section class="rounded-[2rem] border border-base-300 bg-gradient-to-br from-base-100 via-base-100 to-primary/10 shadow-sm p-6 md:p-8 relative overflow-hidden transition duration-500 hover:-translate-y-1 hover:shadow-2xl animate__animated animate__fadeInUp">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 space-y-10 scroll-reveal" data-reveal="fadeIn">
+    <section class="rounded-[2rem] border border-base-300 bg-gradient-to-br from-base-100 via-base-100 to-primary/10 shadow-sm p-6 md:p-8 relative overflow-hidden transition duration-500 hover:-translate-y-1 hover:shadow-2xl scroll-reveal" data-reveal="fadeInUp">
         <div class="absolute -top-16 -right-16 h-48 w-48 rounded-full bg-primary/10 blur-3xl animate-pulse"></div>
         <div class="absolute -bottom-16 -left-10 h-40 w-40 rounded-full bg-secondary/10 blur-3xl animate-pulse"></div>
         <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent"></div>
 
         <div class="relative space-y-2">
             <p class="text-sm font-semibold text-primary uppercase tracking-widest">Programação</p>
-            <h1 class="text-3xl md:text-5xl font-black leading-tight animate__animated animate__fadeInUp" style="--animate-delay: 0.08s;">Agenda do ERAC</h1>
-            <p class="text-base-content/80 max-w-3xl animate__animated animate__fadeInUp" style="--animate-delay: 0.14s;">
+            <h1 class="text-3xl md:text-5xl font-black leading-tight scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="80">Agenda do ERAC</h1>
+            <p class="text-base-content/80 max-w-3xl scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="140">
                 Linha do tempo e atividades do encontro, com uma visão clara do que acontece ao longo do dia.
             </p>
         </div>
     </section>
 
-    <div class="animate__animated animate__fadeInUp" style="--animate-delay: 0.18s;">
+    <div class="scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="180">
         @include('componentes.patrocinadores-carousel', ['patrocinadores' => $patrocinadores ?? collect()])
     </div>
 
     <div class="grid gap-4 md:grid-cols-12">
-        <div class="md:col-span-7 rounded-2xl border border-base-300 bg-base-100/80 shadow-sm p-6 space-y-4 transition duration-500 hover:-translate-y-1 hover:shadow-2xl animate__animated animate__fadeInUp" style="--animate-delay: 0.22s;">
+        <div class="md:col-span-7 rounded-2xl border border-base-300 bg-base-100/80 shadow-sm p-6 space-y-4 transition duration-500 hover:-translate-y-1 hover:shadow-2xl scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="220">
             <div class="flex items-center gap-2 text-sm uppercase tracking-wide text-primary font-semibold">
                 <span class="h-2 w-2 rounded-full bg-primary animate-pulse"></span>
                 Linha do tempo
@@ -50,7 +50,7 @@
         </div>
 
         <div class="md:col-span-5 grid gap-4">
-            <div class="rounded-2xl border border-base-300 bg-gradient-to-br from-primary/10 to-base-100 p-6 shadow-sm transition duration-500 hover:-translate-y-1 hover:shadow-xl animate__animated animate__fadeInUp" style="--animate-delay: 0.28s;">
+            <div class="rounded-2xl border border-base-300 bg-gradient-to-br from-primary/10 to-base-100 p-6 shadow-sm transition duration-500 hover:-translate-y-1 hover:shadow-xl scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="280">
                 <div class="text-sm font-semibold text-primary">Visão geral</div>
                 <div class="text-2xl font-bold">No dia do Evento</div>
 
@@ -66,7 +66,7 @@
                 </div>
             </div>
 
-            <div class="rounded-2xl border border-base-300 bg-base-100/80 p-6 shadow-sm space-y-3 transition duration-500 hover:-translate-y-1 hover:shadow-xl animate__animated animate__fadeInUp" style="--animate-delay: 0.34s;">
+            <div class="rounded-2xl border border-base-300 bg-base-100/80 p-6 shadow-sm space-y-3 transition duration-500 hover:-translate-y-1 hover:shadow-xl scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="340">
                 <div class="text-sm font-semibold text-primary">Pontos-chave</div>
                 <ul class="space-y-2 text-sm text-base-content/80">
                     <li class="flex items-center gap-2 transition duration-300 hover:translate-x-1"><span class="h-2 w-2 rounded-full bg-primary animate-pulse"></span> Início e fim claros para todos</li>
@@ -79,7 +79,7 @@
     </div>
 
     <div class="grid gap-4 md:grid-cols-12">
-        <div class="md:col-span-4 rounded-2xl border border-base-300 bg-base-100/80 p-5 shadow-sm space-y-3 transition duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl animate__animated animate__fadeInUp" style="--animate-delay: 0.38s;">
+        <div class="md:col-span-4 rounded-2xl border border-base-300 bg-base-100/80 p-5 shadow-sm space-y-3 transition duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="380">
             <div class="text-sm font-semibold text-primary">Atividades</div>
             <div class="space-y-2 text-sm text-base-content/80">
                 <div class="font-semibold text-base">Distribuição dos convidados</div>
@@ -89,7 +89,7 @@
             </div>
         </div>
 
-        <div class="md:col-span-4 rounded-2xl border border-base-300 bg-base-100/80 p-5 shadow-sm space-y-3 transition duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl animate__animated animate__fadeInUp" style="--animate-delay: 0.42s;">
+        <div class="md:col-span-4 rounded-2xl border border-base-300 bg-base-100/80 p-5 shadow-sm space-y-3 transition duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="420">
             <div class="text-sm font-semibold text-primary">Temas e palestras</div>
             <div class="space-y-2 text-sm text-base-content/80">
                 <div class="font-semibold text-base">Temas dos trabalhos</div>
@@ -99,7 +99,7 @@
             </div>
         </div>
 
-        <div class="md:col-span-4 rounded-2xl border border-base-300 bg-base-100/80 p-5 shadow-sm space-y-3 transition duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl animate__animated animate__fadeInUp" style="--animate-delay: 0.46s;">
+        <div class="md:col-span-4 rounded-2xl border border-base-300 bg-base-100/80 p-5 shadow-sm space-y-3 transition duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="460">
             <div class="text-sm font-semibold text-primary">Tempo & logística</div>
             <div class="space-y-2 text-sm text-base-content/80">
                 <div class="font-semibold text-base">Tempo de estudo</div>
@@ -110,7 +110,7 @@
         </div>
     </div>
 
-    <div class="rounded-3xl border border-base-300 bg-base-100/90 shadow-sm p-6 space-y-4 transition duration-500 hover:shadow-2xl animate__animated animate__fadeInUp" style="--animate-delay: 0.5s;">
+    <div class="rounded-3xl border border-base-300 bg-base-100/90 shadow-sm p-6 space-y-4 transition duration-500 hover:shadow-2xl scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="500">
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
             <div class="space-y-1">
                 <div class="text-sm font-semibold text-primary uppercase tracking-widest">Temas do GOSP</div>

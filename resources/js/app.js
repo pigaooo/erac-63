@@ -36,9 +36,44 @@ const setupPatrocinadoresCarousel = (containerId, trackId, intervalMs = 2800) =>
     setInterval(goToNext, intervalMs);
 };
 
+const setupScrollReveal = () => {
+    const revealItems = Array.from(document.querySelectorAll('[data-reveal]'));
+    if (!revealItems.length) return;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const revealElement = (element) => {
+        const animation = element.dataset.reveal || 'fadeInUp';
+        const delay = parseInt(element.dataset.revealDelay || '0', 10);
+
+        element.style.setProperty('--animate-delay', `${delay}ms`);
+        element.classList.add('animate__animated', `animate__${animation}`, 'is-visible');
+    };
+
+    if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+        revealItems.forEach(revealElement);
+        return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+
+            revealElement(entry.target);
+            observer.unobserve(entry.target);
+        });
+    }, {
+        threshold: 0.18,
+        rootMargin: '0px 0px -10% 0px',
+    });
+
+    revealItems.forEach((item) => observer.observe(item));
+};
+
 document.addEventListener('DOMContentLoaded', () => {
     setupPatrocinadoresCarousel('patrocinadores-carousel', 'patrocinadores-track', 2800);
     setupPatrocinadoresCarousel('patrocinadores-carousel-mobile', 'patrocinadores-track-mobile', 2600);
+    setupScrollReveal();
 
     const pixModal = document.getElementById('pix-modal');
     const closePixBtn = document.getElementById('close-pix');

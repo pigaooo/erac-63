@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 md:py-14 space-y-8 animate__animated animate__fadeIn">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 md:py-14 space-y-8 scroll-reveal" data-reveal="fadeIn">
     <section class="grid gap-4 lg:grid-cols-12">
-        <div class="lg:col-span-8 rounded-[2rem] border border-base-300 bg-gradient-to-br from-base-100 via-base-100 to-primary/10 shadow-sm p-6 md:p-8 overflow-hidden relative transition duration-500 hover:-translate-y-1 hover:shadow-2xl animate__animated animate__fadeInUp">
+        <div class="lg:col-span-8 rounded-[2rem] border border-base-300 bg-gradient-to-br from-base-100 via-base-100 to-primary/10 shadow-sm p-6 md:p-8 overflow-hidden relative transition duration-500 hover:-translate-y-1 hover:shadow-2xl scroll-reveal" data-reveal="fadeInUp">
             <div class="absolute -top-16 -right-16 h-48 w-48 rounded-full bg-primary/10 blur-3xl animate-pulse"></div>
             <div class="absolute -bottom-16 -left-10 h-40 w-40 rounded-full bg-secondary/10 blur-3xl animate-pulse"></div>
             <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent"></div>
@@ -15,16 +15,16 @@
                 </div>
 
                 <div class="space-y-2">
-                    <h1 class="text-3xl md:text-5xl font-black leading-tight animate__animated animate__fadeInUp" style="--animate-delay: 0.08s;">
+                    <h1 class="text-3xl md:text-5xl font-black leading-tight scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="80">
                         O ERAC 63 será realizado no Espaço de Eventos Santa Eufrásia
                     </h1>
-                    <p class="max-w-3xl text-base md:text-lg text-base-content/70 animate__animated animate__fadeInUp" style="--animate-delay: 0.14s;">
+                    <p class="max-w-3xl text-base md:text-lg text-base-content/70 scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="140">
                         Um lugar agradável, cercado pela natureza e preparado para receber o público com conforto,
                         boa organização e acesso fácil para quem vem de Santa Branca e região.
                     </p>
                 </div>
 
-                <div class="flex flex-wrap gap-3 pt-2 animate__animated animate__fadeInUp" style="--animate-delay: 0.2s;">
+                <div class="flex flex-wrap gap-3 pt-2 scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="200">
                     <a
                         href="https://www.google.com/maps/search/?api=1&query=Av.+Roberto+Ugolini,+2900+-+Santa+Branca+-+SP+-+12380-000"
                         target="_blank"
@@ -46,7 +46,7 @@
         </div>
 
         <div class="lg:col-span-4 grid gap-4">
-            <div class="rounded-[2rem] border border-base-300 bg-base-100 shadow-sm p-6 space-y-3 transition duration-500 hover:-translate-y-1 hover:shadow-xl animate__animated animate__fadeInRight">
+            <div class="rounded-[2rem] border border-base-300 bg-base-100 shadow-sm p-6 space-y-3 transition duration-500 hover:-translate-y-1 hover:shadow-xl scroll-reveal" data-reveal="fadeInRight" data-reveal-delay="120">
                 <div class="text-xs font-bold uppercase tracking-[0.2em] text-base-content/60">Endereço do evento</div>
                 <div class="text-lg font-black leading-snug">
                     Av. Roberto Ugolini, 2900
@@ -60,7 +60,7 @@
                 </p>
             </div>
 
-            <div class="rounded-[2rem] border border-primary/20 bg-primary/10 shadow-sm p-6 space-y-3 transition duration-500 hover:-translate-y-1 hover:shadow-xl animate__animated animate__fadeInRight" style="--animate-delay: 0.08s;">
+            <div class="rounded-[2rem] border border-primary/20 bg-primary/10 shadow-sm p-6 space-y-3 transition duration-500 hover:-translate-y-1 hover:shadow-xl scroll-reveal" data-reveal="fadeInRight" data-reveal-delay="200">
                 <div class="text-xs font-bold uppercase tracking-[0.2em] text-primary">Chegada recomendada</div>
                 <div class="text-2xl font-black">Antecedência de 30 a 45 min</div>
                 <p class="text-sm text-base-content/75">
@@ -71,7 +71,7 @@
     </section>
 
     <section class="grid gap-4 md:grid-cols-12">
-        <div class="md:col-span-7 rounded-[2rem] border border-base-300 bg-base-100 shadow-sm overflow-hidden transition duration-500 hover:-translate-y-1 hover:shadow-2xl animate__animated animate__fadeInUp" style="--animate-delay: 0.12s;">
+        <div class="md:col-span-7 rounded-[2rem] border border-base-300 bg-base-100 shadow-sm overflow-hidden transition duration-500 hover:-translate-y-1 hover:shadow-2xl scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="120">
             <div class="border-b border-base-300 px-6 py-4">
                 <div class="text-sm font-semibold text-primary uppercase tracking-widest">Mapa</div>
                 <h2 class="text-2xl font-black">Como chegar ao local do evento</h2>
@@ -88,7 +88,7 @@
         </div>
 
         <div class="md:col-span-5 grid gap-4">
-            <div class="rounded-[2rem] border border-base-300 bg-base-100 shadow-sm p-6 space-y-4 transition duration-500 hover:-translate-y-1 hover:shadow-xl animate__animated animate__fadeInUp" style="--animate-delay: 0.18s;">
+            <div class="rounded-[2rem] border border-base-300 bg-base-100 shadow-sm p-6 space-y-4 transition duration-500 hover:-translate-y-1 hover:shadow-xl scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="180">
                 <div class="text-sm font-semibold text-primary">Pontos de referência</div>
                 <ul class="space-y-3 text-sm text-base-content/80">
                     <li class="flex items-start gap-3 transition duration-300 hover:translate-x-1">
@@ -106,7 +106,7 @@
                 </ul>
             </div>
 
-            <div class="rounded-[2rem] border border-base-300 bg-gradient-to-br from-base-100 to-secondary/10 shadow-sm p-6 space-y-3 transition duration-500 hover:-translate-y-1 hover:shadow-xl animate__animated animate__fadeInUp" style="--animate-delay: 0.24s;">
+            <div class="rounded-[2rem] border border-base-300 bg-gradient-to-br from-base-100 to-secondary/10 shadow-sm p-6 space-y-3 transition duration-500 hover:-translate-y-1 hover:shadow-xl scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="240">
                 <div class="text-sm font-semibold text-primary">Organize sua chegada</div>
                 <div class="grid grid-cols-2 gap-3 text-sm">
                     <div class="rounded-xl border border-base-300 bg-base-100/80 p-4 transition duration-300 hover:scale-[1.02] hover:border-primary/40 hover:shadow-md">
@@ -130,7 +130,7 @@
         </div>
     </section>
 
-    <section class="rounded-[2rem] border border-base-300 bg-base-100 shadow-sm p-6 md:p-7 space-y-5 transition duration-500 hover:shadow-2xl animate__animated animate__fadeInUp" style="--animate-delay: 0.28s;">
+    <section class="rounded-[2rem] border border-base-300 bg-base-100 shadow-sm p-6 md:p-7 space-y-5 transition duration-500 hover:shadow-2xl scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="280">
         <div class="space-y-2">
             <div class="inline-flex items-center gap-2 text-sm uppercase tracking-wide text-primary font-semibold">
                 <span class="h-2.5 w-2.5 rounded-full bg-primary animate-pulse"></span>
@@ -170,7 +170,7 @@
     </section>
 
     <section class="grid gap-4 md:grid-cols-12">
-        <div class="md:col-span-5 rounded-[2rem] border border-base-300 bg-gradient-to-br from-primary/10 to-base-100 shadow-sm p-6 space-y-4 transition duration-500 hover:-translate-y-1 hover:shadow-xl animate__animated animate__fadeInUp" style="--animate-delay: 0.34s;">
+        <div class="md:col-span-5 rounded-[2rem] border border-base-300 bg-gradient-to-br from-primary/10 to-base-100 shadow-sm p-6 space-y-4 transition duration-500 hover:-translate-y-1 hover:shadow-xl scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="340">
             <div class="text-sm font-semibold text-primary uppercase tracking-widest">Resumo rápido</div>
             <h2 class="text-2xl font-black">Local bonito, acessível e acolhedor</h2>
             <p class="text-sm text-base-content/75">
@@ -182,7 +182,7 @@
             </div>
         </div>
 
-        <div class="md:col-span-7 rounded-[2rem] border border-base-300 bg-base-100 shadow-sm p-6 space-y-4 transition duration-500 hover:-translate-y-1 hover:shadow-xl animate__animated animate__fadeInUp" style="--animate-delay: 0.4s;">
+        <div class="md:col-span-7 rounded-[2rem] border border-base-300 bg-base-100 shadow-sm p-6 space-y-4 transition duration-500 hover:-translate-y-1 hover:shadow-xl scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="400">
             <div class="text-sm font-semibold text-primary">Informações úteis para o dia</div>
             <div class="grid gap-3 sm:grid-cols-2">
                 <div class="rounded-2xl border border-base-300 bg-base-200/40 p-4 transition duration-300 hover:scale-[1.02] hover:border-primary/40 hover:shadow-md">

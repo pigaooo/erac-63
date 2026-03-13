@@ -6,13 +6,13 @@
 </div>
 
 <div class="max-w-6xl mx-auto px-4 sm:px-6 pb-14 space-y-6">
-    <section class="relative overflow-hidden rounded-[2rem] border border-base-300 bg-base-100 shadow-xl animate__animated animate__fadeIn">
+    <section class="relative overflow-hidden rounded-[2rem] border border-base-300 bg-base-100 shadow-xl scroll-reveal" data-reveal="fadeIn">
         <div class="absolute inset-0 bg-cover bg-center opacity-20" style="background-image: url('/images/fundo-banner.png');"></div>
         <div class="absolute inset-0 bg-gradient-to-br from-base-100 via-base-100/96 to-base-200/88"></div>
         <div class="absolute left-0 top-0 h-full w-2 bg-gradient-to-b from-primary via-primary/60 to-transparent"></div>
 
         <div class="relative p-6 md:p-10 lg:p-14">
-            <div class="md:hidden space-y-4 animate__animated animate__fadeInUp animate__faster">
+            <div class="md:hidden space-y-4 scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="80">
                 <div class="inline-flex w-fit items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-primary">
                     <span class="h-2 w-2 rounded-full bg-primary"></span>
                     ERAC 61
@@ -28,7 +28,7 @@
             </div>
 
             <div id="hero-inicial-home" class="hidden md:flex items-center">
-                <div class="max-w-4xl space-y-6 animate__animated animate__fadeInLeft">
+                <div class="max-w-4xl space-y-6 scroll-reveal" data-reveal="fadeInLeft" data-reveal-delay="80">
                     <div class="inline-flex w-fit items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-primary">
                         <span class="h-2 w-2 rounded-full bg-primary"></span>
                         ERAC 61
@@ -72,7 +72,7 @@
     </section>
 
     <section class="grid grid-cols-1 gap-3 md:hidden">
-        <a href="{{ route('localizacao') }}" class="rounded-[1.6rem] border border-base-300 bg-base-100 p-4 shadow-md transition duration-300 hover:border-primary/40 hover:shadow-xl animate__animated animate__fadeInLeft">
+        <a href="{{ route('localizacao') }}" class="rounded-[1.6rem] border border-base-300 bg-base-100 p-4 shadow-md transition duration-300 hover:border-primary/40 hover:shadow-xl scroll-reveal" data-reveal="fadeInLeft">
             <div class="flex items-start gap-4">
                 <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -88,7 +88,7 @@
             </div>
         </a>
 
-        <a href="{{ route('programacao') }}" class="rounded-[1.6rem] border border-base-300 bg-base-100 p-4 shadow-md transition duration-300 hover:border-primary/40 hover:shadow-xl animate__animated animate__fadeInRight">
+        <a href="{{ route('programacao') }}" class="rounded-[1.6rem] border border-base-300 bg-base-100 p-4 shadow-md transition duration-300 hover:border-primary/40 hover:shadow-xl scroll-reveal" data-reveal="fadeInRight" data-reveal-delay="60">
             <div class="flex items-start gap-4">
                 <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-secondary/10 text-secondary">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -103,7 +103,7 @@
             </div>
         </a>
 
-        <a href="{{ route('inscricao') }}" class="rounded-[1.6rem] border border-base-300 bg-base-100 p-4 shadow-md transition duration-300 hover:border-primary/40 hover:shadow-xl animate__animated animate__fadeInLeft">
+        <a href="{{ route('inscricao') }}" class="rounded-[1.6rem] border border-base-300 bg-base-100 p-4 shadow-md transition duration-300 hover:border-primary/40 hover:shadow-xl scroll-reveal" data-reveal="fadeInLeft" data-reveal-delay="120">
             <div class="flex items-start gap-4">
                 <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-accent/10 text-accent">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -118,7 +118,7 @@
             </div>
         </a>
 
-        <a href="{{ route('sobre') }}" class="rounded-[1.6rem] border border-base-300 bg-base-100 p-4 shadow-md transition duration-300 hover:border-primary/40 hover:shadow-xl animate__animated animate__fadeInRight">
+        <a href="{{ route('sobre') }}" class="rounded-[1.6rem] border border-base-300 bg-base-100 p-4 shadow-md transition duration-300 hover:border-primary/40 hover:shadow-xl scroll-reveal" data-reveal="fadeInRight" data-reveal-delay="180">
             <div class="flex items-start gap-4">
                 <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-info/10 text-info">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -135,7 +135,7 @@
         </a>
     </section>
 
-    <section class="grid gap-4 md:grid-cols-12 animate__animated animate__fadeInUp">
+    <section class="grid gap-4 md:grid-cols-12 scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="120">
         <a href="{{ route('inscricao') }}" class="hidden md:block md:col-span-5 rounded-[1.8rem] border border-base-300 bg-base-100 p-6 shadow-lg transition duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-2xl">
             <div class="text-xs font-semibold uppercase tracking-[0.22em] text-primary">Inscrição</div>
             <h2 class="mt-3 text-2xl font-bold text-base-content">Garanta sua participação no encontro</h2>

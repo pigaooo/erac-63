@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 md:py-14 space-y-8 animate__animated animate__fadeIn">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 md:py-14 space-y-8">
     <section class="grid gap-4 lg:grid-cols-12">
-        <div class="lg:col-span-8 rounded-[2rem] border border-base-300 bg-gradient-to-br from-base-100 via-base-100 to-primary/5 shadow-sm p-6 md:p-8 overflow-hidden relative transition duration-500 hover:-translate-y-1 hover:shadow-2xl animate__animated animate__fadeInUp">
+        <div class="lg:col-span-8 rounded-[2rem] border border-base-300 bg-gradient-to-br from-base-100 via-base-100 to-primary/5 shadow-sm p-6 md:p-8 overflow-hidden relative transition duration-500 hover:-translate-y-1 hover:shadow-2xl scroll-reveal" data-reveal="fadeInUp">
             <div class="absolute -top-16 -right-16 h-48 w-48 rounded-full bg-primary/10 blur-3xl animate-pulse"></div>
             <div class="absolute -bottom-20 -left-10 h-40 w-40 rounded-full bg-secondary/10 blur-3xl animate-pulse"></div>
             <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent"></div>
@@ -15,15 +15,15 @@
                 </div>
 
                 <div class="space-y-2">
-                    <h1 class="text-3xl md:text-5xl font-black leading-tight animate__animated animate__fadeInUp" style="--animate-delay: 0.08s;">
+                    <h1 class="text-3xl md:text-5xl font-black leading-tight scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="80">
                         Credenciamento para o Evento
                     </h1>
-                    <p class="max-w-2xl text-base md:text-lg text-base-content/70 animate__animated animate__fadeInUp" style="--animate-delay: 0.14s;">
+                    <p class="max-w-2xl text-base md:text-lg text-base-content/70 scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="140">
                         Finalize sua inscrição com poucos passos. Valores claros, pagamento simples via PIX.
                     </p>
                 </div>
 
-                <div class="flex flex-wrap gap-3 pt-2 animate__animated animate__fadeInUp" style="--animate-delay: 0.2s;">
+                <div class="flex flex-wrap gap-3 pt-2 scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="200">
                     <a href="#inscricao-individual" class="btn btn-outline rounded-xl px-6 transition duration-300 hover:scale-[1.03] hover:border-primary/50">
                         Inscrição individual
                     </a>
@@ -35,7 +35,7 @@
         </div>
 
         <div class="lg:col-span-4 grid gap-4">
-            <div class="rounded-[2rem] border border-primary/20 bg-primary/10 shadow-sm p-6 space-y-3 transition duration-500 hover:-translate-y-1 hover:shadow-xl animate__animated animate__fadeInRight">
+            <div class="rounded-[2rem] border border-primary/20 bg-primary/10 shadow-sm p-6 space-y-3 transition duration-500 hover:-translate-y-1 hover:shadow-xl scroll-reveal" data-reveal="fadeInRight" data-reveal-delay="120">
                 <div class="text-xs font-bold uppercase tracking-[0.2em] text-primary">Prazo</div>
                 <div class="text-2xl font-black">Inscrições online até DD/MM</div>
                 <p class="text-sm text-base-content/75">
@@ -43,7 +43,7 @@
                 </p>
             </div>
 
-            <div class="rounded-[2rem] border border-base-300 bg-base-100 shadow-sm p-6 space-y-3 transition duration-500 hover:-translate-y-1 hover:shadow-xl animate__animated animate__fadeInRight" style="--animate-delay: 0.08s;">
+            <div class="rounded-[2rem] border border-base-300 bg-base-100 shadow-sm p-6 space-y-3 transition duration-500 hover:-translate-y-1 hover:shadow-xl scroll-reveal" data-reveal="fadeInRight" data-reveal-delay="200">
                 <div class="text-xs font-bold uppercase tracking-[0.2em] text-base-content/60">Check-in</div>
                 <div class="text-lg font-bold">Leve sua confirmação no dia</div>
                 <p class="text-sm text-base-content/70">
@@ -56,7 +56,7 @@
     <div id="inscricao-alert" class="hidden rounded-2xl border border-success/40 bg-success/10 text-success px-4 py-3 text-sm shadow-sm animate__animated animate__fadeIn" role="status"></div>
 
     <section class="grid gap-4 md:grid-cols-12">
-        <div class="md:col-span-7 rounded-[2rem] border border-base-300 bg-base-100 shadow-sm p-6 md:p-7 space-y-5 transition duration-500 hover:-translate-y-1 hover:shadow-xl animate__animated animate__fadeInUp" style="--animate-delay: 0.12s;">
+        <div class="md:col-span-7 rounded-[2rem] border border-base-300 bg-base-100 shadow-sm p-6 md:p-7 space-y-5 transition duration-500 hover:-translate-y-1 hover:shadow-xl scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="120">
             <div class="flex items-center gap-2 text-sm uppercase tracking-wide text-primary font-semibold">
                 <span class="h-2.5 w-2.5 rounded-full bg-primary animate-pulse"></span>
                 Valores de inscrição
@@ -90,7 +90,7 @@
         </div>
 
         <div class="md:col-span-5 grid gap-4">
-            <div class="rounded-[2rem] border border-base-300 bg-base-100 shadow-sm p-6 space-y-3 transition duration-500 hover:-translate-y-1 hover:shadow-xl animate__animated animate__fadeInUp" style="--animate-delay: 0.18s;">
+            <div class="rounded-[2rem] border border-base-300 bg-base-100 shadow-sm p-6 space-y-3 transition duration-500 hover:-translate-y-1 hover:shadow-xl scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="180">
                 <div class="text-xs font-bold uppercase tracking-[0.2em] text-base-content/60">Pagamento</div>
                 <div class="text-xl font-black">PIX rápido e prático</div>
                 <p class="text-sm text-base-content/70">
