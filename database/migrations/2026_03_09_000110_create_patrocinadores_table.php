@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('telefone', 50)->nullable();
             $table->string('endereco', 255)->nullable();
             $table->string('tipo_patrocinio', 30);
-            $table->foreignUlid('loja_id')->constrained('lojas')->cascadeOnDelete();
             $table->foreignUlid('user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
         });
