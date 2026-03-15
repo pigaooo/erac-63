@@ -15,11 +15,13 @@ use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
-use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class InscritoResource extends Resource
 {
@@ -95,6 +97,9 @@ class InscritoResource extends Resource
     {
         return $table
             ->columns([
+                ToggleColumn::make('is_paied')
+                    ->label('Pago')
+                    ->sortable(),
                 TextColumn::make('name')
                     ->label('Inscrito')
                     ->searchable()
@@ -120,10 +125,6 @@ class InscritoResource extends Resource
                 TextColumn::make('cim')
                     ->label('CIM')
                     ->toggleable(isToggledHiddenByDefault: true),
-                IconColumn::make('is_paied')
-                    ->label('Pago')
-                    ->boolean()
-                    ->sortable(),
                 TextColumn::make('created_at')
                     ->label('Cadastro')
                     ->dateTime('d/m/Y H:i')
@@ -131,16 +132,21 @@ class InscritoResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
+                Filter::make('name')
+                    ->label('Nome do inscrito')
+                    ->form([
+                        TextInput::make('name')
+                            ->label('Nome')
+                            ->placeholder('Digite o nome do inscrito'),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query->when(
+                            filled($data['name'] ?? null),
+                            fn (Builder $query): Builder => $query->where('name', 'like', '%' . trim($data['name']) . '%'),
+                        );
+                    }),
                 TernaryFilter::make('is_paied')
-                    ->label('Pagamento'),
-                SelectFilter::make('grau')
-                    ->label('Grau')
-                    ->options([
-                        'AM' => 'A∴M∴',
-                        'CM' => 'C∴M∴',
-                        'MM' => 'M∴M∴',
-                        'MI' => 'M∴I∴',
-                    ]),
+                    ->label('Pagos'),
                 SelectFilter::make('loja_id')
                     ->label('Loja')
                     ->relationship('loja', 'name')
