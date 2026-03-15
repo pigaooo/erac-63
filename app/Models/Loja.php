@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Models\Inscrito;
-use App\Models\Patrocinador;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -41,8 +40,4 @@ class Loja extends Model
         return $this->hasMany(Inscrito::class);
     }
 
-    public function patrocinadores()
-    {
-        return $this->hasMany(Patrocinador::class);
-    }
 }

@@ -22,20 +22,13 @@ class Patrocinador extends Model
         'telefone',
         'endereco',
         'tipo_patrocinio',
-        'loja_id',
         'user_id',
     ];
 
     protected $casts = [
         'id' => 'string',
-        'loja_id' => 'string',
         'user_id' => 'string',
     ];
-
-    public function loja()
-    {
-        return $this->belongsTo(Loja::class);
-    }
 
     public function user()
     {
