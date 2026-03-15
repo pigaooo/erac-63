@@ -138,9 +138,9 @@
     <section class="grid gap-4 md:grid-cols-12 scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="120">
         <a href="{{ route('inscricao') }}" class="hidden md:block md:col-span-5 rounded-[1.8rem] border border-base-300 bg-base-100 p-6 shadow-lg transition duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-2xl">
             <div class="text-xs font-semibold uppercase tracking-[0.22em] text-primary">Inscrição</div>
-            <h2 class="mt-3 text-2xl font-bold text-base-content">Garanta sua participação no encontro</h2>
+            <h2 class="mt-3 text-2xl font-bold text-base-content">Antecipe sua participação no encontro</h2>
             <p class="mt-3 text-sm text-base-content/72">
-                Faça sua inscrição individual ou em lote com um fluxo simples e organizado para a sua Loja.
+                Faça sua inscrição ou a incrição dos obreiros de sua loja, de uma forma simples e rapida.
             </p>
             <div class="mt-5 text-sm font-semibold text-primary">Acessar inscrições</div>
         </a>
@@ -162,10 +162,10 @@
         </a>
 
         <a href="{{ route('sobre') }}" class="hidden md:block md:col-span-3 rounded-[1.8rem] border border-base-300 bg-base-100 p-6 shadow-lg transition duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-2xl">
-            <div class="text-xs font-semibold uppercase tracking-[0.22em] text-primary">Sobre</div>
-            <h2 class="mt-3 text-xl font-bold text-base-content">Entenda o espírito do encontro</h2>
+            <div class="text-xs font-semibold uppercase tracking-[0.22em] text-primary">Sobre A Loja Anfitriã</div>
+            <h2 class="mt-3 text-xl font-bold text-base-content">Conheça um pouco sobre Nossa Loja</h2>
             <p class="mt-3 text-sm text-base-content/72">
-                Conheça mais sobre a proposta, a organização e o contexto do ERAC.
+                Fonte de Vida, uma loja que cultiva a harmonia de nosso obreiros e o trabalho.
             </p>
         </a>
 
@@ -174,7 +174,7 @@
             <h2 class="mt-3 text-2xl font-bold text-base-content">Um encontro para viver a maçonaria com profundidade</h2>
             <p class="mt-3 text-sm text-base-content/72">
                 Mais do que uma agenda, o ERAC é uma oportunidade de estreitar laços, aprimorar a formação e fortalecer
-                o senso de pertencimento entre Aprendizes e Companheiros.
+                o senso de pertencimento a um grando ordem.
             </p>
         </div>
 
@@ -187,7 +187,7 @@
                 </li>
                 <li class="flex items-start gap-3">
                     <span class="mt-1 h-2.5 w-2.5 rounded-full bg-primary"></span>
-                    Programação dedicada à formação
+                    Programação dedicada ao estudo maçônico.
                 </li>
                 <li class="flex items-start gap-3">
                     <span class="mt-1 h-2.5 w-2.5 rounded-full bg-primary"></span>
