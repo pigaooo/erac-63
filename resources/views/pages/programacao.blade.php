@@ -2,6 +2,10 @@
 
 @section('content')
 <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 space-y-10 scroll-reveal" data-reveal="fadeIn">
+    <div class="scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="120">
+        @include('componentes.patrocinadores-carousel', ['patrocinadores' => $patrocinadores ?? collect()])
+    </div>
+
     <section class="rounded-[2rem] border border-base-300 bg-gradient-to-br from-base-100 via-base-100 to-primary/10 shadow-sm p-6 md:p-8 relative overflow-hidden transition duration-500 hover:-translate-y-1 hover:shadow-2xl scroll-reveal" data-reveal="fadeInUp">
         <div class="absolute -top-16 -right-16 h-48 w-48 rounded-full bg-primary/10 blur-3xl animate-pulse"></div>
         <div class="absolute -bottom-16 -left-10 h-40 w-40 rounded-full bg-secondary/10 blur-3xl animate-pulse"></div>
@@ -15,10 +19,6 @@
             </p>
         </div>
     </section>
-
-    <div class="scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="180">
-        @include('componentes.patrocinadores-carousel', ['patrocinadores' => $patrocinadores ?? collect()])
-    </div>
 
     <div class="grid gap-4 md:grid-cols-12">
         <div class="md:col-span-7 rounded-2xl border border-base-300 bg-base-100/80 shadow-sm p-6 space-y-4 transition duration-500 hover:-translate-y-1 hover:shadow-2xl scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="220">

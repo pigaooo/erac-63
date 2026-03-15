@@ -15,7 +15,13 @@ Route::get('/', function () {
     return view('pages.home', compact('patrocinadores'));
 })->name('home');
 
-Route::view('/localizacao', 'pages.localizacao')->name('localizacao');
+Route::get('/localizacao', function () {
+    $patrocinadores = Patrocinador::query()
+        ->orderBy('name')
+        ->get();
+
+    return view('pages.localizacao', compact('patrocinadores'));
+})->name('localizacao');
 
 Route::get('/programacao', function () {
     $patrocinadores = Patrocinador::query()
@@ -25,8 +31,21 @@ Route::get('/programacao', function () {
     return view('pages.programacao', compact('patrocinadores'));
 })->name('programacao');
 
-Route::view('/inscricao', 'pages.inscricao')->name('inscricao');
-Route::view('/sobre', 'pages.sobre')->name('sobre');
+Route::get('/inscricao', function () {
+    $patrocinadores = Patrocinador::query()
+        ->orderBy('name')
+        ->get();
+
+    return view('pages.inscricao', compact('patrocinadores'));
+})->name('inscricao');
+
+Route::get('/sobre', function () {
+    $patrocinadores = Patrocinador::query()
+        ->orderBy('name')
+        ->get();
+
+    return view('pages.sobre', compact('patrocinadores'));
+})->name('sobre');
 
 Route::middleware('auth')->get('/admin/inscritos/export-pdf', function (Request $request) {
     $query = Inscrito::query()->with('loja');

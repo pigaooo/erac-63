@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="max-w-7xl mx-auto px-4 sm:px-6 pt-8 md:pt-10">
+    @include('componentes.patrocinadores-carousel', ['patrocinadores' => $patrocinadores ?? collect()])
+</div>
 <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 md:py-14 space-y-8">
     <section class="grid gap-4 lg:grid-cols-12">
         <div class="lg:col-span-8 rounded-[2rem] border border-base-300 bg-gradient-to-br from-base-100 via-base-100 to-primary/5 shadow-sm p-6 md:p-8 overflow-hidden relative transition duration-500 hover:-translate-y-1 hover:shadow-2xl scroll-reveal" data-reveal="fadeInUp">

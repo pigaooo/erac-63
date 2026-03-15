@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="max-w-4xl mx-auto px-4 sm:px-6 pt-8 md:pt-10">
+    @include('componentes.patrocinadores-carousel', ['patrocinadores' => $patrocinadores ?? collect()])
+</div>
 <div class="max-w-4xl mx-auto px-4 sm:px-6 py-12 space-y-8 scroll-reveal" data-reveal="fadeIn">
     <div class="space-y-2">
         <p class="text-sm font-semibold text-primary uppercase tracking-widest">Sobre</p>
