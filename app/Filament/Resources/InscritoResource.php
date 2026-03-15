@@ -6,6 +6,7 @@ use App\Filament\Resources\InscritoResource\Pages\CreateInscrito;
 use App\Filament\Resources\InscritoResource\Pages\EditInscrito;
 use App\Filament\Resources\InscritoResource\Pages\ListInscritos;
 use App\Models\Inscrito;
+use Filament\Actions\BulkAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -21,6 +22,7 @@ use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Builder;
 
 class InscritoResource extends Resource
@@ -159,6 +161,16 @@ class InscritoResource extends Resource
                 DeleteAction::make(),
             ])
             ->toolbarActions([
+                BulkAction::make('exportPdf')
+                    ->label('Exportar PDF')
+                    ->icon('heroicon-o-document-arrow-down')
+                    ->color('gray')
+                    ->deselectRecordsAfterCompletion()
+                    ->action(function (Collection $records) {
+                        return redirect()->to(route('admin.inscritos.export-pdf', [
+                            'ids' => $records->pluck('id')->all(),
+                        ]));
+                    }),
                 DeleteBulkAction::make(),
             ]);
     }
