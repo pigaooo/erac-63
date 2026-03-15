@@ -26,7 +26,7 @@ class InscritoFactory extends Factory
             'telefone' => fake()->numerify('(##) #####-####'),
             'cpf' => fake()->unique()->numerify('###.###.###-##'),
             'cim' => fake()->unique()->numerify('######'),
-            'grau' => fake()->randomElement(['AM', 'CM', 'MM', 'MI']),
+            'grau' => fake()->randomElement(['AM', 'CM', 'MM', 'MI', 'OT']),
             'loja_id' => Loja::query()->inRandomOrder()->value('id'),
             'is_paied' => fake()->boolean(35),
         ];

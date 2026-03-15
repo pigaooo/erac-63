@@ -19,6 +19,7 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Auth;
 
 class LojaResource extends Resource
 {
@@ -60,7 +61,7 @@ class LojaResource extends Resource
                             ->label('Loja ativa')
                             ->default(true),
                         Hidden::make('user_id')
-                            ->default(fn () => auth()->id()),
+                            ->default(fn () => Auth::id()),
                     ])
                     ->columns(2),
             ]);

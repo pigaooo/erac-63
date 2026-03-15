@@ -59,7 +59,7 @@ class InscricaoModal extends Component
             'email' => ['required', 'email', 'max:150', 'unique:inscritos,email'],
             'telefone' => ['required', 'string', 'max:50'],
             'cpf' => ['required', 'string', 'max:20', 'unique:inscritos,cpf'],
-            'grau' => ['required', 'in:AM,CM,MM,MI'],
+            'grau' => ['required', 'in:AM,CM,MM,MI,OT'],
             'lojaId' => ['required', 'exists:lojas,id'],
         ], [
             'nome.required' => 'Informe o nome completo.',

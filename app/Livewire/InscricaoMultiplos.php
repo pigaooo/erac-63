@@ -103,7 +103,7 @@ class InscricaoMultiplos extends Component
                 'inscritos.*.telefone' => ['required', 'string', 'max:50'],
                 'inscritos.*.cpf' => ['required', 'string', 'max:20', 'distinct', 'unique:inscritos,cpf'],
                 'inscritos.*.cim' => ['required', 'string', 'max:50', 'distinct', 'unique:inscritos,cim'],
-                'inscritos.*.grau' => ['required', 'in:AM,CM,MM,MI'],
+                'inscritos.*.grau' => ['required', 'in:AM,CM,MM,MI,OT'],
                 'inscritos.*.loja_id' => ['required', 'exists:lojas,id'],
             ],
             $this->batchMessages()
@@ -186,7 +186,7 @@ class InscricaoMultiplos extends Component
             'telefone' => ['required', 'string', 'max:50'],
             'cpf' => ['required', 'string', 'max:20'],
             'cim' => ['required', 'string', 'max:50'],
-            'grau' => ['required', 'in:AM,CM,MM,MI'],
+            'grau' => ['required', 'in:AM,CM,MM,MI,OT'],
             'loja_id' => ['required', 'exists:lojas,id'],
         ];
     }

@@ -80,6 +80,7 @@ class InscritoResource extends Resource
                                 'CM' => 'C∴M∴',
                                 'MM' => 'M∴M∴',
                                 'MI' => 'M∴I∴',
+                                'OT' => 'Outros',
                             ])
                             ->required(),
                         Select::make('loja_id')
@@ -164,7 +165,7 @@ class InscritoResource extends Resource
                 BulkAction::make('exportPdf')
                     ->label('Exportar PDF')
                     ->icon('heroicon-o-document-arrow-down')
-                    ->color('gray')
+                    ->color('success')
                     ->deselectRecordsAfterCompletion()
                     ->action(function (Collection $records) {
                         return redirect()->to(route('admin.inscritos.export-pdf', [

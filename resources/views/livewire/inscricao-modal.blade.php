@@ -93,6 +93,7 @@
                             <option value="CM">C∴M∴</option>
                             <option value="MM">M∴M∴</option>
                             <option value="MI">M∴I∴</option>
+                            <option value="OT">Outros</option>
                         </select>
                         @error('grau') <span class="text-error text-xs mt-1">{{ $message }}</span> @enderror
                     </label>

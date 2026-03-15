@@ -6,28 +6,28 @@
     @endif
 
     <button id="botao_modal_inscricao_multipla" class="btn btn-primary w-full" wire:click="openModal" type="button">
-        Inscrever múltiplos
+        Inscrever multiplos
     </button>
 
     <div class="modal {{ $showModal ? 'modal-open' : '' }}" wire:keydown.escape="closeModal">
         <div class="modal-box max-w-5xl space-y-4">
             <div class="flex items-start justify-between">
                 <div>
-                    <h3 class="font-bold text-lg">Inscrição múltipla</h3>
+                    <h3 class="font-bold text-lg">Inscricao multipla</h3>
                     <p class="text-sm text-base-content/70">
-                        Escolha a Loja para inserir vários participantes, preencha os dados e adicione à tabela.
+                        Escolha a Loja para inserir varios participantes, preencha os dados e adicione a tabela.
                     </p>
                 </div>
 
                 <button class="btn btn-ghost btn-sm" type="button" wire:click="closeModal">
-                    ×
+                    x
                 </button>
             </div>
 
             <form class="space-y-4" wire:submit.prevent="addToTable">
                 <label class="form-control w-full">
                     <div class="label">
-                        <span class="label-text font-semibold">Loja / Capítulo do lote</span>
+                        <span class="label-text font-semibold">Loja / Capitulo do lote</span>
                     </div>
 
                     @if ($lojas->count())
@@ -43,7 +43,7 @@
                         </select>
                     @else
                         <div class="text-sm text-base-content/70">
-                            Nenhuma Loja/Capítulo cadastrada ainda.
+                            Nenhuma Loja/Capitulo cadastrada ainda.
                         </div>
                     @endif
 
@@ -71,7 +71,7 @@
                             wire:key="name-{{ $formKey }}"
                             type="text"
                             class="input input-bordered"
-                            placeholder="Irmão / Aprendiz / Companheiro"
+                            placeholder="Irmao / Aprendiz / Companheiro"
                             wire:model.defer="name"
                         >
                         @error('name')
@@ -95,7 +95,7 @@
                         @enderror
                     </label>
 
-                    <label class="form-control w-full" >
+                    <label class="form-control w-full">
                         <div class="label">
                             <span class="label-text">Telefone (celular)</span>
                         </div>
@@ -148,7 +148,7 @@
 
                     <label class="form-control w-full">
                         <div class="label">
-                            <span class="label-text">Grau maçônico</span>
+                            <span class="label-text">Grau masonico</span>
                         </div>
                         <select
                             wire:key="grau-{{ $formKey }}"
@@ -160,6 +160,7 @@
                             <option value="CM">C∴M∴</option>
                             <option value="MM">M∴M∴</option>
                             <option value="MI">M∴I∴</option>
+                            <option value="OT">Outros</option>
                         </select>
                         @error('grau')
                             <span class="text-error text-xs mt-1">{{ $message }}</span>
@@ -169,7 +170,7 @@
 
                 <div class="flex items-center justify-between gap-4">
                     <div class="text-sm text-base-content/70">
-                        Preencha os dados acima e clique em "Adicionar à tabela" para listar os inscritos antes de
+                        Preencha os dados acima e clique em "Adicionar a tabela" para listar os inscritos antes de
                         enviar.
                     </div>
 
@@ -179,7 +180,7 @@
                         wire:loading.attr="disabled"
                         wire:target="addToTable"
                     >
-                        <span wire:loading.remove wire:target="addToTable">+ Adicionar à tabela</span>
+                        <span wire:loading.remove wire:target="addToTable">+ Adicionar a tabela</span>
                         <span wire:loading wire:target="addToTable">Adicionando...</span>
                     </button>
                 </div>
@@ -231,7 +232,7 @@
                                             class="btn btn-ghost btn-sm"
                                             wire:click="removeRow({{ $index }})"
                                         >
-                                            ×
+                                            x
                                         </button>
                                     </td>
                                 </tr>
