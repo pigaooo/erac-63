@@ -11,10 +11,12 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -69,6 +71,15 @@ class PatrocinadorResource extends Resource
                                 'Apoio' => 'Apoio',
                             ])
                             ->required(),
+                        SpatieMediaLibraryFileUpload::make('logo')
+                            ->label('Logo do patrocinador')
+                            ->collection('logo')
+                            ->disk('public')
+                            ->image()
+                            ->imageEditor()
+                            ->downloadable()
+                            ->openable()
+                            ->columnSpanFull(),
                         Hidden::make('user_id')
                             ->default(fn () => auth()->id()),
                     ])
@@ -80,6 +91,11 @@ class PatrocinadorResource extends Resource
     {
         return $table
             ->columns([
+                SpatieMediaLibraryImageColumn::make('logo')
+                    ->label('Logo')
+                    ->collection('logo')
+                    ->conversion('thumb')
+                    ->square(),
                 TextColumn::make('name')
                     ->label('Patrocinador')
                     ->searchable()

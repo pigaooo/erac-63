@@ -11,13 +11,16 @@
         <div id="patrocinadores-carousel" class="relative overflow-hidden rounded-2xl bg-base-100/80 border border-base-300">
             <div id="patrocinadores-track" class="flex transition-transform duration-700 ease-in-out">
                 @foreach($patrocinadores as $patrocinador)
+                    @php
+                        $logoUrl = $patrocinador->getFirstMediaUrl('logo', 'thumb') ?: $patrocinador->getFirstMediaUrl('logo');
+                    @endphp
                     <a
                         href="{{ $patrocinador->endereco ? (Str::startsWith($patrocinador->endereco, ['http://', 'https://']) ? $patrocinador->endereco : 'https://' . $patrocinador->endereco) : '#' }}"
                         class="w-full shrink-0 flex items-center justify-center h-72"
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        <img id="logo-patrocinador" src="{{ asset('images/patrocinio-teste.jpg') }}" alt="Logo {{ $patrocinador->name }}" class="h-full w-full object-cover">
+                        <img id="logo-patrocinador" src="{{ $logoUrl ?: asset('images/patrocinio-teste.jpg') }}" alt="Logo {{ $patrocinador->name }}" class="h-full w-full object-contain bg-white">
                     </a>
                 @endforeach
             </div>
@@ -32,13 +35,16 @@
         <div id="patrocinadores-carousel-mobile" class="relative overflow-hidden rounded-2xl bg-base-100/80 border border-base-300">
             <div id="patrocinadores-track-mobile" class="flex transition-transform duration-700 ease-in-out">
                 @foreach($patrocinadores as $patrocinador)
+                    @php
+                        $logoUrl = $patrocinador->getFirstMediaUrl('logo', 'thumb') ?: $patrocinador->getFirstMediaUrl('logo');
+                    @endphp
                     <a
                         href="{{ $patrocinador->endereco ? (Str::startsWith($patrocinador->endereco, ['http://', 'https://']) ? $patrocinador->endereco : 'https://' . $patrocinador->endereco) : '#' }}"
                         class="w-full shrink-0 flex items-center justify-center h-56"
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        <img src="{{ asset('images/patrocinio-teste.jpg') }}" alt="Logo {{ $patrocinador->name }}" class="h-full w-full object-contain">
+                        <img src="{{ $logoUrl ?: asset('images/patrocinio-teste.jpg') }}" alt="Logo {{ $patrocinador->name }}" class="h-full w-full object-contain bg-white">
                     </a>
                 @endforeach
             </div>
