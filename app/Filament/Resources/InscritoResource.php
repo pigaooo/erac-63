@@ -137,7 +137,7 @@ class InscritoResource extends Resource
             ->filters([
                 Filter::make('name')
                     ->label('Nome do inscrito')
-                    ->form([
+                    ->schema([
                         TextInput::make('name')
                             ->label('Nome')
                             ->placeholder('Digite o nome do inscrito'),
