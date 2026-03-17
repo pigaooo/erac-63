@@ -17,6 +17,13 @@
     opacity: 1;
 }
 
+@media (max-width: 767px) {
+    .scroll-reveal {
+        opacity: 1;
+        will-change: auto;
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     .scroll-reveal {
         opacity: 1;
