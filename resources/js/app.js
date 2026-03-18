@@ -6,33 +6,24 @@ Alpine.plugin(mask);
 window.Alpine = Alpine;
 Alpine.start();
 
-// Auto-slide patrocinadores: um card por vez (desktop e mobile)
-const setupPatrocinadoresCarousel = (containerId, trackId, intervalMs = 2800) => {
+// Auto-slide patrocinadores using DaisyUI carousel markup.
+const setupPatrocinadoresCarousel = (containerId, intervalMs = 2800) => {
     const carousel = document.getElementById(containerId);
-    const track = document.getElementById(trackId);
-    if (!carousel || !track) return;
+    if (!carousel) return;
 
-    const items = Array.from(track.children);
+    const items = Array.from(carousel.querySelectorAll('.carousel-item'));
     if (items.length === 0) return;
 
     let current = 0;
 
-    const setWidths = () => {
-        const width = carousel.clientWidth;
-        items.forEach((item) => {
-            item.style.width = `${width}px`;
-        });
-        track.style.transform = `translateX(-${current * width}px)`;
-    };
-
     const goToNext = () => {
         current = (current + 1) % items.length;
-        const width = carousel.clientWidth;
-        track.style.transform = `translateX(-${current * width}px)`;
+        carousel.scrollTo({
+            left: items[current].offsetLeft,
+            behavior: 'smooth',
+        });
     };
 
-    setWidths();
-    window.addEventListener('resize', setWidths);
     setInterval(goToNext, intervalMs);
 };
 
@@ -71,8 +62,8 @@ const setupScrollReveal = () => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-    setupPatrocinadoresCarousel('patrocinadores-carousel', 'patrocinadores-track', 2800);
-    setupPatrocinadoresCarousel('patrocinadores-carousel-mobile', 'patrocinadores-track-mobile', 2600);
+    setupPatrocinadoresCarousel('patrocinadores-carousel', 2800);
+    setupPatrocinadoresCarousel('patrocinadores-carousel-mobile', 2600);
     setupScrollReveal();
 
     const pixModal = document.getElementById('pix-modal');
