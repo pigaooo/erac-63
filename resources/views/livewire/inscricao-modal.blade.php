@@ -16,7 +16,7 @@
         <div class="modal-box max-w-2xl space-y-4">
             <div class="flex items-start justify-between">
                 <div>
-                    <h3 class="font-bold text-lg">Credenciamento</h3>
+                    <h3 class="text-lg font-bold">Credenciamento</h3>
                     <p class="text-sm text-base-content/70">Preencha os dados do irmão para o ERAC.</p>
                 </div>
                 <button class="btn btn-ghost btn-sm" type="button" wire:click="closeModal">×</button>
@@ -34,7 +34,7 @@
                             wire:model.blur="nome"
                             required
                         >
-                        @error('nome') <span class="text-error text-xs mt-1">{{ $message }}</span> @enderror
+                        @error('nome') <span class="mt-1 text-xs text-error">{{ $message }}</span> @enderror
                     </label>
 
                     <label class="form-control w-full">
@@ -47,10 +47,10 @@
                             wire:model.blur="email"
                             required
                         >
-                        @error('email') <span class="text-error text-xs mt-1">{{ $message }}</span> @enderror
+                        @error('email') <span class="mt-1 text-xs text-error">{{ $message }}</span> @enderror
                     </label>
 
-                    <label class="form-control w-full" >
+                    <label class="form-control w-full">
                         <div class="label"><span class="label-text">Telefone (celular)</span></div>
                         <input
                             wire:key="telefone-{{ $formKey }}"
@@ -62,10 +62,10 @@
                             x-mask="(99) 99999-9999"
                             required
                         >
-                        @error('telefone') <span class="text-error text-xs mt-1">{{ $message }}</span> @enderror
+                        @error('telefone') <span class="mt-1 text-xs text-error">{{ $message }}</span> @enderror
                     </label>
 
-                    <label class="form-control w-full" >
+                    <label class="form-control w-full">
                         <div class="label"><span class="label-text">CPF</span></div>
                         <input
                             wire:key="cpf-{{ $formKey }}"
@@ -77,7 +77,7 @@
                             x-mask="999.999.999-99"
                             required
                         >
-                        @error('cpf') <span class="text-error text-xs mt-1">{{ $message }}</span> @enderror
+                        @error('cpf') <span class="mt-1 text-xs text-error">{{ $message }}</span> @enderror
                     </label>
 
                     <label class="form-control w-full">
@@ -95,7 +95,7 @@
                             <option value="MI">M∴I∴</option>
                             <option value="OT">Outros</option>
                         </select>
-                        @error('grau') <span class="text-error text-xs mt-1">{{ $message }}</span> @enderror
+                        @error('grau') <span class="mt-1 text-xs text-error">{{ $message }}</span> @enderror
                     </label>
 
                     <label class="form-control w-full">
@@ -115,7 +115,7 @@
                         @else
                             <div class="text-sm text-base-content/70">Nenhuma Loja/Capítulo cadastrada ainda.</div>
                         @endif
-                        @error('lojaId') <span class="text-error text-xs mt-1">{{ $message }}</span> @enderror
+                        @error('lojaId') <span class="mt-1 text-xs text-error">{{ $message }}</span> @enderror
                     </label>
                 </div>
 

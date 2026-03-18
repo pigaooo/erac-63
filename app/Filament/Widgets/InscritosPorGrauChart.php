@@ -8,9 +8,9 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 
 class InscritosPorGrauChart extends StatsOverviewWidget
 {
-    protected ?string $heading = 'Irmaos por grau';
+    protected ?string $heading = 'Irmãos por grau';
 
-    protected ?string $description = 'Contagem de inscritos agrupada por grau masonico.';
+    protected ?string $description = 'Contagem de inscritos agrupada por grau maçônico.';
 
     protected int | string | array $columnSpan = 'full';
 
@@ -23,16 +23,16 @@ class InscritosPorGrauChart extends StatsOverviewWidget
 
         return [
             Stat::make('Aprendizes', (int) ($counts['AM'] ?? 0))
-                ->description('Irmaos no grau A∴M∴')
+                ->description('Irmãos no grau A∴M∴')
                 ->color('warning'),
             Stat::make('Companheiros', (int) ($counts['CM'] ?? 0))
-                ->description('Irmaos no grau C∴M∴')
+                ->description('Irmãos no grau C∴M∴')
                 ->color('info'),
             Stat::make('Mestres', (int) ($counts['MM'] ?? 0))
-                ->description('Irmaos no grau M∴M∴')
+                ->description('Irmãos no grau M∴M∴')
                 ->color('success'),
-            Stat::make('Mestres instalados', (int) ($counts['MI'] ?? 0))
-                ->description('Irmaos no grau M∴I∴')
+            Stat::make('Mestres Instalados', (int) ($counts['MI'] ?? 0))
+                ->description('Irmãos no grau M∴I∴')
                 ->color('primary'),
             Stat::make('Outros', (int) ($counts['OT'] ?? 0))
                 ->description('Inscritos classificados como outros')

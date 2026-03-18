@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="utf-8">
-    <title>Relatorio de inscritos</title>
+    <title>Relatório de inscritos</title>
     <style>
         body {
             font-family: DejaVu Sans, sans-serif;
@@ -69,8 +69,8 @@
     </style>
 </head>
 <body>
-    <h1>{{ $reportTitle ?? 'Relatorio de inscritos' }}</h1>
-    <div class="subtitle">61o Encontro Regional de Aprendizes e Companheiros</div>
+    <h1>{{ $reportTitle ?? 'Relatório de inscritos' }}</h1>
+    <div class="subtitle">61º Encontro Regional de Aprendizes e Companheiros</div>
 
     <div class="summary">
         <strong>Total de inscritos:</strong> {{ $inscritos->count() }}<br>
@@ -91,7 +91,7 @@
             @forelse ($inscritos as $inscrito)
                 <tr>
                     <td class="{{ $inscrito->is_paied ? 'paid' : 'unpaid' }}">
-                        {{ $inscrito->is_paied ? 'Sim' : 'Nao' }}
+                        {{ $inscrito->is_paied ? 'Sim' : 'Não' }}
                     </td>
                     <td>{{ $inscrito->name }}</td>
                     <td>{{ $inscrito->grau }}</td>

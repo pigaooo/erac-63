@@ -66,7 +66,7 @@ class InscricaoMultiplos extends Component
 
         foreach (['email', 'cpf', 'cim'] as $field) {
             if (collect($this->inscritos)->contains(fn ($item) => $item[$field] === $validated[$field])) {
-                $this->addError($field, strtoupper($field).' duplicado na lista.');
+                $this->addError($field, strtoupper($field) . ' duplicado na lista.');
                 return;
             }
         }
@@ -132,7 +132,7 @@ class InscricaoMultiplos extends Component
         Inscrito::query()->insert($payload);
 
         $this->flashMessage = 'Inscritos cadastrados com sucesso.';
-        $this->dispatch('inscricao-alert', message: 'As Inscrições foram enviadas com sucesso.');
+        $this->dispatch('inscricao-alert', message: 'As inscrições foram enviadas com sucesso.');
 
         $this->inscritos = [];
         $this->resetFormFields();
@@ -161,8 +161,7 @@ class InscricaoMultiplos extends Component
         $this->cpf = '';
         $this->cim = '';
         $this->grau = '';
-         $this->formKey++;
-
+        $this->formKey++;
     }
 
     private function normalizeRow(array $row): array

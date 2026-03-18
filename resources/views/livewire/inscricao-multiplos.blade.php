@@ -6,16 +6,16 @@
     @endif
 
     <button id="botao_modal_inscricao_multipla" class="btn btn-primary w-full" wire:click="openModal" type="button">
-        Inscrever multiplos
+        Inscrever múltiplos
     </button>
 
     <div class="modal {{ $showModal ? 'modal-open' : '' }}" wire:keydown.escape="closeModal">
         <div class="modal-box max-w-5xl space-y-4">
             <div class="flex items-start justify-between">
                 <div>
-                    <h3 class="font-bold text-lg">Inscricao multipla</h3>
+                    <h3 class="text-lg font-bold">Inscrição múltipla</h3>
                     <p class="text-sm text-base-content/70">
-                        Escolha a Loja para inserir varios participantes, preencha os dados e adicione a tabela.
+                        Escolha a Loja para inserir vários participantes, preencha os dados e adicione à tabela.
                     </p>
                 </div>
 
@@ -27,7 +27,7 @@
             <form class="space-y-4" wire:submit.prevent="addToTable">
                 <label class="form-control w-full">
                     <div class="label">
-                        <span class="label-text font-semibold">Loja / Capitulo do lote</span>
+                        <span class="label-text font-semibold">Loja / Capítulo do lote</span>
                     </div>
 
                     @if ($lojas->count())
@@ -43,26 +43,26 @@
                         </select>
                     @else
                         <div class="text-sm text-base-content/70">
-                            Nenhuma Loja/Capitulo cadastrada ainda.
+                            Nenhuma Loja/Capítulo cadastrada ainda.
                         </div>
                     @endif
 
                     @error('loja_id')
-                        <span class="text-error text-xs mt-1">{{ $message }}</span>
+                        <span class="mt-1 text-xs text-error">{{ $message }}</span>
                     @enderror
 
                     @if (count($inscritos) > 0)
                         @php
                             $lojaSelecionada = $lojas->firstWhere('id', $loja_id);
                         @endphp
-                        <div class="text-xs text-base-content/60 mt-1">
-                            Loja travada para este lote:
+                        <div class="mt-1 text-xs text-base-content/60">
+                            Loja vinculada a este lote:
                             <strong>{{ $lojaSelecionada->name ?? '-' }}</strong>
                         </div>
                     @endif
                 </label>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
                     <label class="form-control w-full">
                         <div class="label">
                             <span class="label-text">Nome completo</span>
@@ -71,11 +71,11 @@
                             wire:key="name-{{ $formKey }}"
                             type="text"
                             class="input input-bordered"
-                            placeholder="Irmao / Aprendiz / Companheiro"
+                            placeholder="Irmão / Aprendiz / Companheiro"
                             wire:model.defer="name"
                         >
                         @error('name')
-                            <span class="text-error text-xs mt-1">{{ $message }}</span>
+                            <span class="mt-1 text-xs text-error">{{ $message }}</span>
                         @enderror
                     </label>
 
@@ -91,7 +91,7 @@
                             wire:model.defer="email"
                         >
                         @error('email')
-                            <span class="text-error text-xs mt-1">{{ $message }}</span>
+                            <span class="mt-1 text-xs text-error">{{ $message }}</span>
                         @enderror
                     </label>
 
@@ -109,7 +109,7 @@
                             placeholder="(11) 99999-9999"
                         >
                         @error('telefone')
-                            <span class="text-error text-xs mt-1">{{ $message }}</span>
+                            <span class="mt-1 text-xs text-error">{{ $message }}</span>
                         @enderror
                     </label>
 
@@ -126,7 +126,7 @@
                             wire:model.blur="cpf"
                         >
                         @error('cpf')
-                            <span class="text-error text-xs mt-1">{{ $message }}</span>
+                            <span class="mt-1 text-xs text-error">{{ $message }}</span>
                         @enderror
                     </label>
 
@@ -142,13 +142,13 @@
                             wire:model.defer="cim"
                         >
                         @error('cim')
-                            <span class="text-error text-xs mt-1">{{ $message }}</span>
+                            <span class="mt-1 text-xs text-error">{{ $message }}</span>
                         @enderror
                     </label>
 
                     <label class="form-control w-full">
                         <div class="label">
-                            <span class="label-text">Grau masonico</span>
+                            <span class="label-text">Grau maçônico</span>
                         </div>
                         <select
                             wire:key="grau-{{ $formKey }}"
@@ -163,15 +163,14 @@
                             <option value="OT">Outros</option>
                         </select>
                         @error('grau')
-                            <span class="text-error text-xs mt-1">{{ $message }}</span>
+                            <span class="mt-1 text-xs text-error">{{ $message }}</span>
                         @enderror
                     </label>
                 </div>
 
                 <div class="flex items-center justify-between gap-4">
                     <div class="text-sm text-base-content/70">
-                        Preencha os dados acima e clique em "Adicionar a tabela" para listar os inscritos antes de
-                        enviar.
+                        Preencha os dados acima e clique em "Adicionar à tabela" para listar os inscritos antes de enviar.
                     </div>
 
                     <button
@@ -180,7 +179,7 @@
                         wire:loading.attr="disabled"
                         wire:target="addToTable"
                     >
-                        <span wire:loading.remove wire:target="addToTable">+ Adicionar a tabela</span>
+                        <span wire:loading.remove wire:target="addToTable">+ Adicionar à tabela</span>
                         <span wire:loading wire:target="addToTable">Adicionando...</span>
                     </button>
                 </div>
@@ -193,7 +192,7 @@
                     </div>
 
                     @error('inscritos')
-                        <span class="text-error text-xs">{{ $message }}</span>
+                        <span class="text-xs text-error">{{ $message }}</span>
                     @enderror
                 </div>
 

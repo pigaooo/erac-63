@@ -19,10 +19,10 @@
 
                 <div class="space-y-2">
                     <h1 class="text-3xl md:text-5xl font-black leading-tight scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="80">
-                        Credenciamento para o Evento
+                        Credenciamento para o evento
                     </h1>
                     <p class="max-w-2xl text-base md:text-lg text-base-content/70 scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="140">
-                        Finalize sua inscrição com poucos passos. Valores claros, pagamento simples via PIX.
+                        Finalize sua inscrição com poucos passos. Valores claros e pagamento simples via PIX.
                     </p>
                 </div>
 
@@ -42,7 +42,7 @@
                 <div class="text-xs font-bold uppercase tracking-[0.2em] text-primary">Prazo</div>
                 <div class="text-2xl font-black">Inscrições online até DD/MM</div>
                 <p class="text-sm text-base-content/75">
-                    Após essa data, as inscrições ficam disponíveis apenas no presencial, sujeito à disponibilidade.
+                    Após essa data, as inscrições ficam disponíveis apenas no presencial, sujeitas à disponibilidade.
                 </p>
             </div>
 

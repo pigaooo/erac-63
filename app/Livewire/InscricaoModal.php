@@ -64,14 +64,14 @@ class InscricaoModal extends Component
         ], [
             'nome.required' => 'Informe o nome completo.',
             'email.required' => 'Informe o e-mail.',
-            'email.email' => 'E-mail invalido.',
-            'email.unique' => 'E-mail ja cadastrado.',
+            'email.email' => 'E-mail inválido.',
+            'email.unique' => 'E-mail já cadastrado.',
             'telefone.required' => 'Informe o telefone.',
             'cpf.required' => 'Informe o CPF.',
-            'cpf.unique' => 'CPF ja cadastrado.',
-            'grau.required' => 'Selecione o grau masonico.',
-            'lojaId.required' => 'Selecione a Loja/Capitulo.',
-            'lojaId.exists' => 'Loja nao encontrada.',
+            'cpf.unique' => 'CPF já cadastrado.',
+            'grau.required' => 'Selecione o grau maçônico.',
+            'lojaId.required' => 'Selecione a Loja/Capítulo.',
+            'lojaId.exists' => 'Loja não encontrada.',
         ]);
 
         Inscrito::query()->create([
@@ -85,8 +85,8 @@ class InscricaoModal extends Component
             'is_paied' => false,
         ]);
 
-        $this->flashMessage = 'Inscricao enviada com sucesso.';
-        $this->dispatch('inscricao-alert', message: 'A inscricao individual foi enviada com sucesso.');
+        $this->flashMessage = 'Inscrição enviada com sucesso.';
+        $this->dispatch('inscricao-alert', message: 'A inscrição individual foi enviada com sucesso.');
 
         $this->resetErrorBag();
         $this->resetValidation();

@@ -9,9 +9,9 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 
 class EracOverview extends StatsOverviewWidget
 {
-    protected ?string $heading = 'Visao geral do evento';
+    protected ?string $heading = 'Visão geral do evento';
 
-    protected ?string $description = 'Resumo rapido dos principais cadastros do ERAC.';
+    protected ?string $description = 'Resumo rápido dos principais cadastros do ERAC.';
 
     protected function getStats(): array
     {
