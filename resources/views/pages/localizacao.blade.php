@@ -19,7 +19,7 @@
 
                 <div class="space-y-2">
                     <h1 class="text-3xl md:text-5xl font-black leading-tight scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="80">
-                        O ERAC 63 será realizado no Espaço de Eventos Santa Eufrásia
+                        O ERAC 61 será realizado no Espaço de Eventos Santa Eufrásia
                     </h1>
                     <p class="max-w-3xl text-base md:text-lg text-base-content/70 scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="140">
                         Um lugar agradável, cercado pela natureza e preparado para receber o público com conforto,
@@ -139,7 +139,7 @@
                 <span class="h-2.5 w-2.5 rounded-full bg-primary animate-pulse"></span>
                 Pontos positivos do local
             </div>
-            <h2 class="text-2xl md:text-3xl font-black">Um espaço que combina com o ERAC 63</h2>
+            <h2 class="text-2xl md:text-3xl font-black">Um espaço que combina com o ERAC 61</h2>
             <p class="text-sm md:text-base text-base-content/70 max-w-3xl">
                 O local oferece uma estrutura acolhedora para receber os participantes ao longo de todo o evento.
             </p>
@@ -178,7 +178,7 @@
             <h2 class="text-2xl font-black">Local bonito, acessível e acolhedor</h2>
             <p class="text-sm text-base-content/75">
                 O Espaço Santa Eufrásia reúne boa estrutura, área verde e praticidade para receber os participantes
-                do ERAC 63 com conforto ao longo de todo o dia.
+                do ERAC 61 com conforto ao longo de todo o dia.
             </p>
             <div class="rounded-2xl border border-primary/20 bg-base-100/70 px-4 py-3 text-sm text-base-content/70 transition duration-300 hover:border-primary/40">
                 Isso ajuda a tornar a chegada mais tranquila, o ambiente mais agradável e a experiência do evento mais especial.

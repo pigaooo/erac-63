@@ -1,6 +1,6 @@
-# ERAC 63
+# ERAC 61
 
-Sistema web para divulgacao, organizacao e inscricao do 63o E.R.A.C. (Encontro Regional de Aprendizes e Companheiros).
+Sistema web para divulgacao, organizacao e inscricao do 61o E.R.A.C. (Encontro Regional de Aprendizes e Companheiros).
 
 ## Sobre o projeto
 

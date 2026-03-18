@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="ERAC 63 - Encontro Regional de Aprendizes e Companheiros (maçônico)">
-    <title>ERAC 63</title>
+    <meta name="description" content="ERAC 61 - Encontro Regional de Aprendizes e Companheiros (maçônico)">
+    <title>ERAC 61</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>
@@ -31,7 +31,7 @@
     <footer class="border-t border-base-300 bg-base-100">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6 text-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
             <div>
-                <div class="font-semibold">ERAC 63</div>
+                <div class="font-semibold">ERAC 61</div>
                 <div class="text-base-content/70">Encontro Regional de Aprendizes e Companheiros</div>
             </div>
             <div class="flex items-center gap-3 text-base-content/70">

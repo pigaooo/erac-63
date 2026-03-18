@@ -31,7 +31,7 @@
                             type="text"
                             class="input input-bordered"
                             placeholder="Irmão / Aprendiz / Companheiro"
-                            wire:model.defer="nome"
+                            wire:model.blur="nome"
                             required
                         >
                         @error('nome') <span class="text-error text-xs mt-1">{{ $message }}</span> @enderror
@@ -44,7 +44,7 @@
                             type="email"
                             class="input input-bordered"
                             placeholder="irmao@exemplo.com"
-                            wire:model.defer="email"
+                            wire:model.blur="email"
                             required
                         >
                         @error('email') <span class="text-error text-xs mt-1">{{ $message }}</span> @enderror
@@ -58,7 +58,7 @@
                             class="input input-bordered"
                             placeholder="(11) 99999-9999"
                             inputmode="tel"
-                            wire:model.defer="telefone"
+                            wire:model.blur="telefone"
                             x-mask="(99) 99999-9999"
                             required
                         >
@@ -73,7 +73,7 @@
                             class="input input-bordered"
                             placeholder="000.000.000-00"
                             inputmode="numeric"
-                            wire:model.defer="cpf"
+                            wire:model.blur="cpf"
                             x-mask="999.999.999-99"
                             required
                         >

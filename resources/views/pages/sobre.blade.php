@@ -7,7 +7,7 @@
 <div class="max-w-4xl mx-auto px-4 sm:px-6 py-12 space-y-8 scroll-reveal" data-reveal="fadeIn">
     <div class="space-y-2">
         <p class="text-sm font-semibold text-primary uppercase tracking-widest">Sobre</p>
-        <h1 class="text-3xl font-bold">Sobre o ERAC 63</h1>
+        <h1 class="text-3xl font-bold">Sobre o ERAC 61</h1>
         <p class="text-base-content/80">Encontro Regional de Aprendizes e Companheiros: fortalecimento da formação maçônica e da fraternidade entre as colunas.</p>
     </div>
 
