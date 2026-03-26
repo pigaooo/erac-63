@@ -110,49 +110,153 @@
         </div>
     </div>
 
-    <div class="rounded-3xl border border-base-300 bg-base-100/90 shadow-sm p-6 space-y-4 transition duration-500 hover:shadow-2xl scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="500">
+    <div class="rounded-3xl border border-base-300 bg-base-100/90 shadow-sm p-6 space-y-6 transition duration-500 hover:shadow-2xl scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="500">
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
             <div class="space-y-1">
-                <div class="text-sm font-semibold text-primary uppercase tracking-widest">Temas do GOSP</div>
-                <h2 class="text-2xl font-bold">Seleção de temas (Secretaria de Cultura)</h2>
-                <p class="text-sm text-base-content/70">Formatos ministrados pela Secretaria de Cultura do GOSP. As Lojas escolhem entre os temas listados.</p>
+                <div class="text-sm font-semibold text-primary uppercase tracking-widest">Tema Central do Encontro</div>
+                <h2 class="text-2xl font-bold">Pensamento, Ação e Fundamento Maçônico</h2>
+                <p class="text-sm text-base-content/70">Encontro Regional ERAC – 27/06/2026 – Organizado pela Loja Fonte de Vida nº 2647</p>
             </div>
-            <div class="rounded-2xl bg-primary/10 border border-primary/30 px-4 py-3 text-sm text-primary font-semibold transition duration-300 hover:border-primary/50 hover:bg-primary/15">
-                Formato: curadoria GOSP + escolha pelas Lojas
+            <div class="rounded-2xl bg-blue-500/10 border border-blue-500/30 px-4 py-3 text-sm text-blue-600 font-semibold transition duration-300 hover:border-blue-500/50 hover:bg-blue-500/15">
+                5 Salas • 22 Lojas
             </div>
         </div>
 
-        <div class="grid gap-4 md:grid-cols-12">
-            <div class="md:col-span-5 rounded-2xl border border-base-300 bg-base-100 p-5 shadow-xs space-y-3 transition duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl">
-                <div class="text-sm font-semibold text-primary">Como funciona</div>
-                <ul class="space-y-2 text-sm text-base-content/80 list-disc list-inside">
-                    <li>Temas propostos pela Secretaria de Cultura do GOSP.</li>
-                    <li>As Lojas escolhem os temas disponíveis para apresentar.</li>
-                    <li>Formato ministrado e orientado pelo time da Cultura.</li>
-                    <li>Duração sugerida: 20 a 25 min + Q&A.</li>
-                </ul>
-            </div>
-
-            <div class="md:col-span-7 rounded-2xl border border-base-300 bg-base-100 p-5 shadow-xs space-y-3 transition duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl">
-                <div class="text-sm font-semibold text-primary">Temas sugeridos (exemplo)</div>
-                <div class="grid gap-3 sm:grid-cols-2">
-                    @php
-                        $temas = [
-                            'Harmonia entre Colunas e Lideranças',
-                            'Tradição & Inovação nos Ritos',
-                            'Ética Maçônica na Era Digital',
-                            'Rituais, Simbolismo e Prática',
-                            'Fraternidade e Serviço Comunitário',
-                        ];
-                    @endphp
-                    @foreach($temas as $tema)
-                        <div class="rounded-2xl border border-base-300 bg-base-200/60 p-4 transition duration-300 hover:scale-[1.02] hover:border-primary/40 hover:bg-base-200/90 hover:shadow-md">
-                            <div class="text-base font-semibold">{{ $tema }}</div>
-                            <div class="text-xs text-base-content/70">Tema sugerido para escolha das Lojas.</div>
-                        </div>
-                    @endforeach
+        <!-- SALA 1 -->
+        <div class="rounded-2xl border-2 border-blue-400/40 bg-gradient-to-br from-blue-50 to-blue-100/20 overflow-hidden transition duration-500 hover:shadow-xl hover:border-blue-400/60 dark:from-blue-900/20 dark:to-blue-950/10">
+            <div class="bg-gradient-to-r from-blue-500 to-blue-600 px-6 py-3">
+                <div class="flex items-center gap-2">
+                    <div class="h-3 w-3 rounded-full bg-white"></div>
+                    <h3 class="text-lg font-bold text-white">SALA 1: Pensamento Crítico e Maturidade Intelectual</h3>
                 </div>
             </div>
+            <div class="p-6 grid gap-3 sm:grid-cols-2 md:grid-cols-4">
+                @php
+                    $sala1 = [
+                        ['loja' => 'Acácia de Ubatuba', 'tema' => 'O que significa pensar como um iniciado?'],
+                        ['loja' => 'Amor à Ordem Respeitada', 'tema' => 'Conhecimento x Sabedoria'],
+                        ['loja' => 'Fraternidade Acadêmica Sementes do Amanhã', 'tema' => 'Pensamento crítico x simples crítica'],
+                        ['loja' => 'Estrela Vega', 'tema' => 'Honestidade intelectual e responsabilidade do grau'],
+                    ];
+                @endphp
+                @foreach($sala1 as $item)
+                    <div class="rounded-xl border border-blue-200 bg-white p-4 shadow-xs transition duration-300 hover:-translate-y-1 hover:shadow-lg dark:bg-blue-950/30 dark:border-blue-700">
+                        <div class="text-xs font-semibold text-blue-600 uppercase tracking-wide">{{ $item['loja'] }}</div>
+                        <div class="text-sm font-semibold text-base-content mt-2">{{ $item['tema'] }}</div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+
+        <!-- SALA 2 -->
+        <div class="rounded-2xl border-2 border-green-400/40 bg-gradient-to-br from-green-50 to-green-100/20 overflow-hidden transition duration-500 hover:shadow-xl hover:border-green-400/60 dark:from-green-900/20 dark:to-green-950/10">
+            <div class="bg-gradient-to-r from-green-500 to-green-600 px-6 py-3">
+                <div class="flex items-center gap-2">
+                    <div class="h-3 w-3 rounded-full bg-white"></div>
+                    <h3 class="text-lg font-bold text-white">SALA 2: Riscos Intelectuais e Autonomia</h3>
+                </div>
+            </div>
+            <div class="p-6 grid gap-3 sm:grid-cols-2 md:grid-cols-4">
+                @php
+                    $sala2 = [
+                        ['loja' => 'Vigilantes de Taubaté', 'tema' => 'Idolatria de ideias, pessoas e cargos'],
+                        ['loja' => 'Fraternidade Acadêmica Irmão José Geraldo Trani Brandão', 'tema' => 'Dogmatização na Maçonaria'],
+                        ['loja' => 'Fraternidade Acadêmica Luciano Alfredo Vianna do Rio', 'tema' => 'Tradição: herança viva ou dogma?'],
+                        ['loja' => 'Arquitetos da Harmonia', 'tema' => 'Câmaras de eco e viés de conforto'],
+                    ];
+                @endphp
+                @foreach($sala2 as $item)
+                    <div class="rounded-xl border border-green-200 bg-white p-4 shadow-xs transition duration-300 hover:-translate-y-1 hover:shadow-lg dark:bg-green-950/30 dark:border-green-700">
+                        <div class="text-xs font-semibold text-green-600 uppercase tracking-wide">{{ $item['loja'] }}</div>
+                        <div class="text-sm font-semibold text-base-content mt-2">{{ $item['tema'] }}</div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+
+        <!-- SALA 3 -->
+        <div class="rounded-2xl border-2 border-yellow-400/40 bg-gradient-to-br from-yellow-50 to-yellow-100/20 overflow-hidden transition duration-500 hover:shadow-xl hover:border-yellow-400/60 dark:from-yellow-900/20 dark:to-yellow-950/10">
+            <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 px-6 py-3">
+                <div class="flex items-center gap-2">
+                    <div class="h-3 w-3 rounded-full bg-white"></div>
+                    <h3 class="text-lg font-bold text-white">SALA 3: Posicionamento Moral e Vida Pública</h3>
+                </div>
+            </div>
+            <div class="p-6 grid gap-3 sm:grid-cols-2 md:grid-cols-4">
+                @php
+                    $sala3 = [
+                        ['loja' => 'Independência e Lealdade', 'tema' => 'O maçom deve posicionar-se diante dos conflitos sociais?'],
+                        ['loja' => 'Integridade e Justiça', 'tema' => 'Coragem moral diante da injustiça'],
+                        ['loja' => 'Luz do Oriente', 'tema' => 'Papel do maçom frente à desinformação'],
+                        ['loja' => 'Luz, Vida e Amor', 'tema' => 'Quando não agir também é escolha'],
+                    ];
+                @endphp
+                @foreach($sala3 as $item)
+                    <div class="rounded-xl border border-yellow-200 bg-white p-4 shadow-xs transition duration-300 hover:-translate-y-1 hover:shadow-lg dark:bg-yellow-950/30 dark:border-yellow-700">
+                        <div class="text-xs font-semibold text-yellow-600 uppercase tracking-wide">{{ $item['loja'] }}</div>
+                        <div class="text-sm font-semibold text-base-content mt-2">{{ $item['tema'] }}</div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+
+        <!-- SALA 4 -->
+        <div class="rounded-2xl border-2 border-red-400/40 bg-gradient-to-br from-red-50 to-red-100/20 overflow-hidden transition duration-500 hover:shadow-xl hover:border-red-400/60 dark:from-red-900/20 dark:to-red-950/10">
+            <div class="bg-gradient-to-r from-red-500 to-red-600 px-6 py-3">
+                <div class="flex items-center gap-2">
+                    <div class="h-3 w-3 rounded-full bg-white"></div>
+                    <h3 class="text-lg font-bold text-white">SALA 4: Intervenção Social Concreta</h3>
+                </div>
+            </div>
+            <div class="p-6 grid gap-3 sm:grid-cols-2 md:grid-cols-5">
+                @php
+                    $sala4 = [
+                        ['loja' => 'Solidariedade do Paraitinga', 'tema' => 'Decisões profissionais que impactam terceiros'],
+                        ['loja' => 'Templários da Paz', 'tema' => 'Fazer o certo quando custa caro'],
+                        ['loja' => 'União das Américas', 'tema' => 'Autoridade sem abuso'],
+                        ['loja' => 'União, Força e Vigor', 'tema' => 'Mérito ou favorecimento'],
+                        ['loja' => 'Universitária Cavaleiros do Sol', 'tema' => 'Solidariedade sem assistencialismo'],
+                    ];
+                @endphp
+                @foreach($sala4 as $item)
+                    <div class="rounded-xl border border-red-200 bg-white p-4 shadow-xs transition duration-300 hover:-translate-y-1 hover:shadow-lg dark:bg-red-950/30 dark:border-red-700">
+                        <div class="text-xs font-semibold text-red-600 uppercase tracking-wide">{{ $item['loja'] }}</div>
+                        <div class="text-sm font-semibold text-base-content mt-2">{{ $item['tema'] }}</div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+
+        <!-- SALA 5 -->
+        <div class="rounded-2xl border-2 border-purple-400/40 bg-gradient-to-br from-purple-50 to-purple-100/20 overflow-hidden transition duration-500 hover:shadow-xl hover:border-purple-400/60 dark:from-purple-900/20 dark:to-purple-950/10">
+            <div class="bg-gradient-to-r from-purple-500 to-purple-600 px-6 py-3">
+                <div class="flex items-center gap-2">
+                    <div class="h-3 w-3 rounded-full bg-white"></div>
+                    <h3 class="text-lg font-bold text-white">SALA 5: Fundamentos Doutrinários e Missão</h3>
+                </div>
+            </div>
+            <div class="p-6 grid gap-3 sm:grid-cols-2 md:grid-cols-5">
+                @php
+                    $sala5 = [
+                        ['loja' => 'Fonte de Vida', 'tema' => 'Para que nos reunimos em Loja?'],
+                        ['loja' => 'Vinte e Um de Abril', 'tema' => 'Deveres do homem para com a Pátria'],
+                        ['loja' => 'Natureza e Fraternidade', 'tema' => 'O maçom como agente de transformação da sociedade'],
+                        ['loja' => 'Fraternidade e Integridade Taubateana', 'tema' => 'Sair do conforto em nome da Fraternidade'],
+                        ['loja' => 'Colunas de Luz', 'tema' => 'O que significa "Glorificar a verdade e a justiça"?'],
+                    ];
+                @endphp
+                @foreach($sala5 as $item)
+                    <div class="rounded-xl border border-purple-200 bg-white p-4 shadow-xs transition duration-300 hover:-translate-y-1 hover:shadow-lg dark:bg-purple-950/30 dark:border-purple-700">
+                        <div class="text-xs font-semibold text-purple-600 uppercase tracking-wide">{{ $item['loja'] }}</div>
+                        <div class="text-sm font-semibold text-base-content mt-2">{{ $item['tema'] }}</div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+
+        <div class="rounded-2xl bg-base-200/50 border border-base-300 p-5 text-center text-sm text-base-content/80">
+            <p class="font-semibold">Duração sugerida por apresentação:</p>
+            <p>20 a 25 minutos + espaço para perguntas e respostas</p>
         </div>
     </div>
 </div>
