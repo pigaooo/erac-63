@@ -29,9 +29,11 @@
             <div class="space-y-3">
                 @php
                     $cronograma = [
-                        ['hora' => '08:00 09:00', 'titulo' => 'Credenciamento & Café', 'descricao' => 'Recepção, identificação por Loja e boas-vindas.'],
-                        ['hora' => '09:00 09:30', 'titulo' => 'Abertura do Evento', 'descricao' => 'Saudação às colunas e apresentação das marcas patrocinadoras.'],
-                        ['hora' => '09:30 12:00', 'titulo' => 'Apresentação dos Trabalhos', 'descricao' => 'Distribuição e apresentação dos trabalhos dos Aprendizes e Companheiros.'],
+                        ['hora' => '07h30 - 08h20', 'titulo' => 'Café da manhã e credenciamento', 'descricao' => 'Recepção dos participantes, identificação por Loja e acolhimento inicial.'],
+                        ['hora' => '08h30 - 09h10', 'titulo' => 'Abertura oficial', 'descricao' => 'Composição do Oriente, execução ritualística, palavra das autoridades e orientações metodológicas.'],
+                        ['hora' => '09h10 - 11h30', 'titulo' => 'Trabalhos em salas', 'descricao' => 'Apresentações temáticas por sala, com tempo padronizado por Loja, perguntas e debate coletivo.'],
+                        ['hora' => '11h30 - 11h40', 'titulo' => 'Retorno ao plenário', 'descricao' => 'Reorganização dos participantes para a etapa final conjunta.'],
+                        ['hora' => '11h40 - 12h00', 'titulo' => 'Encerramento oficial', 'descricao' => 'Síntese geral do encontro e palavra final da coordenação regional.'],
                         ['hora' => '12:00 13:00', 'titulo' => 'Almoço fraterno', 'descricao' => 'Intervalo para refeição e convivência.'],
                         ['hora' => '13:00 16:00', 'titulo' => 'Confraternização', 'descricao' => 'Momentos de lazer e convivência.'],
                     ];
@@ -57,11 +59,11 @@
                 <div class="mt-4 grid grid-cols-2 gap-3 text-sm">
                     <div class="rounded-xl bg-base-100/70 border border-base-300 p-3 transition duration-300 hover:scale-[1.02] hover:border-primary/40 hover:shadow-md">
                         <div class="text-base font-semibold">Manhã</div>
-                        <div class="text-xs text-base-content/70">Credenciamento individual, abertura formal, exposição de patrocinadores e apresentação dos trabalhos</div>
+                        <div class="text-xs text-base-content/70">Credenciamento, abertura oficial, trabalhos em salas, retorno ao plenário e encerramento</div>
                     </div>
                     <div class="rounded-xl bg-base-100/70 border border-base-300 p-3 transition duration-300 hover:scale-[1.02] hover:border-primary/40 hover:shadow-md">
                         <div class="text-base font-semibold">Tarde</div>
-                        <div class="text-xs text-base-content/70">Confraternização, exposição das marcas patrocinadoras e projetos sociais</div>
+                        <div class="text-xs text-base-content/70">Almoço fraterno, confraternização e convivência entre as Lojas participantes</div>
                     </div>
                 </div>
             </div>
@@ -70,9 +72,9 @@
                 <div class="text-sm font-semibold text-primary">Pontos-chave</div>
                 <ul class="space-y-2 text-sm text-base-content/80">
                     <li class="flex items-center gap-2 transition duration-300 hover:translate-x-1"><span class="h-2 w-2 rounded-full bg-primary animate-pulse"></span> Início e fim claros para todos</li>
-                    <li class="flex items-center gap-2 transition duration-300 hover:translate-x-1"><span class="h-2 w-2 rounded-full bg-primary animate-pulse"></span> Alimentação organizada, com café e almoço</li>
-                    <li class="flex items-center gap-2 transition duration-300 hover:translate-x-1"><span class="h-2 w-2 rounded-full bg-primary animate-pulse"></span> Palestras e oficinas com tempo definido</li>
-                    <li class="flex items-center gap-2 transition duration-300 hover:translate-x-1"><span class="h-2 w-2 rounded-full bg-primary animate-pulse"></span> Distribuição dos convidados por salas</li>
+                    <li class="flex items-center gap-2 transition duration-300 hover:translate-x-1"><span class="h-2 w-2 rounded-full bg-primary animate-pulse"></span> Alimentação organizada, com café da manhã e almoço</li>
+                    <li class="flex items-center gap-2 transition duration-300 hover:translate-x-1"><span class="h-2 w-2 rounded-full bg-primary animate-pulse"></span> Tempo padronizado por Loja para manter fluidez nas salas</li>
+                    <li class="flex items-center gap-2 transition duration-300 hover:translate-x-1"><span class="h-2 w-2 rounded-full bg-primary animate-pulse"></span> Síntese final em plenário antes do encerramento</li>
                 </ul>
             </div>
         </div>
@@ -82,10 +84,10 @@
         <div class="md:col-span-4 rounded-2xl border border-base-300 bg-base-100/80 p-5 shadow-sm space-y-3 transition duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="380">
             <div class="text-sm font-semibold text-primary">Atividades</div>
             <div class="space-y-2 text-sm text-base-content/80">
-                <div class="font-semibold text-base">Distribuição dos convidados</div>
-                <p>Orientar colunas e lugares para Aprendizes e Companheiros.</p>
-                <div class="font-semibold text-base">Modelo dos trabalhos</div>
-                <p>Roteiro padronizado para fluidez e pontualidade.</p>
+                <div class="font-semibold text-base">Abertura ritual e institucional</div>
+                <p>Composição do Oriente, execução ritualística e palavra das autoridades.</p>
+                <div class="font-semibold text-base">Trabalhos em salas</div>
+                <p>Apresentações temáticas com perguntas, debate coletivo e síntese por sala.</p>
             </div>
         </div>
 
@@ -93,41 +95,87 @@
             <div class="text-sm font-semibold text-primary">Temas e palestras</div>
             <div class="space-y-2 text-sm text-base-content/80">
                 <div class="font-semibold text-base">Temas dos trabalhos</div>
-                <p>Valores maçônicos, ética e vivência ritualística.</p>
+                <p>Pensamento crítico, autonomia, posicionamento moral, intervenção social e missão maçônica.</p>
                 <div class="font-semibold text-base">Formato</div>
-                <p>Palestras curtas, painéis e Q&A.</p>
+                <p>Apresentações por Loja, perguntas objetivas, debate coletivo e síntese final por relator.</p>
             </div>
         </div>
 
         <div class="md:col-span-4 rounded-2xl border border-base-300 bg-base-100/80 p-5 shadow-sm space-y-3 transition duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="460">
             <div class="text-sm font-semibold text-primary">Tempo & logística</div>
             <div class="space-y-2 text-sm text-base-content/80">
-                <div class="font-semibold text-base">Tempo de estudo</div>
-                <p>Blocos de 25 a 30 min com intervalo para perguntas.</p>
+                <div class="font-semibold text-base">Janela oficial das salas</div>
+                <p>Das 09h10 às 11h30, com margem técnica para atrasos e fechamento por sala.</p>
                 <div class="font-semibold text-base">Alimentação</div>
-                <p>Café da manhã na chegada e almoço fraterno ao meio-dia.</p>
+                <p>Café da manhã no acolhimento e almoço fraterno após o encerramento oficial.</p>
             </div>
         </div>
     </div>
 
-    <div class="rounded-3xl border border-base-300 bg-base-100/90 shadow-sm p-6 space-y-6 transition duration-500 hover:shadow-2xl scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="500">
+    <div class="rounded-3xl border border-base-300 bg-base-100/90 shadow-sm p-6 space-y-6 transition duration-500 hover:shadow-2xl scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="120">
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
             <div class="space-y-1">
                 <div class="text-sm font-semibold text-primary uppercase tracking-widest">Tema Central do Encontro</div>
                 <h2 class="text-2xl font-bold">Pensamento, Ação e Fundamento Maçônico</h2>
-                <p class="text-sm text-base-content/70">Encontro Regional ERAC – 27/06/2026 – Organizado pela Loja Fonte de Vida nº 2647</p>
+                <p class="text-sm text-base-content/70">ERAC 27/06/2026 • Loja Fonte de Vida nº 2647 • Programação distribuída em 5 salas temáticas</p>
             </div>
             <div class="rounded-2xl bg-blue-500/10 border border-blue-500/30 px-4 py-3 text-sm text-blue-600 font-semibold transition duration-300 hover:border-blue-500/50 hover:bg-blue-500/15">
                 5 Salas • 22 Lojas
             </div>
         </div>
 
+        <div class="rounded-2xl border border-base-300 bg-gradient-to-br from-base-100 to-base-200/70 p-6 shadow-sm space-y-5">
+            <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+                <div class="space-y-1">
+                    <div class="text-sm font-semibold text-primary uppercase tracking-widest">Modelo de Tempo das Apresentações</div>
+                    <h3 class="text-xl font-bold">Janela oficial dos trabalhos em salas: 09h10 - 11h30</h3>
+                    <p class="text-sm text-base-content/70">O período total das salas tem 2h20, distribuídos entre apresentações, síntese interna e margem técnica.</p>
+                </div>
+                <div class="rounded-2xl bg-primary/10 border border-primary/30 px-4 py-3 text-sm font-semibold text-primary">
+                    2h20 totais
+                </div>
+            </div>
+
+            <div class="grid gap-4 md:grid-cols-2 text-sm">
+                <div class="rounded-2xl border border-base-300 bg-base-100 p-4">
+                    <div class="font-semibold text-base">1h40 de apresentações</div>
+                    <p class="mt-1 text-base-content/70">Tempo principal reservado para exposições por Loja, perguntas e debate coletivo.</p>
+                </div>
+                <div class="rounded-2xl border border-base-300 bg-base-100 p-4">
+                    <div class="font-semibold text-base">20 min de síntese da sala</div>
+                    <p class="mt-1 text-base-content/70">Fechamento interno para consolidar os principais pontos antes do retorno ao plenário.</p>
+                </div>
+            </div>
+
+            <div class="grid gap-4 md:grid-cols-2">
+                <div class="rounded-2xl border border-primary/30 bg-primary/5 p-5 space-y-2">
+                    <div class="text-sm font-semibold uppercase tracking-wide text-primary">Salas com 4 Lojas</div>
+                    <div class="text-base font-semibold">20 min por Loja</div>
+                    <p class="text-sm text-base-content/75">15 min de exposição + 5 min de perguntas. Total de 1h20 de apresentações, com 20 min de debate coletivo.</p>
+                </div>
+                <div class="rounded-2xl border border-secondary/30 bg-secondary/8 p-5 space-y-2">
+                    <div class="text-sm font-semibold uppercase tracking-wide text-secondary">Salas com 5 Lojas</div>
+                    <div class="text-base font-semibold">15 min por Loja</div>
+                    <p class="text-sm text-base-content/75">12 min de exposição + 3 min de perguntas. Total de 1h15 de apresentações, com 20 min de debate coletivo.</p>
+                </div>
+            </div>
+
+            <div class="rounded-2xl border border-base-300 bg-base-100 p-4 text-sm text-base-content/80">
+                <span class="font-semibold text-base-content">Síntese no plenário:</span> cada sala terá 2 minutos para apresentação final do relator, totalizando 10 minutos para as 5 salas dentro do encerramento conjunto.
+            </div>
+        </div>
+
         <!-- SALA 1 -->
         <div class="rounded-2xl border-2 border-blue-400/40 bg-gradient-to-br from-blue-50 to-blue-100/20 overflow-hidden transition duration-500 hover:shadow-xl hover:border-blue-400/60 dark:from-blue-900/20 dark:to-blue-950/10">
             <div class="bg-gradient-to-r from-blue-500 to-blue-600 px-6 py-3">
-                <div class="flex items-center gap-2">
-                    <div class="h-3 w-3 rounded-full bg-white"></div>
-                    <h3 class="text-lg font-bold text-white">SALA 1: Pensamento Crítico e Maturidade Intelectual</h3>
+                <div class="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+                    <div class="flex items-center gap-2">
+                        <div class="h-3 w-3 rounded-full bg-white"></div>
+                        <h3 class="text-lg font-bold text-white">SALA 1: Pensamento Crítico e Maturidade Intelectual</h3>
+                    </div>
+                    <div class="rounded-full bg-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
+                        4 lojas • 20 min por loja
+                    </div>
                 </div>
             </div>
             <div class="p-6 grid gap-3 sm:grid-cols-2 md:grid-cols-4">
@@ -151,9 +199,14 @@
         <!-- SALA 2 -->
         <div class="rounded-2xl border-2 border-green-400/40 bg-gradient-to-br from-green-50 to-green-100/20 overflow-hidden transition duration-500 hover:shadow-xl hover:border-green-400/60 dark:from-green-900/20 dark:to-green-950/10">
             <div class="bg-gradient-to-r from-green-500 to-green-600 px-6 py-3">
-                <div class="flex items-center gap-2">
-                    <div class="h-3 w-3 rounded-full bg-white"></div>
-                    <h3 class="text-lg font-bold text-white">SALA 2: Riscos Intelectuais e Autonomia</h3>
+                <div class="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+                    <div class="flex items-center gap-2">
+                        <div class="h-3 w-3 rounded-full bg-white"></div>
+                        <h3 class="text-lg font-bold text-white">SALA 2: Riscos Intelectuais e Autonomia</h3>
+                    </div>
+                    <div class="rounded-full bg-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
+                        4 lojas • 20 min por loja
+                    </div>
                 </div>
             </div>
             <div class="p-6 grid gap-3 sm:grid-cols-2 md:grid-cols-4">
@@ -177,9 +230,14 @@
         <!-- SALA 3 -->
         <div class="rounded-2xl border-2 border-yellow-400/40 bg-gradient-to-br from-yellow-50 to-yellow-100/20 overflow-hidden transition duration-500 hover:shadow-xl hover:border-yellow-400/60 dark:from-yellow-900/20 dark:to-yellow-950/10">
             <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 px-6 py-3">
-                <div class="flex items-center gap-2">
-                    <div class="h-3 w-3 rounded-full bg-white"></div>
-                    <h3 class="text-lg font-bold text-white">SALA 3: Posicionamento Moral e Vida Pública</h3>
+                <div class="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+                    <div class="flex items-center gap-2">
+                        <div class="h-3 w-3 rounded-full bg-white"></div>
+                        <h3 class="text-lg font-bold text-white">SALA 3: Posicionamento Moral e Vida Pública</h3>
+                    </div>
+                    <div class="rounded-full bg-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
+                        4 lojas • 20 min por loja
+                    </div>
                 </div>
             </div>
             <div class="p-6 grid gap-3 sm:grid-cols-2 md:grid-cols-4">
@@ -203,9 +261,14 @@
         <!-- SALA 4 -->
         <div class="rounded-2xl border-2 border-red-400/40 bg-gradient-to-br from-red-50 to-red-100/20 overflow-hidden transition duration-500 hover:shadow-xl hover:border-red-400/60 dark:from-red-900/20 dark:to-red-950/10">
             <div class="bg-gradient-to-r from-red-500 to-red-600 px-6 py-3">
-                <div class="flex items-center gap-2">
-                    <div class="h-3 w-3 rounded-full bg-white"></div>
-                    <h3 class="text-lg font-bold text-white">SALA 4: Intervenção Social Concreta</h3>
+                <div class="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+                    <div class="flex items-center gap-2">
+                        <div class="h-3 w-3 rounded-full bg-white"></div>
+                        <h3 class="text-lg font-bold text-white">SALA 4: Intervenção Social Concreta</h3>
+                    </div>
+                    <div class="rounded-full bg-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
+                        5 lojas • 15 min por loja
+                    </div>
                 </div>
             </div>
             <div class="p-6 grid gap-3 sm:grid-cols-2 md:grid-cols-5">
@@ -230,9 +293,14 @@
         <!-- SALA 5 -->
         <div class="rounded-2xl border-2 border-purple-400/40 bg-gradient-to-br from-purple-50 to-purple-100/20 overflow-hidden transition duration-500 hover:shadow-xl hover:border-purple-400/60 dark:from-purple-900/20 dark:to-purple-950/10">
             <div class="bg-gradient-to-r from-purple-500 to-purple-600 px-6 py-3">
-                <div class="flex items-center gap-2">
-                    <div class="h-3 w-3 rounded-full bg-white"></div>
-                    <h3 class="text-lg font-bold text-white">SALA 5: Fundamentos Doutrinários e Missão</h3>
+                <div class="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+                    <div class="flex items-center gap-2">
+                        <div class="h-3 w-3 rounded-full bg-white"></div>
+                        <h3 class="text-lg font-bold text-white">SALA 5: Fundamentos Doutrinários e Missão</h3>
+                    </div>
+                    <div class="rounded-full bg-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
+                        5 lojas • 15 min por loja
+                    </div>
                 </div>
             </div>
             <div class="p-6 grid gap-3 sm:grid-cols-2 md:grid-cols-5">
@@ -254,10 +322,6 @@
             </div>
         </div>
 
-        <div class="rounded-2xl bg-base-200/50 border border-base-300 p-5 text-center text-sm text-base-content/80">
-            <p class="font-semibold">Duração sugerida por apresentação:</p>
-            <p>20 a 25 minutos + espaço para perguntas e respostas</p>
-        </div>
     </div>
 </div>
 @endsection
