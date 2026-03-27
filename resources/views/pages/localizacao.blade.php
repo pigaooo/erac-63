@@ -29,7 +29,7 @@
 
                 <div class="flex flex-wrap gap-3 pt-2 scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="200">
                     <a
-                        href="https://www.google.com/maps/search/?api=1&query=Av.+Roberto+Ugolini,+2900+-+Santa+Branca+-+SP+-+12380-000"
+                        href="https://www.google.com/maps/search/?api=1&query=Espa%C3%A7o+Santa+Eufr%C3%A1sia+Entrada+Jequitib%C3%A1"
                         target="_blank"
                         rel="noopener noreferrer"
                         class="btn btn-primary rounded-xl px-6 transition duration-300 hover:scale-[1.03] hover:shadow-lg"
@@ -37,7 +37,7 @@
                         Abrir no Google Maps
                     </a>
                     <a
-                        href="https://www.waze.com/ul?q=Av.%20Roberto%20Ugolini%2C%202900%2C%20Santa%20Branca%20SP"
+                        href="https://www.waze.com/ul?q=Espa%C3%A7o%20Santa%20Eufr%C3%A1sia%20Entrada%20Jequitib%C3%A1"
                         target="_blank"
                         rel="noopener noreferrer"
                         class="btn btn-outline rounded-xl px-6 transition duration-300 hover:scale-[1.03] hover:border-primary/50"
@@ -52,24 +52,27 @@
             <div class="rounded-[2rem] border border-base-300 bg-base-100 shadow-sm p-6 space-y-3 transition duration-500 hover:-translate-y-1 hover:shadow-xl scroll-reveal" data-reveal="fadeInRight" data-reveal-delay="120">
                 <div class="text-xs font-bold uppercase tracking-[0.2em] text-base-content/60">Endereço do evento</div>
                 <div class="text-lg font-black leading-snug">
-                    Av. Roberto Ugolini, 2900
+                    Entrada Jequitibá
                 </div>
                 <p class="text-sm text-base-content/75">
-                    Espaço de Eventos Santa Eufrásia
+                    Espaço Santa Eufrásia
                     <br>
                     Santa Branca - SP
                     <br>
-                    CEP 12380-000
+                    Acesso recomendado pelo Maps e Waze
                 </p>
             </div>
 
-            <div class="rounded-[2rem] border border-primary/20 bg-primary/10 shadow-sm p-6 space-y-3 transition duration-500 hover:-translate-y-1 hover:shadow-xl scroll-reveal" data-reveal="fadeInRight" data-reveal-delay="200">
-                <div class="text-xs font-bold uppercase tracking-[0.2em] text-primary">Chegada recomendada</div>
-                <div class="text-2xl font-black">Antecedência de 30 a 45 min</div>
-                <p class="text-sm text-base-content/75">
-                    Assim você estaciona com calma, faz o credenciamento e se organiza melhor para o início do evento.
+            <div class="rounded-[2rem] border border-amber-400/80 bg-gradient-to-br from-amber-200 via-amber-50 to-base-100 shadow-lg p-6 space-y-3 transition duration-500 hover:-translate-y-1 hover:shadow-2xl scroll-reveal" data-reveal="fadeInRight" data-reveal-delay="170">
+                <div class="inline-flex w-fit items-center rounded-full border border-amber-700/70 bg-amber-300 px-3 py-1 text-[11px] font-black uppercase tracking-[0.22em] text-amber-950">
+                    Atenção na entrada
+                </div>
+                <div class="text-xl font-black leading-snug text-amber-950">Prefira a Entrada Jequitibá</div>
+                <p class="text-sm leading-relaxed text-stone-900">
+                    A entrada Jequitibá é mais segura e recomendada para chegada ao evento do que a entrada Eucaliptos.
                 </p>
             </div>
+
         </div>
     </section>
 
@@ -81,11 +84,11 @@
             </div>
             <div class="aspect-[16/10] w-full">
                 <iframe
-                    title="Mapa do Espaço Santa Eufrásia"
+                    title="Mapa do Espaço Santa Eufrásia - Entrada Jequitibá"
                     class="h-full w-full"
                     loading="lazy"
                     referrerpolicy="no-referrer-when-downgrade"
-                    src="https://www.google.com/maps?q=Av.+Roberto+Ugolini,+2900,+Santa+Branca,+SP,+12380-000&output=embed">
+                    src="https://www.google.com/maps?q=Espa%C3%A7o+Santa+Eufr%C3%A1sia+Entrada+Jequitib%C3%A1&output=embed">
                 </iframe>
             </div>
         </div>
@@ -100,7 +103,7 @@
                     </li>
                     <li class="flex items-start gap-3 transition duration-300 hover:translate-x-1">
                         <span class="mt-1 h-2.5 w-2.5 rounded-full bg-primary animate-pulse"></span>
-                        Use o GPS com o endereço completo para chegar direto à entrada.
+                        Use o GPS com a rota para a Entrada Jequitibá para chegar com mais segurança.
                     </li>
                     <li class="flex items-start gap-3 transition duration-300 hover:translate-x-1">
                         <span class="mt-1 h-2.5 w-2.5 rounded-full bg-primary animate-pulse"></span>
@@ -190,7 +193,7 @@
             <div class="grid gap-3 sm:grid-cols-2">
                 <div class="rounded-2xl border border-base-300 bg-base-200/40 p-4 transition duration-300 hover:scale-[1.02] hover:border-primary/40 hover:shadow-md">
                     <div class="font-semibold">Endereço completo</div>
-                    <div class="text-sm text-base-content/70">Av. Roberto Ugolini, 2900 - Santa Branca - SP - CEP 12380-000</div>
+                    <div class="text-sm text-base-content/70">Espaço Santa Eufrásia - Entrada Jequitibá - Santa Branca - SP</div>
                 </div>
                 <div class="rounded-2xl border border-base-300 bg-base-200/40 p-4 transition duration-300 hover:scale-[1.02] hover:border-primary/40 hover:shadow-md">
                     <div class="font-semibold">Local</div>
