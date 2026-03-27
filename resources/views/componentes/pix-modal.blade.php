@@ -6,11 +6,42 @@
         <div class="rounded-xl border border-dashed border-base-300 bg-base-200/60 p-8 text-center text-base-content/60">QR Code aqui</div>
         <div class="text-sm space-y-1">
             <div class="font-semibold">Chave PIX (teste):</div>
-            <div class="text-base">pix@fontedevida.com</div>
+            <div class="flex flex-col sm:flex-row sm:items-center gap-3">
+                <div id="pix-key" class="text-base break-all">pix@fontedevida.com</div>
+                <button
+                    type="button"
+                    class="btn btn-sm btn-outline btn-primary w-full sm:w-auto"
+                    data-copy-button
+                    data-copy-text="pix@fontedevida.com"
+                    aria-label="Copiar chave PIX"
+                    title="Copiar chave PIX"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <rect x="9" y="9" width="10" height="10" rx="2"></rect>
+                        <path d="M5 15V7a2 2 0 0 1 2-2h8"></path>
+                    </svg>
+                </button>
+            </div>
             <div class="text-xs text-base-content/60">Substitua pela chave real quando definida.</div>
         </div>
-        <div class="rounded-xl border border-primary/30 bg-primary/10 p-3 text-sm font-semibold text-primary text-center">
-            Após pagar, envie o comprovante para <span class="underline">comprovante@fontedevida.com</span>.
+        <div class="rounded-xl border border-primary/30 bg-primary/10 p-3 text-sm font-semibold text-primary">
+            <div class="text-center">Após pagar, envie o comprovante para</div>
+            <div class="mt-2 flex flex-col sm:flex-row sm:items-center sm:justify-center gap-3">
+                <span class="underline break-all">comprovante@fontedevida.com</span>
+                <button
+                    type="button"
+                    class="btn btn-sm btn-outline btn-primary w-full sm:w-auto"
+                    data-copy-button
+                    data-copy-text="comprovante@fontedevida.com"
+                    aria-label="Copiar e-mail do comprovante"
+                    title="Copiar e-mail do comprovante"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <rect x="9" y="9" width="10" height="10" rx="2"></rect>
+                        <path d="M5 15V7a2 2 0 0 1 2-2h8"></path>
+                    </svg>
+                </button>
+            </div>
         </div>
     </div>
 </div>

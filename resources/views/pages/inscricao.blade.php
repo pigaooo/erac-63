@@ -40,9 +40,9 @@
         <div class="lg:col-span-4 grid gap-4">
             <div class="rounded-[2rem] border border-primary/20 bg-primary/10 shadow-sm p-6 space-y-3 transition duration-500 hover:-translate-y-1 hover:shadow-xl scroll-reveal" data-reveal="fadeInRight" data-reveal-delay="120">
                 <div class="text-xs font-bold uppercase tracking-[0.2em] text-primary">Prazo</div>
-                <div class="text-2xl font-black">Inscrições online até DD/MM</div>
+                <div class="text-2xl font-black">Inscrições on-line até 20/06</div>
                 <p class="text-sm text-base-content/75">
-                    Após essa data, as inscrições ficam disponíveis apenas no presencial, sujeitas à disponibilidade.
+                    Após 20/06, as inscrições ficam encerradas.
                 </p>
             </div>
 
@@ -65,30 +65,50 @@
                 Valores de inscrição
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="rounded-[1.5rem] border border-base-300 bg-base-200/60 p-5 shadow-xs space-y-3 transition duration-300 hover:scale-[1.02] hover:border-primary/40 hover:bg-base-200/90 hover:shadow-lg">
                     <div class="flex items-center justify-between">
-                        <div class="badge badge-primary badge-lg">Antecipado</div>
+                        <div class="badge badge-primary badge-lg">1º lote</div>
                     </div>
-                    <div class="text-3xl md:text-4xl font-black">R$ 100,00</div>
+                    <div class="text-3xl md:text-4xl font-black">R$ 125,00</div>
                     <p class="text-sm text-base-content/70">
-                        Até DD/MM via site. A confirmação é enviada após a validação do pagamento.
+                        De 30/03 até 30/04. A confirmação é enviada após a validação do pagamento.
                     </p>
                 </div>
 
                 <div class="rounded-[1.5rem] border border-base-300 bg-base-200/60 p-5 shadow-xs space-y-3 transition duration-300 hover:scale-[1.02] hover:border-primary/40 hover:bg-base-200/90 hover:shadow-lg">
                     <div class="flex items-center justify-between">
-                        <div class="badge badge-secondary badge-lg">No dia</div>
+                        <div class="badge badge-secondary badge-lg">2º lote</div>
                     </div>
-                    <div class="text-3xl md:text-4xl font-black">R$ 120,00</div>
+                    <div class="text-3xl md:text-4xl font-black">R$ 135,00</div>
                     <p class="text-sm text-base-content/70">
-                        Pagamento presencial por PIX, sujeito à disponibilidade de vagas no evento.
+                        De 01/05 até 20/05, com pagamento via PIX e validação posterior.
+                    </p>
+                </div>
+
+                <div class="rounded-[1.5rem] border border-base-300 bg-base-200/60 p-5 shadow-xs space-y-3 transition duration-300 hover:scale-[1.02] hover:border-primary/40 hover:bg-base-200/90 hover:shadow-lg">
+                    <div class="flex items-center justify-between">
+                        <div class="badge badge-accent badge-lg">3º lote</div>
+                    </div>
+                    <div class="text-3xl md:text-4xl font-black">R$ 140,00</div>
+                    <p class="text-sm text-base-content/70">
+                        De 21/05 até 20/06, com pagamento via PIX e validação posterior.
+                    </p>
+                </div>
+
+                <div class="rounded-[1.5rem] border border-error/30 bg-error/5 p-5 shadow-xs space-y-3 transition duration-300 hover:scale-[1.02] hover:border-error/50 hover:shadow-lg">
+                    <div class="flex items-center justify-between">
+                        <div class="badge badge-error badge-lg">Prazo final</div>
+                    </div>
+                    <div class="text-2xl md:text-3xl font-black">Após esta data</div>
+                    <p class="text-sm text-base-content/70">
+                        Somente no local do evento. O encerramento é apenas para a inscrição online.
                     </p>
                 </div>
             </div>
 
             <div class="rounded-2xl border border-dashed border-base-300 bg-base-200/40 px-4 py-3 text-xs text-base-content/60 transition duration-300 hover:border-primary/40">
-                * Ajuste datas, valores e textos conforme a definição oficial do evento.
+                * Valores e prazos oficiais: 30/03 a 30/04 = R$ 125,00; 01/05 a 20/05 = R$ 135,00; 21/05 a 20/06 = R$ 140,00.
             </div>
         </div>
 
@@ -167,7 +187,7 @@
                 <div class="space-y-2">
                     <h3 class="text-xl font-bold">Confirmação</h3>
                     <p class="text-sm text-base-content/70">
-                        Aguarde a validação da Loja Fonte de Vida e apresente a confirmação no check-in.
+                        A confirmação da inscrição será feita via e-mail ou WhatsApp cadastrado através do formulário enviado.
                     </p>
                 </div>
 
@@ -200,7 +220,7 @@
                 </div>
 
                 <div class="space-y-2">
-                    <h3 class="text-xl font-bold">Dados em lote</h3>
+                    <h3 class="text-xl font-bold">Inscrições em lote</h3>
                     <p class="text-sm text-base-content/70">
                         Adicione vários participantes da mesma Loja/Capítulo com nome, contato, CIM e grau.
                     </p>
@@ -239,7 +259,7 @@
                 <div class="space-y-2">
                     <h3 class="text-xl font-bold">Confirmação por inscrito</h3>
                     <p class="text-sm text-base-content/70">
-                        Cada participante será validado nominalmente pela organização após a conferência.
+                        A confirmação será enviada para o e-mail no qual nós recebemos o comprovante de pagamento no passo 2.
                     </p>
                 </div>
 

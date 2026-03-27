@@ -69,8 +69,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const pixModal = document.getElementById('pix-modal');
     const closePixBtn = document.getElementById('close-pix');
     const pixTriggers = document.querySelectorAll('[data-pix-trigger]');
+    const copyButtons = document.querySelectorAll('[data-copy-button]');
 
     const hidePixModal = () => pixModal?.classList.add('hidden');
+
+    const copyText = async (text) => {
+        if (navigator.clipboard?.writeText) {
+            await navigator.clipboard.writeText(text);
+            return true;
+        }
+
+        const tempInput = document.createElement('input');
+        tempInput.value = text;
+        tempInput.setAttribute('readonly', '');
+        tempInput.style.position = 'absolute';
+        tempInput.style.left = '-9999px';
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        const success = document.execCommand('copy');
+        document.body.removeChild(tempInput);
+        return success;
+    };
 
     if (pixModal && pixTriggers.length) {
         pixTriggers.forEach((btn) => {
@@ -89,6 +108,26 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.target === pixModal) hidePixModal();
         });
     }
+
+    copyButtons.forEach((button) => {
+        const defaultButtonHtml = button.innerHTML;
+
+        button.addEventListener('click', async () => {
+            const text = button.dataset.copyText || '';
+            if (!text) return;
+
+            try {
+                const copied = await copyText(text);
+                button.textContent = copied ? 'Copiado!' : 'Falhou';
+            } catch {
+                button.textContent = 'Falhou';
+            }
+
+            window.setTimeout(() => {
+                button.innerHTML = defaultButtonHtml;
+            }, 1800);
+        });
+    });
 
     const inscricaoAlert = document.getElementById('inscricao-alert');
     let inscricaoAlertTimeout;
