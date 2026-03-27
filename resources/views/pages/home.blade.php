@@ -25,6 +25,12 @@
                 <p class="text-sm text-base-content/72">
                     Encontro Regional de Aprendizes e Companheiros.
                 </p>
+
+                <div class="rounded-[1.4rem] border border-primary/30 bg-gradient-to-r from-primary/18 via-primary/10 to-secondary/10 px-4 py-3 shadow-sm">
+                    <div class="text-[11px] font-semibold uppercase tracking-[0.22em] text-primary">Data do evento</div>
+                    <div class="mt-1 text-lg font-black text-base-content">27/06/2026</div>
+                    <div class="mt-1 text-sm font-semibold text-base-content/75">Início às 07h30</div>
+                </div>
             </div>
 
             <div id="hero-inicial-home" class="hidden md:flex items-center">
@@ -44,12 +50,23 @@
                         </p>
                     </div>
 
-                    <div class="grid gap-4 md:grid-cols-2">
+                    <div class="grid gap-4 md:grid-cols-3">
                         <div class="rounded-[1.5rem] border border-base-300 bg-base-200/55 p-5 shadow-sm">
                             <div class="text-xs font-semibold uppercase tracking-[0.22em] text-primary">Região</div>
                             <div class="mt-3 text-lg font-semibold text-base-content">9ª Região Administrativa do GOSP</div>
                             <p class="mt-2 text-sm text-base-content/70">
                                 Representando uma região marcada pelo trabalho, pela união entre as Lojas e pelo compromisso com a formação maçônica.
+                            </p>
+                        </div>
+
+                        <div class="rounded-[1.5rem] border border-primary/25 bg-gradient-to-br from-primary/18 via-primary/10 to-base-100 p-5 shadow-md shadow-primary/10">
+                            <div>
+                                <div class="text-xs font-semibold uppercase tracking-[0.22em] text-primary">Data do evento</div>
+                            </div>
+                            <div class="mt-4 text-2xl font-black text-base-content">27/06/2026</div>
+                            <div class="mt-1 text-sm font-semibold uppercase tracking-[0.16em] text-base-content/70">Início às 07h30</div>
+                            <p class="mt-2 text-sm text-base-content/75">
+                                Reserve a data para viver um dia de instrução, integração e fraternidade no ERAC 61.
                             </p>
                         </div>
 
