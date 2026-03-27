@@ -58,11 +58,25 @@ class InscricaoCalendar
 
     public function resumo(?CarbonImmutable $date = null): array
     {
-        $today = $this->resolveDate($date);
+        $dateTime = $this->resolveDateTime($date);
+        $today = $dateTime->startOfDay();
+        $lotesVisiveis = $this->lotesVisiveis($today);
+        $loteMaisProximo = $lotesVisiveis[0]['id'] ?? null;
+
+        $lotesVisiveis = array_map(function (array $lote) use ($dateTime, $loteMaisProximo): array {
+            $countdown = $lote['id'] === $loteMaisProximo
+                ? $this->countdownParaLote($lote, $dateTime)
+                : null;
+
+            return [
+                ...$lote,
+                'countdown' => $countdown,
+            ];
+        }, $lotesVisiveis);
 
         return [
             'inscricoes_abertas' => $this->inscricoesAbertas($today),
-            'lotes_visiveis' => $this->lotesVisiveis($today),
+            'lotes_visiveis' => $lotesVisiveis,
             'lote_atual' => $this->loteAtual($today),
             'mensagem_status' => $this->mensagemStatus($today),
             'encerramento_online' => $this->encerramentoOnline(),
@@ -80,14 +94,52 @@ class InscricaoCalendar
         return array_map(function (array $lote): array {
             $inicio = CarbonImmutable::parse($lote['inicio'], $this->timezone())->startOfDay();
             $fim = CarbonImmutable::parse($lote['fim'], $this->timezone())->startOfDay();
+            $expiraEm = $fim->endOfDay();
 
             return [
                 ...$lote,
                 'inicio' => $inicio,
                 'fim' => $fim,
+                'expira_em' => $expiraEm,
                 'periodo' => sprintf('%s até %s', $inicio->translatedFormat('d/m'), $fim->translatedFormat('d/m')),
             ];
         }, config('inscricoes.lotes', []));
+    }
+
+    private function countdownParaLote(array $lote, CarbonImmutable $dateTime): ?array
+    {
+        $expiraEm = $lote['expira_em'] ?? null;
+
+        if (! $expiraEm instanceof CarbonImmutable || $dateTime->greaterThan($expiraEm)) {
+            return null;
+        }
+
+        $remainingSeconds = $dateTime->diffInSeconds($expiraEm);
+
+        if ($remainingSeconds >= 86400) {
+            $value = max(1, $dateTime->diffInDays($expiraEm));
+
+            return $this->formatCountdown($value, 'dias', $expiraEm);
+        }
+
+        if ($remainingSeconds >= 3600) {
+            $value = max(1, $dateTime->diffInHours($expiraEm));
+
+            return $this->formatCountdown($value, 'horas', $expiraEm);
+        }
+
+        $value = max(1, (int) ceil($remainingSeconds / 60));
+
+        return $this->formatCountdown($value, 'minutos', $expiraEm);
+    }
+
+    private function formatCountdown(int $value, string $unit, CarbonImmutable $expiraEm): array
+    {
+        return [
+            'value' => $value,
+            'unit' => $unit,
+            'expires_at_iso' => $expiraEm->toIso8601String(),
+        ];
     }
 
     private function inicioInscricoes(): CarbonImmutable
@@ -104,8 +156,12 @@ class InscricaoCalendar
 
     private function resolveDate(?CarbonImmutable $date = null): CarbonImmutable
     {
+        return $this->resolveDateTime($date)->startOfDay();
+    }
+
+    private function resolveDateTime(?CarbonImmutable $date = null): CarbonImmutable
+    {
         return ($date ?? CarbonImmutable::now($this->timezone()))
-            ->setTimezone($this->timezone())
-            ->startOfDay();
+            ->setTimezone($this->timezone());
     }
 }

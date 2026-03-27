@@ -84,12 +84,36 @@
                     @foreach ($lotesVisiveis as $lote)
                         @php
                             $isAtual = $loteAtual && $loteAtual['id'] === $lote['id'];
+                            $countdown = $lote['countdown'] ?? null;
                         @endphp
                         <div class="rounded-[1.5rem] border p-5 shadow-xs space-y-3 transition duration-300 hover:scale-[1.02] hover:shadow-lg {{ $isAtual ? 'border-primary/40 bg-primary/10 ring-1 ring-primary/30' : 'border-base-300 bg-base-200/60 hover:border-primary/40 hover:bg-base-200/90' }}">
-                            <div class="flex items-center justify-between gap-3">
-                                <div class="badge badge-{{ $lote['badge'] }} badge-lg">{{ $lote['label'] }}</div>
-                                @if ($isAtual)
-                                    <div class="badge badge-outline badge-primary">Lote vigente</div>
+                            <div class="flex items-start justify-between gap-3">
+                                <div class="space-y-2">
+                                    <div class="badge badge-{{ $lote['badge'] }} badge-lg">{{ $lote['label'] }}</div>
+                                    @if ($isAtual)
+                                        <div class="badge badge-outline badge-primary">Lote vigente</div>
+                                    @endif
+                                </div>
+
+                                @if ($countdown)
+                                    <div
+                                        class="text-right text-[10px] uppercase tracking-[0.18em] text-base-content/45"
+                                        data-lote-countdown
+                                        data-countdown-expires-at="{{ $countdown['expires_at_iso'] }}"
+                                    >
+                                        <div class="leading-none">Encerra em</div>
+                                        <div class="mt-1 flex items-baseline justify-end gap-1">
+                                            <span class="countdown font-semibold text-sm text-base-content/70">
+                                                <span
+                                                    data-countdown-value
+                                                    style="--value:{{ $countdown['value'] }}; --digits:{{ max(strlen((string) $countdown['value']), 2) }};"
+                                                    aria-live="polite"
+                                                    aria-label="{{ $countdown['value'] }}"
+                                                ></span>
+                                            </span>
+                                            <span data-countdown-unit>{{ $countdown['unit'] }}</span>
+                                        </div>
+                                    </div>
                                 @endif
                             </div>
                             <div class="text-3xl md:text-4xl font-black">{{ $lote['valor'] }}</div>

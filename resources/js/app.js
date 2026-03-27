@@ -61,10 +61,52 @@ const setupScrollReveal = () => {
     revealItems.forEach((item) => observer.observe(item));
 };
 
+const setupLoteCountdown = () => {
+    const countdowns = Array.from(document.querySelectorAll('[data-lote-countdown]'));
+    if (!countdowns.length) return;
+
+    const renderCountdown = (container) => {
+        const expiresAt = container.dataset.countdownExpiresAt;
+        const valueNode = container.querySelector('[data-countdown-value]');
+        const unitNode = container.querySelector('[data-countdown-unit]');
+
+        if (!expiresAt || !valueNode || !unitNode) return;
+
+        const expiresAtMs = new Date(expiresAt).getTime();
+
+        if (Number.isNaN(expiresAtMs)) return;
+
+        const remainingSeconds = Math.max(0, Math.floor((expiresAtMs - Date.now()) / 1000));
+
+        let value;
+        let unit;
+
+        if (remainingSeconds >= 86400) {
+            value = Math.max(1, Math.floor(remainingSeconds / 86400));
+            unit = value === 1 ? 'dia' : 'dias';
+        } else if (remainingSeconds >= 3600) {
+            value = Math.max(1, Math.floor(remainingSeconds / 3600));
+            unit = value === 1 ? 'hora' : 'horas';
+        } else {
+            value = Math.max(1, Math.ceil(remainingSeconds / 60));
+            unit = value === 1 ? 'minuto' : 'minutos';
+        }
+
+        valueNode.style.setProperty('--value', String(value));
+        valueNode.style.setProperty('--digits', String(Math.max(String(value).length, 2)));
+        valueNode.setAttribute('aria-label', String(value));
+        unitNode.textContent = unit;
+    };
+
+    countdowns.forEach(renderCountdown);
+    window.setInterval(() => countdowns.forEach(renderCountdown), 1000);
+};
+
 document.addEventListener('DOMContentLoaded', () => {
     setupPatrocinadoresCarousel('patrocinadores-carousel', 2800);
     setupPatrocinadoresCarousel('patrocinadores-carousel-mobile', 2600);
     setupScrollReveal();
+    setupLoteCountdown();
 
     const pixModal = document.getElementById('pix-modal');
     const closePixBtn = document.getElementById('close-pix');
