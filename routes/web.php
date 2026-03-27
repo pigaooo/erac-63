@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SiteController;
 use App\Http\Controllers\ExportsPdf\InscritoPdfExportController;
 use App\Models\Patrocinador;
 use Illuminate\Support\Facades\Route;
@@ -28,13 +29,7 @@ Route::get('/programacao', function () {
     return view('pages.programacao', compact('patrocinadores'));
 })->name('programacao');
 
-Route::get('/inscricao', function () {
-    $patrocinadores = Patrocinador::query()
-        ->orderBy('name')
-        ->get();
-
-    return view('pages.inscricao', compact('patrocinadores'));
-})->name('inscricao');
+Route::get('/inscricao', [SiteController::class, 'inscricao'])->name('inscricao');
 
 Route::get('/sobre', function () {
     $patrocinadores = Patrocinador::query()

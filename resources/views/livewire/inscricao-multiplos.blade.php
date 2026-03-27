@@ -1,21 +1,25 @@
 <div class="space-y-4">
     @if ($flashMessage)
-        <div class="alert alert-success text-sm">
+        <div class="alert {{ $inscricoesAbertas ? 'alert-success' : 'alert-warning' }} text-sm">
             {{ $flashMessage }}
         </div>
     @endif
 
-    <button id="botao_modal_inscricao_multipla" class="btn btn-primary w-full" wire:click="openModal" type="button">
-        Inscrever múltiplos
+    @error('inscricoes')
+        <div class="alert alert-warning text-sm">{{ $message }}</div>
+    @enderror
+
+    <button id="botao_modal_inscricao_multipla" class="btn btn-primary w-full" wire:click="openModal" type="button" @disabled(! $inscricoesAbertas)>
+        Inscrever mÃºltiplos
     </button>
 
     <div class="modal {{ $showModal ? 'modal-open' : '' }}" wire:keydown.escape="closeModal">
         <div class="modal-box max-w-5xl space-y-4">
             <div class="flex items-start justify-between">
                 <div>
-                    <h3 class="text-lg font-bold">Inscrição múltipla</h3>
+                    <h3 class="text-lg font-bold">InscriÃ§Ã£o mÃºltipla</h3>
                     <p class="text-sm text-base-content/70">
-                        Escolha a Loja para inserir vários participantes, preencha os dados e adicione à tabela.
+                        Escolha a Loja para inserir vÃ¡rios participantes, preencha os dados e adicione Ã  tabela.
                     </p>
                 </div>
 
@@ -27,7 +31,7 @@
             <form class="space-y-4" wire:submit.prevent="addToTable">
                 <label class="form-control w-full">
                     <div class="label">
-                        <span class="label-text font-semibold">Loja / Capítulo do lote</span>
+                        <span class="label-text font-semibold">Loja / CapÃ­tulo do lote</span>
                     </div>
 
                     @if ($lojas->count())
@@ -43,7 +47,7 @@
                         </select>
                     @else
                         <div class="text-sm text-base-content/70">
-                            Nenhuma Loja/Capítulo cadastrada ainda.
+                            Nenhuma Loja/CapÃ­tulo cadastrada ainda.
                         </div>
                     @endif
 
@@ -71,7 +75,7 @@
                             wire:key="name-{{ $formKey }}"
                             type="text"
                             class="input input-bordered"
-                            placeholder="Irmão / Aprendiz / Companheiro"
+                            placeholder="IrmÃ£o / Aprendiz / Companheiro"
                             wire:model.defer="name"
                         >
                         @error('name')
@@ -148,7 +152,7 @@
 
                     <label class="form-control w-full">
                         <div class="label">
-                            <span class="label-text">Grau maçônico</span>
+                            <span class="label-text">Grau maÃ§Ã´nico</span>
                         </div>
                         <select
                             wire:key="grau-{{ $formKey }}"
@@ -156,10 +160,10 @@
                             wire:model.defer="grau"
                         >
                             <option value="">Selecione</option>
-                            <option value="AM">A∴M∴</option>
-                            <option value="CM">C∴M∴</option>
-                            <option value="MM">M∴M∴</option>
-                            <option value="MI">M∴I∴</option>
+                            <option value="AM">Aâˆ´Mâˆ´</option>
+                            <option value="CM">Câˆ´Mâˆ´</option>
+                            <option value="MM">Mâˆ´Mâˆ´</option>
+                            <option value="MI">Mâˆ´Iâˆ´</option>
                             <option value="OT">Outros</option>
                         </select>
                         @error('grau')
@@ -170,7 +174,7 @@
 
                 <div class="flex items-center justify-between gap-4">
                     <div class="text-sm text-base-content/70">
-                        Preencha os dados acima e clique em "Adicionar à tabela" para listar os inscritos antes de enviar.
+                        Preencha os dados acima e clique em "Adicionar Ã  tabela" para listar os inscritos antes de enviar.
                     </div>
 
                     <button
@@ -179,7 +183,7 @@
                         wire:loading.attr="disabled"
                         wire:target="addToTable"
                     >
-                        <span wire:loading.remove wire:target="addToTable">+ Adicionar à tabela</span>
+                        <span wire:loading.remove wire:target="addToTable">+ Adicionar Ã  tabela</span>
                         <span wire:loading wire:target="addToTable">Adicionando...</span>
                     </button>
                 </div>

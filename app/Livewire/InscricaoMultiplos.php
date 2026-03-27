@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Inscrito;
 use App\Models\Loja;
+use App\Support\InscricaoCalendar;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Validator;
@@ -25,9 +26,12 @@ class InscricaoMultiplos extends Component
     public string $grau = '';
     public string $loja_id = '';
     public int $formKey = 0;
+    public bool $inscricoesAbertas = false;
+    public string $mensagemStatus = '';
 
     public function mount(): void
     {
+        $this->syncInscricoesStatus();
         $this->loadLojas();
     }
 
@@ -40,6 +44,10 @@ class InscricaoMultiplos extends Component
 
     public function openModal(): void
     {
+        if (! $this->ensureInscricoesAbertas()) {
+            return;
+        }
+
         $this->resetErrorBag();
         $this->flashMessage = null;
         $this->showModal = true;
@@ -52,11 +60,13 @@ class InscricaoMultiplos extends Component
 
     public function addToTable(): void
     {
+        if (! $this->ensureInscricoesAbertas()) {
+            return;
+        }
+
         $this->resetErrorBag();
 
         $row = $this->currentRow();
-
-        logger()->info('ROW BEFORE VALIDATION', $row);
 
         $validated = Validator::validate(
             $row,
@@ -83,6 +93,10 @@ class InscricaoMultiplos extends Component
 
     public function submit(): void
     {
+        if (! $this->ensureInscricoesAbertas()) {
+            return;
+        }
+
         $this->resetErrorBag();
 
         if (count($this->inscritos) === 0) {
@@ -222,5 +236,28 @@ class InscricaoMultiplos extends Component
     public function render()
     {
         return view('livewire.inscricao-multiplos');
+    }
+
+    private function syncInscricoesStatus(): void
+    {
+        $calendar = app(InscricaoCalendar::class);
+        $this->inscricoesAbertas = $calendar->inscricoesAbertas();
+        $this->mensagemStatus = $calendar->mensagemStatus();
+    }
+
+    private function ensureInscricoesAbertas(): bool
+    {
+        $this->syncInscricoesStatus();
+
+        if ($this->inscricoesAbertas) {
+            return true;
+        }
+
+        $this->flashMessage = $this->mensagemStatus;
+        $this->addError('inscricoes', $this->mensagemStatus);
+        $this->dispatch('inscricao-alert', message: $this->mensagemStatus);
+        $this->showModal = false;
+
+        return false;
     }
 }

@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Inscrito;
 use App\Models\Loja;
+use App\Support\InscricaoCalendar;
 use Illuminate\Support\Facades\Schema;
 use Livewire\Component;
 
@@ -19,9 +20,12 @@ class InscricaoModal extends Component
     public $lojas;
     public ?string $flashMessage = null;
     public int $formKey = 0;
+    public bool $inscricoesAbertas = false;
+    public string $mensagemStatus = '';
 
     public function mount(): void
     {
+        $this->syncInscricoesStatus();
         $this->loadLojas();
     }
 
@@ -34,6 +38,10 @@ class InscricaoModal extends Component
 
     public function openModal(): void
     {
+        if (! $this->ensureInscricoesAbertas()) {
+            return;
+        }
+
         $this->resetErrorBag();
         $this->resetValidation();
         $this->resetFormFields();
@@ -51,6 +59,10 @@ class InscricaoModal extends Component
 
     public function submit(): void
     {
+        if (! $this->ensureInscricoesAbertas()) {
+            return;
+        }
+
         $this->cpf = trim((string) $this->cpf);
         $this->telefone = trim((string) $this->telefone);
 
@@ -103,5 +115,28 @@ class InscricaoModal extends Component
     public function render()
     {
         return view('livewire.inscricao-modal');
+    }
+
+    private function syncInscricoesStatus(): void
+    {
+        $calendar = app(InscricaoCalendar::class);
+        $this->inscricoesAbertas = $calendar->inscricoesAbertas();
+        $this->mensagemStatus = $calendar->mensagemStatus();
+    }
+
+    private function ensureInscricoesAbertas(): bool
+    {
+        $this->syncInscricoesStatus();
+
+        if ($this->inscricoesAbertas) {
+            return true;
+        }
+
+        $this->flashMessage = $this->mensagemStatus;
+        $this->addError('inscricoes', $this->mensagemStatus);
+        $this->dispatch('inscricao-alert', message: $this->mensagemStatus);
+        $this->showModal = false;
+
+        return false;
     }
 }

@@ -1,15 +1,20 @@
 <div class="space-y-4">
     @if ($flashMessage)
-        <div class="alert alert-success text-sm">{{ $flashMessage }}</div>
+        <div class="alert {{ $inscricoesAbertas ? 'alert-success' : 'alert-warning' }} text-sm">{{ $flashMessage }}</div>
     @endif
+
+    @error('inscricoes')
+        <div class="alert alert-warning text-sm">{{ $message }}</div>
+    @enderror
 
     <button
         id="botao_modal_inscricao"
         type="button"
         class="btn btn-primary w-full"
         wire:click="openModal"
+        @disabled(! $inscricoesAbertas)
     >
-        Inscrição individual
+        InscriÃ§Ã£o individual
     </button>
 
     <div class="modal {{ $showModal ? 'modal-open' : '' }}" wire:keydown.escape="closeModal">
@@ -17,9 +22,9 @@
             <div class="flex items-start justify-between">
                 <div>
                     <h3 class="text-lg font-bold">Credenciamento</h3>
-                    <p class="text-sm text-base-content/70">Preencha os dados do irmão para o ERAC.</p>
+                    <p class="text-sm text-base-content/70">Preencha os dados do irmÃ£o para o ERAC.</p>
                 </div>
-                <button class="btn btn-ghost btn-sm" type="button" wire:click="closeModal">×</button>
+                <button class="btn btn-ghost btn-sm" type="button" wire:click="closeModal">Ã—</button>
             </div>
 
             <form class="space-y-4" wire:submit.prevent="submit">
@@ -30,7 +35,7 @@
                             wire:key="nome-{{ $formKey }}"
                             type="text"
                             class="input input-bordered"
-                            placeholder="Irmão / Aprendiz / Companheiro"
+                            placeholder="IrmÃ£o / Aprendiz / Companheiro"
                             wire:model.blur="nome"
                             required
                         >
@@ -81,7 +86,7 @@
                     </label>
 
                     <label class="form-control w-full">
-                        <div class="label"><span class="label-text">Grau maçônico</span></div>
+                        <div class="label"><span class="label-text">Grau maÃ§Ã´nico</span></div>
                         <select
                             wire:key="grau-{{ $formKey }}"
                             class="select select-bordered"
@@ -89,10 +94,10 @@
                             required
                         >
                             <option value="">Selecione</option>
-                            <option value="AM">A∴M∴</option>
-                            <option value="CM">C∴M∴</option>
-                            <option value="MM">M∴M∴</option>
-                            <option value="MI">M∴I∴</option>
+                            <option value="AM">Aâˆ´Mâˆ´</option>
+                            <option value="CM">Câˆ´Mâˆ´</option>
+                            <option value="MM">Mâˆ´Mâˆ´</option>
+                            <option value="MI">Mâˆ´Iâˆ´</option>
                             <option value="OT">Outros</option>
                         </select>
                         @error('grau') <span class="mt-1 text-xs text-error">{{ $message }}</span> @enderror
@@ -113,7 +118,7 @@
                                 @endforeach
                             </select>
                         @else
-                            <div class="text-sm text-base-content/70">Nenhuma Loja/Capítulo cadastrada ainda.</div>
+                            <div class="text-sm text-base-content/70">Nenhuma Loja/CapÃ­tulo cadastrada ainda.</div>
                         @endif
                         @error('lojaId') <span class="mt-1 text-xs text-error">{{ $message }}</span> @enderror
                     </label>
