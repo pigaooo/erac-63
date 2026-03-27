@@ -10,7 +10,7 @@ class InscricaoCalendar
     {
         $today = $this->resolveDate($date);
 
-        return $today->betweenIncluded($this->inicioInscricoes(), $this->encerramentoOnline());
+        return $today->lessThanOrEqualTo($this->encerramentoOnline());
     }
 
     public function lotesVisiveis(?CarbonImmutable $date = null): array
@@ -39,11 +39,13 @@ class InscricaoCalendar
     public function mensagemStatus(?CarbonImmutable $date = null): string
     {
         $today = $this->resolveDate($date);
-        $inicio = $this->inicioInscricoes();
         $encerramento = $this->encerramentoOnline();
 
-        if ($today->lessThan($inicio)) {
-            return sprintf('As inscrições on-line começam em %s.', $inicio->translatedFormat('d/m/Y'));
+        if ($today->lessThan($this->inicioInscricoes())) {
+            return sprintf(
+                'As inscrições on-line estão disponíveis para testes e seguem abertas até %s.',
+                $encerramento->translatedFormat('d/m/Y')
+            );
         }
 
         if ($today->greaterThan($encerramento)) {
