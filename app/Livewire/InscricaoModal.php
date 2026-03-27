@@ -15,6 +15,7 @@ class InscricaoModal extends Component
     public string $email = '';
     public string $telefone = '';
     public string $cpf = '';
+    public string $cim = '';
     public string $grau = '';
     public string $lojaId = '';
     public $lojas;
@@ -57,6 +58,20 @@ class InscricaoModal extends Component
         $this->showModal = false;
     }
 
+    public function updatedGrau(string $value): void
+    {
+        if ($value === 'OT') {
+            $this->cim = '';
+            $this->lojaId = $this->fallbackLojaId();
+            $this->resetValidation(['cim', 'lojaId']);
+            return;
+        }
+
+        if ($this->lojaId !== '' && ! $this->lojas->contains('id', $this->lojaId)) {
+            $this->lojaId = '';
+        }
+    }
+
     public function submit(): void
     {
         if (! $this->ensureInscricoesAbertas()) {
@@ -65,15 +80,28 @@ class InscricaoModal extends Component
 
         $this->cpf = trim((string) $this->cpf);
         $this->telefone = trim((string) $this->telefone);
+        $this->cim = trim((string) $this->cim);
+
+        $isOutros = $this->grau === 'OT';
+
+        if ($isOutros && $this->lojaId === '') {
+            $this->lojaId = $this->fallbackLojaId();
+        }
 
         $validated = $this->validate([
+            'grau' => ['required', 'in:AM,CM,MM,MI,OT'],
             'nome' => ['required', 'string', 'min:3', 'max:150'],
             'email' => ['required', 'email', 'max:150', 'unique:inscritos,email'],
             'telefone' => ['required', 'string', 'max:50'],
             'cpf' => ['required', 'string', 'max:20', 'unique:inscritos,cpf'],
-            'grau' => ['required', 'in:AM,CM,MM,MI,OT'],
-            'lojaId' => ['required', 'exists:lojas,id'],
+            'cim' => $isOutros
+                ? ['nullable', 'string', 'max:50']
+                : ['required', 'string', 'max:50', 'unique:inscritos,cim'],
+            'lojaId' => $isOutros
+                ? ['required', 'exists:lojas,id']
+                : ['required', 'exists:lojas,id'],
         ], [
+            'grau.required' => 'Selecione o grau maçônico.',
             'nome.required' => 'Informe o nome completo.',
             'email.required' => 'Informe o e-mail.',
             'email.email' => 'E-mail inválido.',
@@ -81,17 +109,20 @@ class InscricaoModal extends Component
             'telefone.required' => 'Informe o telefone.',
             'cpf.required' => 'Informe o CPF.',
             'cpf.unique' => 'CPF já cadastrado.',
-            'grau.required' => 'Selecione o grau maçônico.',
-            'lojaId.required' => 'Selecione a Loja/Capítulo.',
+            'cim.required' => 'Informe o CIM.',
+            'cim.unique' => 'CIM já cadastrado.',
+            'lojaId.required' => 'Selecione a Loja.',
             'lojaId.exists' => 'Loja não encontrada.',
         ]);
+
+        $cim = $isOutros ? $validated['cpf'] : $validated['cim'];
 
         Inscrito::query()->create([
             'name' => $validated['nome'],
             'email' => $validated['email'],
             'telefone' => $validated['telefone'],
             'cpf' => $validated['cpf'],
-            'cim' => $validated['cpf'],
+            'cim' => $cim,
             'grau' => $validated['grau'],
             'loja_id' => $validated['lojaId'],
             'is_paied' => false,
@@ -108,8 +139,17 @@ class InscricaoModal extends Component
 
     private function resetFormFields(): void
     {
-        $this->reset(['nome', 'email', 'telefone', 'cpf', 'grau', 'lojaId']);
+        $this->reset(['nome', 'email', 'telefone', 'cpf', 'cim', 'grau', 'lojaId']);
         $this->formKey++;
+    }
+
+    private function fallbackLojaId(): string
+    {
+        $lojaFonteDeVida = $this->lojas->first(function ($loja) {
+            return mb_strtolower((string) $loja->name) === 'fonte de vida';
+        });
+
+        return (string) ($lojaFonteDeVida?->id ?? $this->lojas->first()?->id ?? '');
     }
 
     public function render()

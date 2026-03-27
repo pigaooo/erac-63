@@ -14,7 +14,7 @@
         wire:click="openModal"
         @disabled(! $inscricoesAbertas)
     >
-        InscriÃ§Ã£o individual
+        Inscrição individual
     </button>
 
     <div class="modal {{ $showModal ? 'modal-open' : '' }}" wire:keydown.escape="closeModal">
@@ -22,20 +22,38 @@
             <div class="flex items-start justify-between">
                 <div>
                     <h3 class="text-lg font-bold">Credenciamento</h3>
-                    <p class="text-sm text-base-content/70">Preencha os dados do irmÃ£o para o ERAC.</p>
+                    <p class="text-sm text-base-content/70">Preencha os dados do irmão para o ERAC.</p>
                 </div>
-                <button class="btn btn-ghost btn-sm" type="button" wire:click="closeModal">Ã—</button>
+                <button class="btn btn-ghost btn-sm" type="button" wire:click="closeModal">X</button>
             </div>
 
             <form class="space-y-4" wire:submit.prevent="submit">
                 <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                    <label class="form-control w-full md:col-span-2">
+                        <div class="label"><span class="label-text">Grau maçônico</span></div>
+                        <select
+                            wire:key="grau-{{ $formKey }}"
+                            class="select select-bordered"
+                            wire:model.live="grau"
+                            required
+                        >
+                            <option value="">Selecione</option>
+                            <option value="AM">A∴M∴</option>
+                            <option value="CM">C∴M∴</option>
+                            <option value="MM">M∴M∴</option>
+                            <option value="MI">M∴I∴</option>
+                            <option value="OT">Outros</option>
+                        </select>
+                        @error('grau') <span class="mt-1 text-xs text-error">{{ $message }}</span> @enderror
+                    </label>
+
                     <label class="form-control w-full">
                         <div class="label"><span class="label-text">Nome completo</span></div>
                         <input
                             wire:key="nome-{{ $formKey }}"
                             type="text"
                             class="input input-bordered"
-                            placeholder="IrmÃ£o / Aprendiz / Companheiro"
+                            placeholder="Nome do participante"
                             wire:model.blur="nome"
                             required
                         >
@@ -85,43 +103,40 @@
                         @error('cpf') <span class="mt-1 text-xs text-error">{{ $message }}</span> @enderror
                     </label>
 
-                    <label class="form-control w-full">
-                        <div class="label"><span class="label-text">Grau maÃ§Ã´nico</span></div>
-                        <select
-                            wire:key="grau-{{ $formKey }}"
-                            class="select select-bordered"
-                            wire:model.defer="grau"
-                            required
-                        >
-                            <option value="">Selecione</option>
-                            <option value="AM">Aâˆ´Mâˆ´</option>
-                            <option value="CM">Câˆ´Mâˆ´</option>
-                            <option value="MM">Mâˆ´Mâˆ´</option>
-                            <option value="MI">Mâˆ´Iâˆ´</option>
-                            <option value="OT">Outros</option>
-                        </select>
-                        @error('grau') <span class="mt-1 text-xs text-error">{{ $message }}</span> @enderror
-                    </label>
-
-                    <label class="form-control w-full">
-                        <div class="label"><span class="label-text">Loja</span></div>
-                        @if ($lojas->count())
-                            <select
-                                wire:key="loja-{{ $formKey }}"
-                                class="select select-bordered"
-                                wire:model.defer="lojaId"
+                    @if ($grau !== 'OT')
+                        <label class="form-control w-full">
+                            <div class="label"><span class="label-text">CIM</span></div>
+                            <input
+                                wire:key="cim-{{ $formKey }}"
+                                type="text"
+                                class="input input-bordered"
+                                placeholder="CIM"
+                                wire:model.blur="cim"
                                 required
                             >
-                                <option value="">Selecione</option>
-                                @foreach ($lojas as $loja)
-                                    <option value="{{ $loja->id }}">{{ $loja->name }}</option>
-                                @endforeach
-                            </select>
-                        @else
-                            <div class="text-sm text-base-content/70">Nenhuma Loja/CapÃ­tulo cadastrada ainda.</div>
-                        @endif
-                        @error('lojaId') <span class="mt-1 text-xs text-error">{{ $message }}</span> @enderror
-                    </label>
+                            @error('cim') <span class="mt-1 text-xs text-error">{{ $message }}</span> @enderror
+                        </label>
+
+                        <label class="form-control w-full">
+                            <div class="label"><span class="label-text">Loja</span></div>
+                            @if ($lojas->count())
+                                <select
+                                    wire:key="loja-{{ $formKey }}"
+                                    class="select select-bordered"
+                                    wire:model.defer="lojaId"
+                                    required
+                                >
+                                    <option value="">Selecione</option>
+                                    @foreach ($lojas as $loja)
+                                        <option value="{{ $loja->id }}">{{ $loja->name }}</option>
+                                    @endforeach
+                                </select>
+                            @else
+                                <div class="text-sm text-base-content/70">Nenhuma Loja cadastrada ainda.</div>
+                            @endif
+                            @error('lojaId') <span class="mt-1 text-xs text-error">{{ $message }}</span> @enderror
+                        </label>
+                    @endif
                 </div>
 
                 <div class="modal-action">
