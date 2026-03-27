@@ -29,13 +29,13 @@
             <div>
                 @php
                     $cronograma = [
-                        ['hora' => '07:30 08:20', 'titulo' => 'Café da manhã e credenciamento', 'descricao' => 'Recepção dos participantes, identificação por Loja e acolhimento inicial.'],
-                        ['hora' => '08:30 09:10', 'titulo' => 'Abertura oficial', 'descricao' => 'Composição do Oriente, execução ritualística, palavra das autoridades e orientações metodológicas.'],
-                        ['hora' => '09:10 11:30', 'titulo' => 'Trabalhos em salas', 'descricao' => 'Apresentações temáticas por sala, com tempo padronizado por Loja, perguntas e debate coletivo.'],
-                        ['hora' => '11:30 11:40', 'titulo' => 'Retorno ao plenário', 'descricao' => 'Reorganização dos participantes para a etapa final conjunta.'],
-                        ['hora' => '11:40 12:00', 'titulo' => 'Encerramento oficial', 'descricao' => 'Síntese geral do encontro e palavra final da coordenação regional.'],
-                        ['hora' => '12:00 13:00', 'titulo' => 'Almoço fraterno', 'descricao' => 'Intervalo para refeição e convivência.'],
-                        ['hora' => '13:00 16:00', 'titulo' => 'Confraternização', 'descricao' => 'Momentos de lazer e convivência.'],
+                        ['hora' => '07:30 às 08:20', 'titulo' => 'Café da manhã e credenciamento', 'descricao' => 'Recepção dos participantes, identificação por Loja e acolhimento inicial.'],
+                        ['hora' => '08:30 às 09:30', 'titulo' => 'Abertura institucional', 'descricao' => 'Palavra da Mesa, composição da mesa e apresentação dos patrocinadores.'],
+                        ['hora' => '09:10 às 11:30', 'titulo' => 'Trabalhos em salas', 'descricao' => 'Apresentações temáticas por sala, com tempo padronizado por Loja, perguntas e debate coletivo.'],
+                        ['hora' => '11:30 às 11:40', 'titulo' => 'Retorno ao plenário', 'descricao' => 'Reorganização dos participantes para a etapa final conjunta.'],
+                        ['hora' => '11:40 às 12:00', 'titulo' => 'Encerramento oficial', 'descricao' => 'Síntese geral do encontro e palavra final da coordenação regional.'],
+                        ['hora' => '12:00 às 13:00', 'titulo' => 'Almoço fraterno', 'descricao' => 'Intervalo para refeição e convivência.'],
+                        ['hora' => '13:00 às 16:00', 'titulo' => 'Confraternização', 'descricao' => 'Momentos de lazer e convivência.'],
                     ];
                 @endphp
 
