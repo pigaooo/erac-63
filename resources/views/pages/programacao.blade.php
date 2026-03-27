@@ -26,28 +26,44 @@
                 <span class="h-2 w-2 rounded-full bg-primary animate-pulse"></span>
                 Linha do tempo
             </div>
-            <div class="space-y-3">
+            <div>
                 @php
                     $cronograma = [
-                        ['hora' => '07h30 - 08h20', 'titulo' => 'Café da manhã e credenciamento', 'descricao' => 'Recepção dos participantes, identificação por Loja e acolhimento inicial.'],
-                        ['hora' => '08h30 - 09h10', 'titulo' => 'Abertura oficial', 'descricao' => 'Composição do Oriente, execução ritualística, palavra das autoridades e orientações metodológicas.'],
-                        ['hora' => '09h10 - 11h30', 'titulo' => 'Trabalhos em salas', 'descricao' => 'Apresentações temáticas por sala, com tempo padronizado por Loja, perguntas e debate coletivo.'],
-                        ['hora' => '11h30 - 11h40', 'titulo' => 'Retorno ao plenário', 'descricao' => 'Reorganização dos participantes para a etapa final conjunta.'],
-                        ['hora' => '11h40 - 12h00', 'titulo' => 'Encerramento oficial', 'descricao' => 'Síntese geral do encontro e palavra final da coordenação regional.'],
+                        ['hora' => '07:30 08:20', 'titulo' => 'Café da manhã e credenciamento', 'descricao' => 'Recepção dos participantes, identificação por Loja e acolhimento inicial.'],
+                        ['hora' => '08:30 09:10', 'titulo' => 'Abertura oficial', 'descricao' => 'Composição do Oriente, execução ritualística, palavra das autoridades e orientações metodológicas.'],
+                        ['hora' => '09:10 11:30', 'titulo' => 'Trabalhos em salas', 'descricao' => 'Apresentações temáticas por sala, com tempo padronizado por Loja, perguntas e debate coletivo.'],
+                        ['hora' => '11:30 11:40', 'titulo' => 'Retorno ao plenário', 'descricao' => 'Reorganização dos participantes para a etapa final conjunta.'],
+                        ['hora' => '11:40 12:00', 'titulo' => 'Encerramento oficial', 'descricao' => 'Síntese geral do encontro e palavra final da coordenação regional.'],
                         ['hora' => '12:00 13:00', 'titulo' => 'Almoço fraterno', 'descricao' => 'Intervalo para refeição e convivência.'],
                         ['hora' => '13:00 16:00', 'titulo' => 'Confraternização', 'descricao' => 'Momentos de lazer e convivência.'],
                     ];
                 @endphp
 
-                @foreach($cronograma as $index => $item)
-                    <div class="flex gap-4 items-start transition duration-300 hover:translate-x-1">
-                        <div class="w-16 text-sm font-semibold text-primary">{{ $item['hora'] }}</div>
-                        <div class="flex-1 rounded-2xl border border-base-300 bg-base-200/50 p-4 shadow-xs transition duration-300 hover:border-primary/40 hover:bg-base-200/80 hover:shadow-lg">
-                            <div class="text-base font-semibold">{{ $item['titulo'] }}</div>
-                            <div class="text-sm text-base-content/70">{{ $item['descricao'] }}</div>
-                        </div>
-                    </div>
-                @endforeach
+                <ul class="timeline timeline-snap-icon timeline-compact timeline-vertical w-full">
+                    @foreach($cronograma as $index => $item)
+                        <li>
+                            @if($index > 0)
+                                <hr class="bg-primary/30" />
+                            @endif
+
+                            <div class="timeline-middle">
+                                <span class="flex h-8 w-8 items-center justify-center rounded-full border border-primary/30 bg-primary/10 text-primary shadow-sm">
+                                    <span class="h-2.5 w-2.5 rounded-full bg-primary"></span>
+                                </span>
+                            </div>
+
+                            <div class="timeline-end mb-8 w-full rounded-2xl border border-base-300 bg-base-200/50 p-4 shadow-xs transition duration-300 hover:border-primary/40 hover:bg-base-200/80 hover:shadow-lg">
+                                <time class="text-sm font-semibold text-primary">{{ $item['hora'] }}</time>
+                                <div class="mt-1 text-base font-semibold">{{ $item['titulo'] }}</div>
+                                <div class="text-sm text-base-content/70">{{ $item['descricao'] }}</div>
+                            </div>
+
+                            @if($index < count($cronograma) - 1)
+                                <hr class="bg-primary/30" />
+                            @endif
+                        </li>
+                    @endforeach
+                </ul>
             </div>
         </div>
 
