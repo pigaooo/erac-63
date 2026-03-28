@@ -119,13 +119,13 @@ class InscricaoCalendar
         $remainingSeconds = $dateTime->diffInSeconds($expiraEm);
 
         if ($remainingSeconds >= 86400) {
-            $value = max(1, $dateTime->diffInDays($expiraEm));
+            $value = max(1, (int) ceil($dateTime->diffInDays($expiraEm)));
 
             return $this->formatCountdown($value, 'dias', $expiraEm);
         }
 
         if ($remainingSeconds >= 3600) {
-            $value = max(1, $dateTime->diffInHours($expiraEm));
+            $value = max(1, (int) ceil($dateTime->diffInHours($expiraEm)));
 
             return $this->formatCountdown($value, 'horas', $expiraEm);
         }

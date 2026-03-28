@@ -178,7 +178,7 @@
                     </div>
                     <h2 class="text-2xl md:text-3xl font-black">Faça sua inscrição em 3 passos</h2>
                     <p class="text-sm md:text-base text-base-content/70 max-w-3xl">
-                        Um fluxo simples para participantes individuais: cadastro, pagamento por PIX e confirmação.
+                        Um fluxo simples para participantes individuais, incluindo inscrições de não irmãos: cadastro, pagamento por PIX e confirmação.
                     </p>
                 </div>
             </div>
@@ -193,7 +193,7 @@
                     <div class="space-y-2">
                         <h3 class="text-xl font-bold">Dados pessoais</h3>
                         <p class="text-sm text-base-content/70">
-                            Preencha nome completo, Loja, grau maçônico e informações de contato.
+                            Neste bloco também podem ser feitas inscrições de não irmãos, com preenchimento simples dos dados e contatos.
                         </p>
                     </div>
 
@@ -242,7 +242,7 @@
         </section>
 
         <section id="inscricao-multipla" class="rounded-[2rem] border border-base-300 bg-base-100 shadow-sm p-6 md:p-7 space-y-5 transition duration-500 hover:shadow-2xl">
-            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-3">
+            <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
                 <div class="space-y-2">
                     <div class="inline-flex items-center gap-2 text-sm uppercase tracking-wide text-primary font-semibold">
                         <span class="h-2.5 w-2.5 rounded-full bg-primary animate-pulse"></span>
@@ -251,6 +251,16 @@
                     <h2 class="text-2xl md:text-3xl font-black">Cadastre vários participantes com mais agilidade</h2>
                     <p class="text-sm md:text-base text-base-content/70 max-w-3xl">
                         Ideal para inscrições por Loja ou grupo, com envio unificado e conferência organizada.
+                    </p>
+                </div>
+
+                <div class="w-full md:w-auto md:max-w-xs rounded-[1.4rem] border border-amber-400/80 bg-gradient-to-br from-amber-200 via-amber-50 to-base-100 shadow-lg px-5 py-4 space-y-2 transition duration-500 hover:-translate-y-1 hover:shadow-xl">
+                    <div class="inline-flex w-fit items-center rounded-full border border-amber-700/70 bg-amber-300 px-3 py-1 text-[11px] font-black uppercase tracking-[0.22em] text-amber-950">
+                        Atenção neste bloco
+                    </div>
+                    <div class="text-sm font-black leading-snug text-amber-950">Exclusivo para irmãos</div>
+                    <p class="text-sm leading-relaxed text-stone-900">
+                        As inscrições em lote deste bloco são exclusivas para irmãos.
                     </p>
                 </div>
             </div>

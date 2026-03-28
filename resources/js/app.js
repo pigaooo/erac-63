@@ -1,10 +1,9 @@
 import './bootstrap';
-import Alpine from 'alpinejs';
 import mask from '@alpinejs/mask';
 
-Alpine.plugin(mask);
-window.Alpine = Alpine;
-Alpine.start();
+document.addEventListener('alpine:init', () => {
+    window.Alpine.plugin(mask);
+});
 
 // Auto-slide patrocinadores using DaisyUI carousel markup.
 const setupPatrocinadoresCarousel = (containerId, intervalMs = 2800) => {
