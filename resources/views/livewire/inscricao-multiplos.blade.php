@@ -19,7 +19,7 @@
                 <div>
                     <h3 class="text-lg font-bold">Inscrição múltipla</h3>
                     <p class="text-sm text-base-content/70">
-                        Escolha a Loja para inserir vários participantes, preencha os dados e adicione à tabela.
+                        Escolha a Loja para inserir vários participantes. Após cadastrar o primeiro irmão por uma Loja, os próximos cadastros deste lote poderão ser feitos somente para irmãos da mesma Loja.
                     </p>
                 </div>
 
@@ -172,14 +172,14 @@
                     </label>
                 </div>
 
-                <div class="flex items-center justify-between gap-4">
-                    <div class="text-sm text-base-content/70">
-                        Preencha os dados acima e clique em "Adicionar à tabela" para listar os inscritos antes de enviar.
+                <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                    <div class="alert alert-info border border-info/20 shadow-sm text-sm">
+                        <span>Preencha os dados acima e clique em "Adicionar à tabela" para listar os inscritos antes de enviar.</span>
                     </div>
 
                     <button
                         type="submit"
-                        class="btn btn-outline"
+                        class="btn btn-primary btn-wide shadow-lg"
                         wire:loading.attr="disabled"
                         wire:target="addToTable"
                     >

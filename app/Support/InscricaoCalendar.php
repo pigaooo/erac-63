@@ -43,7 +43,7 @@ class InscricaoCalendar
 
         if ($today->lessThan($this->inicioInscricoes())) {
             return sprintf(
-                'As inscrições on-line estão disponíveis para testes e seguem abertas até %s.',
+                'As inscrições on-line estão abertas até %s.',
                 $encerramento->translatedFormat('d/m/Y')
             );
         }
@@ -55,7 +55,10 @@ class InscricaoCalendar
             );
         }
 
-        return sprintf('As inscrições on-line estão abertas até %s.', $encerramento->translatedFormat('d/m/Y'));
+        return sprintf(
+            'As inscrições on-line estão abertas até %s.',
+            $encerramento->translatedFormat('d/m/Y')
+        );
     }
 
     public function resumo(?CarbonImmutable $date = null): array

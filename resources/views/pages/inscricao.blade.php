@@ -73,99 +73,76 @@
     <div id="inscricao-alert" class="hidden rounded-2xl border border-success/40 bg-success/10 text-success px-4 py-3 text-sm shadow-sm animate__animated animate__fadeIn" role="status"></div>
 
     <section class="grid gap-4 md:grid-cols-12">
-        <div class="md:col-span-7 rounded-[2rem] border border-base-300 bg-base-100 shadow-sm p-6 md:p-7 space-y-5 transition duration-500 hover:-translate-y-1 hover:shadow-xl scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="120">
-            <div class="flex items-center gap-2 text-sm uppercase tracking-wide text-primary font-semibold">
-                <span class="h-2.5 w-2.5 rounded-full bg-primary animate-pulse"></span>
-                Valores de inscrição
-            </div>
+        <div class="md:col-span-12 rounded-[2rem] border border-base-300 bg-base-100 shadow-sm p-6 md:p-7 transition duration-500 hover:-translate-y-1 hover:shadow-xl scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="120">
+            <div class="mx-auto max-w-6xl space-y-5">
+                <div class="flex items-center gap-2 text-sm uppercase tracking-wide text-primary font-semibold">
+                    <span class="h-2.5 w-2.5 rounded-full bg-primary animate-pulse"></span>
+                    Valores de inscrição
+                </div>
 
-            @if (count($lotesVisiveis))
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    @foreach ($lotesVisiveis as $lote)
-                        @php
-                            $isAtual = $loteAtual && $loteAtual['id'] === $lote['id'];
-                            $countdown = $lote['countdown'] ?? null;
-                        @endphp
-                        <div class="rounded-[1.5rem] border p-5 shadow-xs space-y-3 transition duration-300 hover:scale-[1.02] hover:shadow-lg {{ $isAtual ? 'border-primary/40 bg-primary/10 ring-1 ring-primary/30' : 'border-base-300 bg-base-200/60 hover:border-primary/40 hover:bg-base-200/90' }}">
-                            <div class="flex items-start justify-between gap-3">
-                                <div class="space-y-2">
-                                    <div class="badge badge-{{ $lote['badge'] }} badge-lg">{{ $lote['label'] }}</div>
-                                    @if ($isAtual)
-                                        <div class="badge badge-outline badge-primary">Lote vigente</div>
+                @if (count($lotesVisiveis))
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        @foreach ($lotesVisiveis as $lote)
+                            @php
+                                $isAtual = $loteAtual && $loteAtual['id'] === $lote['id'];
+                                $countdown = $lote['countdown'] ?? null;
+                            @endphp
+                            <div class="rounded-[1.5rem] border p-5 shadow-xs space-y-3 transition duration-300 hover:scale-[1.02] hover:shadow-lg {{ $isAtual ? 'border-primary/40 bg-primary/10 ring-1 ring-primary/30' : 'border-base-300 bg-base-200/60 hover:border-primary/40 hover:bg-base-200/90' }}">
+                                <div class="flex items-start justify-between gap-3">
+                                    <div class="space-y-2">
+                                        <div class="badge badge-{{ $lote['badge'] }} badge-lg">{{ $lote['label'] }}</div>
+                                        @if ($isAtual)
+                                            <div class="badge badge-outline badge-primary">Lote vigente</div>
+                                        @endif
+                                    </div>
+
+                                    @if ($countdown)
+                                        <div
+                                            class="text-right text-[10px] uppercase tracking-[0.18em] text-base-content/45"
+                                            data-lote-countdown
+                                            data-countdown-expires-at="{{ $countdown['expires_at_iso'] }}"
+                                        >
+                                            <div class="leading-none">Encerra em</div>
+                                            <div class="mt-1 flex items-baseline justify-end gap-1">
+                                                <span class="countdown font-semibold text-sm text-base-content/70">
+                                                    <span
+                                                        data-countdown-value
+                                                        style="--value:{{ $countdown['value'] }}; --digits:{{ max(strlen((string) $countdown['value']), 2) }};"
+                                                        aria-live="polite"
+                                                        aria-label="{{ $countdown['value'] }}"
+                                                    ></span>
+                                                </span>
+                                                <span data-countdown-unit>{{ $countdown['unit'] }}</span>
+                                            </div>
+                                        </div>
                                     @endif
                                 </div>
-
-                                @if ($countdown)
-                                    <div
-                                        class="text-right text-[10px] uppercase tracking-[0.18em] text-base-content/45"
-                                        data-lote-countdown
-                                        data-countdown-expires-at="{{ $countdown['expires_at_iso'] }}"
-                                    >
-                                        <div class="leading-none">Encerra em</div>
-                                        <div class="mt-1 flex items-baseline justify-end gap-1">
-                                            <span class="countdown font-semibold text-sm text-base-content/70">
-                                                <span
-                                                    data-countdown-value
-                                                    style="--value:{{ $countdown['value'] }}; --digits:{{ max(strlen((string) $countdown['value']), 2) }};"
-                                                    aria-live="polite"
-                                                    aria-label="{{ $countdown['value'] }}"
-                                                ></span>
-                                            </span>
-                                            <span data-countdown-unit>{{ $countdown['unit'] }}</span>
-                                        </div>
-                                    </div>
-                                @endif
+                                <div class="text-3xl md:text-4xl font-black">{{ $lote['valor'] }}</div>
+                                <p class="text-sm text-base-content/70">
+                                    De {{ $lote['periodo'] }}. {{ $lote['descricao'] }}
+                                </p>
                             </div>
-                            <div class="text-3xl md:text-4xl font-black">{{ $lote['valor'] }}</div>
+                        @endforeach
+
+                        <div class="rounded-[1.5rem] border border-error/30 bg-error/5 p-5 shadow-xs space-y-3 transition duration-300 hover:scale-[1.02] hover:border-error/50 hover:shadow-lg">
+                            <div class="flex items-center justify-between">
+                                <div class="badge badge-error badge-lg">Prazo final</div>
+                            </div>
+                            <div class="text-2xl md:text-3xl font-black">Após {{ $encerramentoOnline?->translatedFormat('d/m') }}</div>
                             <p class="text-sm text-base-content/70">
-                                De {{ $lote['periodo'] }}. {{ $lote['descricao'] }}
+                                Somente no local do evento. O encerramento é apenas para a inscrição online.
                             </p>
                         </div>
-                    @endforeach
-
-                    <div class="rounded-[1.5rem] border border-error/30 bg-error/5 p-5 shadow-xs space-y-3 transition duration-300 hover:scale-[1.02] hover:border-error/50 hover:shadow-lg">
-                        <div class="flex items-center justify-between">
-                            <div class="badge badge-error badge-lg">Prazo final</div>
-                        </div>
-                        <div class="text-2xl md:text-3xl font-black">Após {{ $encerramentoOnline?->translatedFormat('d/m') }}</div>
-                        <p class="text-sm text-base-content/70">
-                            Somente no local do evento. O encerramento é apenas para a inscrição online.
-                        </p>
                     </div>
-                </div>
-            @else
-                <div class="rounded-[1.5rem] border border-warning/30 bg-warning/10 p-5 text-sm text-base-content/75">
-                    Nenhum lote está disponível no momento. {{ $mensagemStatus }}
-                </div>
-            @endif
+                @else
+                    <div class="rounded-[1.5rem] border border-warning/30 bg-warning/10 p-5 text-sm text-base-content/75">
+                        Nenhum lote está disponível no momento. {{ $mensagemStatus }}
+                    </div>
+                @endif
 
-            <div class="rounded-2xl border border-dashed border-base-300 bg-base-200/40 px-4 py-3 text-xs text-base-content/60 transition duration-300 hover:border-primary/40">
-                * Regras automáticas de exibição no fuso {{ $timezoneInscricoes }}. Cada lote permanece visível até sua data de encerramento.
             </div>
         </div>
 
-        <div class="md:col-span-5 grid gap-4">
-            @if ($inscricoesAbertas)
-                <div class="rounded-[2rem] border border-base-300 bg-base-100 shadow-sm p-6 space-y-3 transition duration-500 hover:-translate-y-1 hover:shadow-xl scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="180">
-                    <div class="text-xs font-bold uppercase tracking-[0.2em] text-base-content/60">Pagamento</div>
-                    <div class="text-xl font-black">PIX rápido e prático</div>
-                    <p class="text-sm text-base-content/70">
-                        Abra o QR Code ou a chave PIX, realize o pagamento e envie o comprovante para validação.
-                    </p>
-                    <button type="button" class="btn btn-primary rounded-xl w-full transition duration-300 hover:scale-[1.03] hover:shadow-lg" data-pix-trigger>
-                        Abrir PIX / QR
-                    </button>
-                </div>
-            @else
-                <div class="rounded-[2rem] border border-base-300 bg-base-100 shadow-sm p-6 space-y-3 scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="180">
-                    <div class="text-xs font-bold uppercase tracking-[0.2em] text-base-content/60">Pagamento on-line</div>
-                    <div class="text-xl font-black">Canal PIX encerrado</div>
-                    <p class="text-sm text-base-content/70">
-                        Como as inscrições on-line foram encerradas, o pagamento via PIX para o site não está mais disponível.
-                    </p>
-                </div>
-            @endif
-        </div>
     </section>
 
     @if ($inscricoesAbertas)
@@ -256,7 +233,7 @@
 
                 <div class="w-full md:w-auto md:max-w-xs rounded-[1.4rem] border border-amber-400/80 bg-gradient-to-br from-amber-200 via-amber-50 to-base-100 shadow-lg px-5 py-4 space-y-2 transition duration-500 hover:-translate-y-1 hover:shadow-xl">
                     <div class="inline-flex w-fit items-center rounded-full border border-amber-700/70 bg-amber-300 px-3 py-1 text-[11px] font-black uppercase tracking-[0.22em] text-amber-950">
-                        Atenção neste bloco
+                        Atenção
                     </div>
                     <div class="text-sm font-black leading-snug text-amber-950">Exclusivo para irmãos</div>
                     <p class="text-sm leading-relaxed text-stone-900">
