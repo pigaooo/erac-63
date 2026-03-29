@@ -19,7 +19,7 @@
                 <div>
                     <h3 class="text-lg font-bold">Inscrição múltipla</h3>
                     <p class="text-sm text-base-content/70">
-                        Escolha a Loja para inserir vários participantes. Após cadastrar o primeiro irmão por uma Loja, os próximos cadastros deste lote poderão ser feitos somente para irmãos da mesma Loja.
+                        Escolha a Loja para inserir vários participantes. Após adicionar o primeiro irmão à tabela, os próximos cadastros deste lote poderão ser feitos somente para irmãos da mesma Loja.
                     </p>
                 </div>
 
