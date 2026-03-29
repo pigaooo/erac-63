@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 space-y-10 scroll-reveal" data-reveal="fadeIn">
-    <div class="scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="120">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 space-y-10">
+    <div>
         @include('componentes.patrocinadores-carousel', ['patrocinadores' => $patrocinadores ?? collect()])
     </div>
 
@@ -13,8 +13,8 @@
 
         <div class="relative space-y-2">
             <p class="text-sm font-semibold text-primary uppercase tracking-widest">Programação</p>
-            <h1 class="text-3xl md:text-5xl font-black leading-tight scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="80">Agenda do ERAC</h1>
-            <p class="text-base-content/80 max-w-3xl scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="140">
+            <h1 class="text-3xl md:text-5xl font-black leading-tight">Agenda do ERAC</h1>
+            <p class="text-base-content/80 max-w-3xl">
                 Linha do tempo e atividades do encontro, com uma visão clara do que acontece ao longo do dia.
             </p>
         </div>
@@ -97,7 +97,7 @@
     </div>
 
     <div class="grid gap-4 md:grid-cols-12">
-        <div class="md:col-span-4 rounded-2xl border border-base-300 bg-base-100/80 p-5 shadow-sm space-y-3 transition duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="380">
+        <div class="md:col-span-4 rounded-2xl border border-base-300 bg-base-100/80 p-5 shadow-sm space-y-3 transition duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl">
             <div class="text-sm font-semibold text-primary">Atividades</div>
             <div class="space-y-2 text-sm text-base-content/80">
                 <div class="font-semibold text-base">Abertura ritual e institucional</div>
@@ -107,7 +107,7 @@
             </div>
         </div>
 
-        <div class="md:col-span-4 rounded-2xl border border-base-300 bg-base-100/80 p-5 shadow-sm space-y-3 transition duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="420">
+        <div class="md:col-span-4 rounded-2xl border border-base-300 bg-base-100/80 p-5 shadow-sm space-y-3 transition duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl">
             <div class="text-sm font-semibold text-primary">Temas e palestras</div>
             <div class="space-y-2 text-sm text-base-content/80">
                 <div class="font-semibold text-base">Temas dos trabalhos</div>
@@ -117,7 +117,7 @@
             </div>
         </div>
 
-        <div class="md:col-span-4 rounded-2xl border border-base-300 bg-base-100/80 p-5 shadow-sm space-y-3 transition duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="460">
+        <div class="md:col-span-4 rounded-2xl border border-base-300 bg-base-100/80 p-5 shadow-sm space-y-3 transition duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl">
             <div class="text-sm font-semibold text-primary">Tempo & logística</div>
             <div class="space-y-2 text-sm text-base-content/80">
                 <div class="font-semibold text-base">Janela oficial das salas</div>

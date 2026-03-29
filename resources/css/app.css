@@ -10,7 +10,6 @@
 
 .scroll-reveal {
     opacity: 0;
-    will-change: opacity, transform;
 }
 
 .scroll-reveal.is-visible {

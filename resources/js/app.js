@@ -36,8 +36,16 @@ const setupScrollReveal = () => {
         const animation = element.dataset.reveal || 'fadeInUp';
         const delay = parseInt(element.dataset.revealDelay || '0', 10);
 
+        element.style.willChange = 'opacity, transform';
         element.style.setProperty('--animate-delay', `${delay}ms`);
         element.classList.add('animate__animated', `animate__${animation}`, 'is-visible');
+
+        const clearWillChange = () => {
+            element.style.willChange = 'auto';
+            element.removeEventListener('animationend', clearWillChange);
+        };
+
+        element.addEventListener('animationend', clearWillChange, { once: true });
     };
 
     if (prefersReducedMotion || !('IntersectionObserver' in window)) {
