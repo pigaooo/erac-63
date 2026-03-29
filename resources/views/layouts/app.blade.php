@@ -70,9 +70,58 @@
             </div>
 
             <div class="border-t border-base-300/80 pt-5 text-xs text-base-content/60">
-                <div>ERAC 61. Formação, integração e fraternidade entre Aprendizes e Companheiros.</div>
+                <div class="flex items-center justify-between gap-4">
+                    <div>ERAC 61. Formação, integração e fraternidade entre Aprendizes e Companheiros.</div>
+                    <button
+                        type="button"
+                        class="font-medium text-primary transition hover:text-primary/80"
+                        onclick="document.getElementById('developer-modal').showModal()"
+                    >
+                        Desenvolvido por
+                    </button>
+                </div>
             </div>
         </div>
     </footer>
+
+    <dialog id="developer-modal" class="modal">
+        <div class="modal-box relative max-w-lg rounded-[2rem] border border-base-300 bg-base-100 p-6 md:p-8">
+            <form method="dialog">
+                <button class="btn btn-sm btn-circle absolute right-4 top-4">✕</button>
+            </form>
+
+            <div class="mb-6 pr-10">
+                <div class="text-xs font-semibold uppercase tracking-[0.28em] text-primary">Autor</div>
+                <h3 id="developer-modal-title" class="mt-2 text-2xl font-black text-base-content">Informações sobre o autor</h3>
+                <p class="mt-2 text-sm leading-6 text-base-content/70">
+                    Este Site foi desenvolvido com carinho para nossa querida A∴R∴B∴L∴S∴
+                    <strong class="font-bold text-base-content">Fonte de Vida</strong>
+                </p>
+            </div>
+
+            <div class="space-y-4">
+                <div class="rounded-[1.5rem] border border-base-300 bg-base-200/60 p-4">
+                    <div class="text-[11px] font-semibold uppercase tracking-[0.24em] text-base-content/50">Nome</div>
+                    <div class="mt-2 text-base font-semibold text-base-content">Thiago Sarkis ∴</div>
+                </div>
+
+                <div class="rounded-[1.5rem] border border-base-300 bg-base-200/60 p-4">
+                    <div class="text-[11px] font-semibold uppercase tracking-[0.24em] text-base-content/50">E-mail</div>
+                    <a href="mailto:pigaooo@gmail.com" class="mt-2 inline-flex text-base font-semibold text-primary transition hover:text-primary/80">
+                        pigaooo@gmail.com
+                    </a>
+                </div>
+
+                <div class="rounded-[1.5rem] border border-base-300 bg-base-200/60 p-4">
+                    <div class="text-[11px] font-semibold uppercase tracking-[0.24em] text-base-content/50">Profissão</div>
+                    <div class="mt-2 text-base font-semibold text-base-content">Software Engineering</div>
+                </div>
+            </div>
+        </div>
+
+        <form method="dialog" class="modal-backdrop">
+            <button>Fechar</button>
+        </form>
+    </dialog>
 </body>
 </html>
