@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Inscrito;
 use App\Models\Loja;
 use App\Support\InscricaoCalendar;
+use App\Support\InscritoEmailDispatcher;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Validator;
@@ -144,6 +145,13 @@ class InscricaoMultiplos extends Component
             ->all();
 
         Inscrito::query()->insert($payload);
+
+        $inscritos = Inscrito::query()
+            ->with('loja')
+            ->whereIn('id', collect($payload)->pluck('id'))
+            ->get();
+
+        app(InscritoEmailDispatcher::class)->dispatchRegistrationConfirmations($inscritos, true);
 
         $this->flashMessage = 'Inscritos cadastrados com sucesso.';
         $this->dispatch('inscricao-alert', message: 'As inscrições foram enviadas com sucesso.');

@@ -6,10 +6,12 @@ use App\Filament\Resources\InscritoResource\Pages\CreateInscrito;
 use App\Filament\Resources\InscritoResource\Pages\EditInscrito;
 use App\Filament\Resources\InscritoResource\Pages\ListInscritos;
 use App\Models\Inscrito;
+use App\Support\InscritoEmailDispatcher;
 use Filament\Actions\BulkAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Notifications\Notification;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -162,6 +164,47 @@ class InscritoResource extends Resource
                 DeleteAction::make(),
             ])
             ->toolbarActions([
+                BulkAction::make('confirmPayments')
+                    ->label('Confirmar pagamento')
+                    ->icon('heroicon-o-banknotes')
+                    ->color('primary')
+                    ->requiresConfirmation()
+                    ->deselectRecordsAfterCompletion()
+                    ->action(function (Collection $records): void {
+                        $ids = $records
+                            ->filter(fn (Inscrito $inscrito) => $inscrito->payment_confirmation_sent_at === null)
+                            ->pluck('id');
+
+                        if ($ids->isEmpty()) {
+                            Notification::make()
+                                ->title('Nenhum inscrito elegivel para confirmacao de pagamento.')
+                                ->warning()
+                                ->send();
+
+                            return;
+                        }
+
+                        Inscrito::withoutEvents(function () use ($ids): void {
+                            Inscrito::query()
+                                ->whereKey($ids)
+                                ->update([
+                                    'is_paied' => true,
+                                    'updated_at' => now(),
+                                ]);
+                        });
+
+                        $inscritos = Inscrito::query()
+                            ->with('loja')
+                            ->whereKey($ids)
+                            ->get();
+
+                        app(InscritoEmailDispatcher::class)->dispatchPaymentBatch($inscritos);
+
+                        Notification::make()
+                            ->title('Pagamentos confirmados e e-mails enviados para a fila.')
+                            ->success()
+                            ->send();
+                    }),
                 BulkAction::make('exportPdf')
                     ->label('Exportar PDF')
                     ->icon('heroicon-o-document-arrow-down')

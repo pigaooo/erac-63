@@ -23,12 +23,16 @@ class Inscrito extends Model
         'grau',
         'loja_id',
         'is_paied',
+        'registration_confirmation_sent_at',
+        'payment_confirmation_sent_at',
     ];
 
     protected $casts = [
         'id' => 'string',
         'loja_id' => 'string',
         'is_paied' => 'boolean',
+        'registration_confirmation_sent_at' => 'datetime',
+        'payment_confirmation_sent_at' => 'datetime',
     ];
 
     public function loja()

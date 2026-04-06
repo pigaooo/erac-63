@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Inscrito;
 use App\Models\Loja;
 use App\Support\InscricaoCalendar;
+use App\Support\InscritoEmailDispatcher;
 use Illuminate\Support\Facades\Schema;
 use Livewire\Component;
 
@@ -117,7 +118,7 @@ class InscricaoModal extends Component
 
         $cim = $isOutros ? $validated['cpf'] : $validated['cim'];
 
-        Inscrito::query()->create([
+        $inscrito = Inscrito::query()->create([
             'name' => $validated['nome'],
             'email' => $validated['email'],
             'telefone' => $validated['telefone'],
@@ -127,6 +128,8 @@ class InscricaoModal extends Component
             'loja_id' => $validated['lojaId'],
             'is_paied' => false,
         ]);
+
+        app(InscritoEmailDispatcher::class)->dispatchRegistrationConfirmation($inscrito);
 
         $this->flashMessage = 'Inscrição enviada com sucesso.';
         $this->dispatch('inscricao-alert', message: 'A inscrição individual foi enviada com sucesso.');
