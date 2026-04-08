@@ -27,12 +27,12 @@
         <div class="rounded-xl border border-primary/30 bg-primary/10 p-3 text-sm font-semibold text-primary">
             <div class="text-center">Após pagar, envie o comprovante para</div>
             <div class="mt-2 flex flex-col sm:flex-row sm:items-center sm:justify-center gap-3">
-                <span class="underline break-all">comprovante@fontedevida.com</span>
+                <span class="underline break-all">comprovantes@erac61.com.br</span>
                 <button
                     type="button"
                     class="btn btn-sm btn-outline btn-primary w-full sm:w-auto"
                     data-copy-button
-                    data-copy-text="comprovante@fontedevida.com"
+                    data-copy-text="comprovantes@erac61.com.br"
                     aria-label="Copiar e-mail do comprovante"
                     title="Copiar e-mail do comprovante"
                 >

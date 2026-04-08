@@ -17,7 +17,7 @@
             <td style="padding:20px 22px;">
                 <div style="font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:#d7b98d; margin-bottom:8px;">Proximo passo</div>
                 <div style="font-size:16px; line-height:1.75; color:#fff5e2;">
-                    Realize o pagamento via PIX e envie o comprovante para <strong>comprovante@fontedevida.com</strong>.
+                    Realize o pagamento via PIX e envie o comprovante para <strong>comprovantes@erac61.com.br</strong>.
                 </div>
             </td>
         </tr>

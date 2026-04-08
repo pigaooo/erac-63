@@ -35,6 +35,22 @@ class Inscrito extends Model
         'payment_confirmation_sent_at' => 'datetime',
     ];
 
+    public function getGrauDescricaoAttribute()
+    {
+        $map = [
+            'AM' => 'A∴M∴',
+            'CM' => 'C∴M∴',
+            'MM' => 'M∴M∴',
+            'MI' => 'M∴I∴',
+            'OT' => 'Outros',
+            'VI' => 'Visitante',
+            'CU' => 'Cunhada',
+            'SO' => 'Sobrinho',
+        ];
+
+        return $map[$this->grau] ?? $this->grau;
+    }
+
     public function loja()
     {
         return $this->belongsTo(Loja::class);

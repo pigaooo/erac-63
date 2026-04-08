@@ -187,7 +187,7 @@
                         <h3 class="text-xl font-bold">Pagamento via PIX</h3>
                         <p class="text-sm text-base-content/70">
                             Abra o QR/Chave PIX, realize o pagamento e envie o comprovante para
-                            <strong>comprovante@fontedevida.com</strong>.
+                            <strong>comprovantes@erac61.com.br</strong>.
                         </p>
                     </div>
 
@@ -269,7 +269,7 @@
                         <h3 class="text-xl font-bold">Pagamento único</h3>
                         <p class="text-sm text-base-content/70">
                             Efetue o pagamento total via PIX e envie um único comprovante para
-                            <strong>comprovante@fontedevida.com</strong>.
+                            <strong>comprovantes@erac61.com.br</strong>.
                         </p>
                     </div>
 

@@ -36,7 +36,7 @@
                                             <strong>Nome:</strong> {{ $inscrito->name }}<br>
                                             <strong>E-mail:</strong> {{ $inscrito->email }}<br>
                                             <strong>Loja:</strong> {{ $inscrito->loja->name ?? 'Nao informada' }}<br>
-                                            <strong>Grau:</strong> {{ $inscrito->grau }}
+                                            <strong>Grau:</strong> {{ $inscrito->grau_descricao }}
                                         </div>
                                     </td>
                                 </tr>
@@ -46,11 +46,10 @@
                     <tr>
                         <td style="padding:0 36px 36px 36px;">
                             <p style="margin:0 0 14px 0; font-size:15px; line-height:1.75; color:#5a4030;">
-                                Se precisar falar com a organizacao, responda este e-mail ou envie o comprovante para <strong>comprovante@fontedevida.com</strong>.
+                                Duvidas sobre a inscrição ou o pagamento envie um e-mail para: <strong>inscricao@erac61.com.br</strong>
                             </p>
                             <p style="margin:0; font-size:12px; line-height:1.7; color:#8a715f;">
-                                {{ config('app.name') }}<br>
-                                Mensagem automatica enviada pela fila do sistema.
+                                ERAC 61
                             </p>
                         </td>
                     </tr>
