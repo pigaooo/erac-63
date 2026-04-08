@@ -99,7 +99,17 @@ class InscricaoMultiplos extends Component
             }
         }
 
-        $this->inscritos[] = $validated;
+        $annotated = $this->annotateDatabaseStatus($validated);
+
+        if ($annotated['ja_cadastrado']) {
+            $message = 'Participante já está cadastrado.';
+            $this->flashMessage = $message;
+            $this->addError('inscritos', $message);
+
+            return;
+        }
+
+        $this->inscritos[] = $annotated;
         $this->resetFormFields();
     }
 
@@ -220,6 +230,49 @@ class InscricaoMultiplos extends Component
             'grau' => trim((string) ($row['grau'] ?? '')),
             'loja_id' => (string) ($row['loja_id'] ?? ''),
         ];
+    }
+
+    private function annotateDatabaseStatus(array $row): array
+    {
+        $normalized = $this->normalizeRow($row);
+        $duplicateMessage = $this->findDatabaseDuplicateMessage($normalized);
+
+        $normalized['ja_cadastrado'] = $duplicateMessage !== null;
+
+        return $normalized;
+    }
+
+    private function findDatabaseDuplicateMessage(array $row): ?string
+    {
+        $existing = Inscrito::query()
+            ->where('email', $row['email'])
+            ->orWhere('cpf', $row['cpf'])
+            ->orWhere('cim', $row['cim'])
+            ->first(['email', 'cpf', 'cim']);
+
+        if (! $existing) {
+            return null;
+        }
+
+        $campos = [];
+
+        if ((string) $existing->email === $row['email']) {
+            $campos[] = 'e-mail';
+        }
+
+        if ((string) $existing->cpf === $row['cpf']) {
+            $campos[] = 'CPF';
+        }
+
+        if ((string) $existing->cim === $row['cim']) {
+            $campos[] = 'CIM';
+        }
+
+        $descricao = implode(', ', $campos);
+
+        return $descricao !== ''
+            ? "Já cadastrado no sistema ({$descricao})."
+            : 'Já cadastrado no sistema.';
     }
 
     private function rowRules(): array

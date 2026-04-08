@@ -4,12 +4,14 @@ namespace App\Jobs;
 
 use App\Mail\PaymentConfirmationMail;
 use App\Models\Inscrito;
+use Illuminate\Bus\Batchable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Facades\Mail;
 
 class SendPaymentConfirmationEmail implements ShouldQueue
 {
+    use Batchable;
     use Queueable;
 
     public function __construct(public string $inscritoId)

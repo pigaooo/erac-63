@@ -1,10 +1,4 @@
 <div class="space-y-4">
-    @if ($flashMessage)
-        <div class="alert {{ $inscricoesAbertas ? 'alert-success' : 'alert-warning' }} text-sm">
-            {{ $flashMessage }}
-        </div>
-    @endif
-
     @error('inscricoes')
         <div class="alert alert-warning text-sm">{{ $message }}</div>
     @enderror
@@ -15,6 +9,12 @@
 
     <div class="modal {{ $showModal ? 'modal-open' : '' }}" wire:keydown.escape="closeModal">
         <div class="modal-box max-w-5xl space-y-4">
+            @if ($flashMessage)
+                <div class="alert alert-warning text-sm">
+                    {{ $flashMessage }}
+                </div>
+            @endif
+
             <div class="flex items-start justify-between">
                 <div>
                     <h3 class="text-lg font-bold">Inscrição múltipla</h3>
@@ -39,77 +39,91 @@
                             $lojaSelecionadaNome = $lojas->firstWhere('id', $loja_id)?->name ?? '';
                             $lojaOptions = $lojas->map(fn ($loja) => ['id' => (string) $loja->id, 'name' => $loja->name])->values();
                         @endphp
-                        <div
-                            class="dropdown w-full"
-                            x-data="{
-                                open: false,
-                                search: @js($lojaSelecionadaNome),
-                                selectedId: @js($loja_id),
-                                disabled: @js(count($inscritos) > 0),
-                                options: @js($lojaOptions),
-                                normalize(value) { return (value || '').toLowerCase().trim() },
-                                get filteredOptions() {
-                                    return this.options.filter(option => this.normalize(option.name).includes(this.normalize(this.search)))
-                                },
-                                handleInput() {
-                                    if (this.disabled) return
-                                    this.open = true
-                                    const match = this.options.find(option => this.normalize(option.name) === this.normalize(this.search))
-                                    this.selectedId = match ? match.id : ''
-                                    $wire.set('lojaSearch', this.search)
-                                    $wire.set('loja_id', this.selectedId)
-                                },
-                                selectOption(option) {
-                                    if (this.disabled) return
-                                    this.search = option.name
-                                    this.selectedId = option.id
-                                    this.open = false
-                                    $wire.set('lojaSearch', option.name)
-                                    $wire.set('loja_id', option.id)
-                                },
-                                closeDropdown() {
-                                    this.open = false
-                                }
-                            }"
-                            @click.outside="closeDropdown()"
-                        >
+                        @if(count($inscritos) === 0)
+                            <div
+                                class="dropdown w-full"
+                                x-data="{
+                                    open: false,
+                                    search: @js($lojaSelecionadaNome),
+                                    selectedId: @js($loja_id),
+                                    options: @js($lojaOptions),
+                                    normalize(value) { return (value || '').toLowerCase().trim() },
+                                    get filteredOptions() {
+                                        return this.options.filter(option => this.normalize(option.name).includes(this.normalize(this.search)))
+                                    },
+                                    handleInput() {
+                                        this.open = true
+                                        const match = this.options.find(option => this.normalize(option.name) === this.normalize(this.search))
+                                        this.selectedId = match ? match.id : ''
+                                        $wire.set('lojaSearch', this.search)
+                                        $wire.set('loja_id', this.selectedId)
+                                    },
+                                    selectOption(option) {
+                                        this.search = option.name
+                                        this.selectedId = option.id
+                                        this.open = false
+                                        $wire.set('lojaSearch', option.name)
+                                        $wire.set('loja_id', option.id)
+                                    },
+                                    closeDropdown() {
+                                        this.open = false
+                                    }
+                                }"
+                                @click.outside="closeDropdown()"
+                            >
+                                <div class="relative">
+                                    <input
+                                        type="text"
+                                        class="input input-bordered w-full pr-10"
+                                        placeholder="Pesquisar loja..."
+                                        x-model="search"
+                                        @focus="open = true"
+                                        @input="handleInput()"
+                                    >
+                                    <span class="pointer-events-none absolute inset-y-0 right-3 flex items-center text-base-content/45">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.512a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                        </svg>
+                                    </span>
+                                </div>
+
+                                <ul
+                                    x-show="open"
+                                    x-transition.opacity.duration.120ms
+                                    class="dropdown-content z-[70] mt-2 w-full rounded-box border border-base-300 bg-base-100 p-2 shadow-xl max-h-60 overflow-y-auto"
+                                >
+                                    <template x-for="option in filteredOptions" :key="option.id">
+                                        <li class="list-none">
+                                            <button
+                                                type="button"
+                                                class="btn btn-ghost btn-sm justify-start w-full normal-case font-medium"
+                                                @click="selectOption(option)"
+                                                x-text="option.name"
+                                            ></button>
+                                        </li>
+                                    </template>
+                                    <li x-show="filteredOptions.length === 0" class="list-none px-3 py-2 text-sm text-base-content/60">
+                                        Nenhuma loja encontrada.
+                                    </li>
+                                </ul>
+                            </div>
+                        @else
                             <div class="relative">
                                 <input
                                     type="text"
                                     class="input input-bordered w-full pr-10"
-                                    placeholder="Pesquisar loja..."
-                                    x-model="search"
-                                    @focus="if (!disabled) open = true"
-                                    @input="handleInput()"
-                                    :disabled="disabled"
+                                    value="{{ $lojaSelecionadaNome }}"
+                                    disabled
                                 >
+                                <input type="hidden" wire:model="loja_id">
+                                <input type="hidden" wire:model="lojaSearch">
                                 <span class="pointer-events-none absolute inset-y-0 right-3 flex items-center text-base-content/45">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                                         <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.512a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
                                     </svg>
                                 </span>
                             </div>
-
-                            <ul
-                                x-show="open && !disabled"
-                                x-transition.opacity.duration.120ms
-                                class="dropdown-content z-[70] mt-2 w-full rounded-box border border-base-300 bg-base-100 p-2 shadow-xl max-h-60 overflow-y-auto"
-                            >
-                                <template x-for="option in filteredOptions" :key="option.id">
-                                    <li class="list-none">
-                                        <button
-                                            type="button"
-                                            class="btn btn-ghost btn-sm justify-start w-full normal-case font-medium"
-                                            @click="selectOption(option)"
-                                            x-text="option.name"
-                                        ></button>
-                                    </li>
-                                </template>
-                                <li x-show="filteredOptions.length === 0" class="list-none px-3 py-2 text-sm text-base-content/60">
-                                    Nenhuma loja encontrada.
-                                </li>
-                            </ul>
-                        </div>
+                        @endif
 
                         @if ($lojaSearch !== '' && $loja_id === '')
                             <div class="mt-1 text-xs text-base-content/60">Selecione uma loja válida na lista.</div>
