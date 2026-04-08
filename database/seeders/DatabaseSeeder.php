@@ -46,6 +46,7 @@ class DatabaseSeeder extends Seeder
             'Uniao das Americas',
             'Uniao, Forca e Vigor',
             'Universitaria Cavaleiros do Sol',
+            'Visitante',
             'Fonte de Vida',
             'Vinte e Um de Abril',
             'Natureza e Fraternidade',

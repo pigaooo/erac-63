@@ -11,6 +11,8 @@ use Livewire\Component;
 
 class InscricaoModal extends Component
 {
+    private const TIPOS_ESPECIAIS = ['OT', 'VI', 'CU', 'SO'];
+
     public bool $showModal = false;
     public string $nome = '';
     public string $email = '';
@@ -19,6 +21,7 @@ class InscricaoModal extends Component
     public string $cim = '';
     public string $grau = '';
     public string $lojaId = '';
+    public string $lojaSearch = '';
     public $lojas;
     public ?string $flashMessage = null;
     public int $formKey = 0;
@@ -61,16 +64,39 @@ class InscricaoModal extends Component
 
     public function updatedGrau(string $value): void
     {
-        if ($value === 'OT') {
+        if ($this->isTipoEspecial($value)) {
             $this->cim = '';
-            $this->lojaId = $this->fallbackLojaId();
+            $this->lojaId = $this->visitanteLojaId();
+            $this->lojaSearch = $this->lojas->firstWhere('id', $this->lojaId)?->name ?? '';
             $this->resetValidation(['cim', 'lojaId']);
+
             return;
+        }
+
+        if ($this->lojaId === $this->visitanteLojaId()) {
+            $this->lojaId = '';
+            $this->lojaSearch = '';
         }
 
         if ($this->lojaId !== '' && ! $this->lojas->contains('id', $this->lojaId)) {
             $this->lojaId = '';
         }
+    }
+
+    public function updatedLojaSearch(string $value): void
+    {
+        $search = mb_strtolower(trim($value));
+
+        if ($search === '') {
+            $this->lojaId = '';
+            return;
+        }
+
+        $loja = $this->lojas->first(function ($item) use ($search) {
+            return mb_strtolower((string) $item->name) === $search;
+        });
+
+        $this->lojaId = (string) ($loja?->id ?? '');
     }
 
     public function submit(): void
@@ -83,26 +109,25 @@ class InscricaoModal extends Component
         $this->telefone = trim((string) $this->telefone);
         $this->cim = trim((string) $this->cim);
 
-        $isOutros = $this->grau === 'OT';
+        $isTipoEspecial = $this->isTipoEspecial();
 
-        if ($isOutros && $this->lojaId === '') {
-            $this->lojaId = $this->fallbackLojaId();
+        if ($isTipoEspecial && $this->lojaId === '') {
+            $this->lojaId = $this->visitanteLojaId();
         }
 
         $validated = $this->validate([
-            'grau' => ['required', 'in:AM,CM,MM,MI,OT'],
+            'grau' => ['required', 'in:AM,CM,MM,MI,OT,VI,CU,SO'],
             'nome' => ['required', 'string', 'min:3', 'max:150'],
             'email' => ['required', 'email', 'max:150', 'unique:inscritos,email'],
             'telefone' => ['required', 'string', 'max:50'],
             'cpf' => ['required', 'string', 'max:20', 'unique:inscritos,cpf'],
-            'cim' => $isOutros
+            'cim' => $isTipoEspecial
                 ? ['nullable', 'string', 'max:50']
                 : ['required', 'string', 'max:50', 'unique:inscritos,cim'],
-            'lojaId' => $isOutros
-                ? ['required', 'exists:lojas,id']
-                : ['required', 'exists:lojas,id'],
+            'lojaId' => ['required', 'exists:lojas,id'],
         ], [
-            'grau.required' => 'Selecione o grau maçônico.',
+            'grau.required' => 'Selecione o tipo de visitante.',
+            'grau.in' => 'Selecione um tipo de visitante válido.',
             'nome.required' => 'Informe o nome completo.',
             'email.required' => 'Informe o e-mail.',
             'email.email' => 'E-mail inválido.',
@@ -116,7 +141,7 @@ class InscricaoModal extends Component
             'lojaId.exists' => 'Loja não encontrada.',
         ]);
 
-        $cim = $isOutros ? $validated['cpf'] : $validated['cim'];
+        $cim = $isTipoEspecial ? $validated['cpf'] : $validated['cim'];
 
         $inscrito = Inscrito::query()->create([
             'name' => $validated['nome'],
@@ -142,17 +167,22 @@ class InscricaoModal extends Component
 
     private function resetFormFields(): void
     {
-        $this->reset(['nome', 'email', 'telefone', 'cpf', 'cim', 'grau', 'lojaId']);
+        $this->reset(['nome', 'email', 'telefone', 'cpf', 'cim', 'grau', 'lojaId', 'lojaSearch']);
         $this->formKey++;
     }
 
-    private function fallbackLojaId(): string
+    private function visitanteLojaId(): string
     {
-        $lojaFonteDeVida = $this->lojas->first(function ($loja) {
-            return mb_strtolower((string) $loja->name) === 'fonte de vida';
+        $lojaVisitante = $this->lojas->first(function ($loja) {
+            return mb_strtolower((string) $loja->name) === 'visitante';
         });
 
-        return (string) ($lojaFonteDeVida?->id ?? $this->lojas->first()?->id ?? '');
+        return (string) ($lojaVisitante?->id ?? $this->lojas->first()?->id ?? '');
+    }
+
+    private function isTipoEspecial(?string $value = null): bool
+    {
+        return in_array($value ?? $this->grau, self::TIPOS_ESPECIAIS, true);
     }
 
     public function render()

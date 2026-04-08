@@ -26,6 +26,7 @@ class InscricaoMultiplos extends Component
     public string $cim = '';
     public string $grau = '';
     public string $loja_id = '';
+    public string $lojaSearch = '';
     public int $formKey = 0;
     public bool $inscricoesAbertas = false;
     public string $mensagemStatus = '';
@@ -59,6 +60,22 @@ class InscricaoMultiplos extends Component
         $this->showModal = false;
     }
 
+    public function updatedLojaSearch(string $value): void
+    {
+        $search = mb_strtolower(trim($value));
+
+        if ($search === '') {
+            $this->loja_id = '';
+            return;
+        }
+
+        $loja = $this->lojas->first(function ($item) use ($search) {
+            return mb_strtolower((string) $item->name) === $search;
+        });
+
+        $this->loja_id = (string) ($loja?->id ?? '');
+    }
+
     public function addToTable(): void
     {
         if (! $this->ensureInscricoesAbertas()) {
@@ -90,6 +107,11 @@ class InscricaoMultiplos extends Component
     {
         unset($this->inscritos[$index]);
         $this->inscritos = array_values($this->inscritos);
+
+        if (count($this->inscritos) === 0) {
+            $this->loja_id = '';
+            $this->lojaSearch = '';
+        }
     }
 
     public function submit(): void
@@ -159,6 +181,7 @@ class InscricaoMultiplos extends Component
         $this->inscritos = [];
         $this->resetFormFields();
         $this->loja_id = '';
+        $this->lojaSearch = '';
         $this->showModal = false;
     }
 
@@ -222,7 +245,7 @@ class InscricaoMultiplos extends Component
             'cpf.required' => 'Informe o CPF.',
             'cim.required' => 'Informe o CIM.',
             'grau.required' => 'Selecione o grau maçônico.',
-            'loja_id.required' => 'Selecione a Loja/Capítulo.',
+            'loja_id.required' => 'Selecione a Loja.',
             'loja_id.exists' => 'Loja não encontrada.',
         ];
     }

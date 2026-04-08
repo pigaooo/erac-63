@@ -22,7 +22,7 @@
             <div class="flex items-start justify-between">
                 <div>
                     <h3 class="text-lg font-bold">Credenciamento</h3>
-                    <p class="text-sm text-base-content/70">Preencha os dados do irmão para o ERAC.</p>
+                    <p class="text-sm text-base-content/70">Preencha os dados do participante para o ERAC.</p>
                 </div>
                 <button class="btn btn-ghost btn-sm" type="button" wire:click="closeModal">X</button>
             </div>
@@ -30,7 +30,7 @@
             <form class="space-y-4" wire:submit.prevent="submit">
                 <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                     <label class="form-control w-full md:col-span-2">
-                        <div class="label"><span class="label-text">Grau maçônico</span></div>
+                        <div class="label"><span class="label-text">Tipo de visitante</span></div>
                         <select
                             wire:key="grau-{{ $formKey }}"
                             class="select select-bordered"
@@ -43,6 +43,9 @@
                             <option value="MM">M∴M∴</option>
                             <option value="MI">M∴I∴</option>
                             <option value="OT">Outros</option>
+                            <option value="VI">Visitante</option>
+                            <option value="CU">Cunhada</option>
+                            <option value="SO">Sobrinho</option>
                         </select>
                         @error('grau') <span class="mt-1 text-xs text-error">{{ $message }}</span> @enderror
                     </label>
@@ -103,7 +106,7 @@
                         @error('cpf') <span class="mt-1 text-xs text-error">{{ $message }}</span> @enderror
                     </label>
 
-                    @if ($grau !== 'OT')
+                    @if (! in_array($grau, ['OT', 'VI', 'CU', 'SO'], true))
                         <label class="form-control w-full">
                             <div class="label"><span class="label-text">CIM</span></div>
                             <input
@@ -117,20 +120,85 @@
                             @error('cim') <span class="mt-1 text-xs text-error">{{ $message }}</span> @enderror
                         </label>
 
-                        <label class="form-control w-full">
+                        <label class="form-control w-full md:col-span-2">
                             <div class="label"><span class="label-text">Loja</span></div>
                             @if ($lojas->count())
-                                <select
-                                    wire:key="loja-{{ $formKey }}"
-                                    class="select select-bordered"
-                                    wire:model.defer="lojaId"
-                                    required
+                                @php
+                                    $lojaSelecionadaNome = $lojas->firstWhere('id', $lojaId)?->name ?? '';
+                                    $lojaOptions = $lojas->map(fn ($loja) => ['id' => (string) $loja->id, 'name' => $loja->name])->values();
+                                @endphp
+                                <div
+                                    class="dropdown w-full"
+                                    x-data="{
+                                        open: false,
+                                        search: @js($lojaSelecionadaNome),
+                                        selectedId: @js($lojaId),
+                                        options: @js($lojaOptions),
+                                        normalize(value) { return (value || '').toLowerCase().trim() },
+                                        get filteredOptions() {
+                                            return this.options.filter(option => this.normalize(option.name).includes(this.normalize(this.search)))
+                                        },
+                                        handleInput() {
+                                            this.open = true
+                                            const match = this.options.find(option => this.normalize(option.name) === this.normalize(this.search))
+                                            this.selectedId = match ? match.id : ''
+                                            $wire.set('lojaSearch', this.search)
+                                            $wire.set('lojaId', this.selectedId)
+                                        },
+                                        selectOption(option) {
+                                            this.search = option.name
+                                            this.selectedId = option.id
+                                            this.open = false
+                                            $wire.set('lojaSearch', option.name)
+                                            $wire.set('lojaId', option.id)
+                                        },
+                                        closeDropdown() {
+                                            this.open = false
+                                        }
+                                    }"
+                                    @click.outside="closeDropdown()"
                                 >
-                                    <option value="">Selecione</option>
-                                    @foreach ($lojas as $loja)
-                                        <option value="{{ $loja->id }}">{{ $loja->name }}</option>
-                                    @endforeach
-                                </select>
+                                    <div class="relative">
+                                        <input
+                                            type="text"
+                                            placeholder="Pesquisar loja..."
+                                            class="input input-bordered w-full pr-10"
+                                            x-model="search"
+                                            @focus="open = true"
+                                            @input="handleInput()"
+                                            required
+                                        />
+                                        <span class="pointer-events-none absolute inset-y-0 right-3 flex items-center text-base-content/45">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.512a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                            </svg>
+                                        </span>
+                                    </div>
+
+                                    <ul
+                                        x-show="open"
+                                        x-transition.opacity.duration.120ms
+                                        class="dropdown-content z-[70] mt-2 w-full rounded-box border border-base-300 bg-base-100 p-2 shadow-xl max-h-60 overflow-y-auto"
+                                    >
+                                        <template x-for="option in filteredOptions" :key="option.id">
+                                            <li class="list-none">
+                                                <button
+                                                    type="button"
+                                                    class="btn btn-ghost btn-sm justify-start w-full normal-case font-medium"
+                                                    @click="selectOption(option)"
+                                                    x-text="option.name"
+                                                ></button>
+                                            </li>
+                                        </template>
+                                        <li x-show="filteredOptions.length === 0" class="list-none px-3 py-2 text-sm text-base-content/60">
+                                            Nenhuma loja encontrada.
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                @if ($lojaSearch !== '' && $lojaId === '')
+                                    <div class="mt-1 text-xs text-base-content/60">Selecione uma loja válida na lista.</div>
+                                @endif
                             @else
                                 <div class="text-sm text-base-content/70">Nenhuma Loja cadastrada ainda.</div>
                             @endif
