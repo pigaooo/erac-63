@@ -205,7 +205,7 @@
                     <div class="space-y-2">
                         <h3 class="text-xl font-bold">Confirmação</h3>
                         <p class="text-sm text-base-content/70">
-                            A confirmação da inscrição será feita via e-mail ou WhatsApp cadastrado através do formulário enviado.
+                            A confirmação do pagamento será via e-mail cadastrado apos o envio do comprovante, para o e-mail do passo 2.
                         </p>
                     </div>
 
@@ -287,7 +287,7 @@
                     <div class="space-y-2">
                         <h3 class="text-xl font-bold">Confirmação por inscrito</h3>
                         <p class="text-sm text-base-content/70">
-                            A confirmação será enviada para o e-mail no qual nós recebemos o comprovante de pagamento no passo 2.
+                            Após o envio do comprovante com a nossa confirmação, será enviado um e-mail para cada inscrito individualmente. Portanto é de extrema importância colocar um e-mail válido.
                         </p>
                     </div>
 
