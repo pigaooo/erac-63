@@ -16,8 +16,8 @@
                                 <div style="display:inline-block; padding:8px 14px; border:1px solid rgba(255,255,255,0.35); border-radius:999px; color:#fff6e4; font-size:12px; letter-spacing:0.24em; text-transform:uppercase;">
                                     ERAC
                                 </div>
-                                <h1 style="margin:18px 0 10px 0; font-size:34px; line-height:1.15; color:#fff6e4;">{{ $heroTitle ?? 'Confirmacao enviada' }}</h1>
-                                <p style="margin:0; max-width:520px; font-size:16px; line-height:1.7; color:#f3e4cd;">{{ $heroText ?? 'Recebemos sua solicitacao e registramos as informacoes no evento.' }}</p>
+                                <h1 style="margin:18px 0 10px 0; font-size:34px; line-height:1.15; color:#fff6e4;">{{ $heroTitle ?? 'Confirmação enviada' }}</h1>
+                                <p style="margin:0; max-width:520px; font-size:16px; line-height:1.7; color:#f3e4cd;">{{ $heroText ?? 'Recebemos sua solicitação e registramos as informações no evento.' }}</p>
                             </div>
                         </td>
                     </tr>
@@ -35,7 +35,7 @@
                                         <div style="font-size:15px; line-height:1.9; color:#382214;">
                                             <strong>Nome:</strong> {{ $inscrito->name }}<br>
                                             <strong>E-mail:</strong> {{ $inscrito->email }}<br>
-                                            <strong>Loja:</strong> {{ $inscrito->loja->name ?? 'Nao informada' }}<br>
+                                            <strong>Loja:</strong> {{ $inscrito->loja->name ?? 'Não informada' }}<br>
                                             <strong>Grau:</strong> {{ $inscrito->grau_descricao }}
                                         </div>
                                     </td>
@@ -46,7 +46,7 @@
                     <tr>
                         <td style="padding:0 36px 36px 36px;">
                             <p style="margin:0 0 14px 0; font-size:15px; line-height:1.75; color:#5a4030;">
-                                Duvidas sobre a inscrição ou o pagamento envie um e-mail para: <strong>inscricao@erac61.com.br</strong>
+                                Dúvidas sobre a inscrição ou o pagamento envie um e-mail para: <strong>inscricao@erac61.com.br</strong>
                             </p>
                             <p style="margin:0; font-size:12px; line-height:1.7; color:#8a715f;">
                                 ERAC 61
