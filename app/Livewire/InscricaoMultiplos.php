@@ -149,7 +149,7 @@ class InscricaoMultiplos extends Component
                 'inscritos.*.email' => ['required', 'email', 'max:150', 'distinct', 'unique:inscritos,email'],
                 'inscritos.*.telefone' => ['required', 'string', 'max:50'],
                 'inscritos.*.cpf' => ['required', 'string', 'max:20', 'distinct', 'unique:inscritos,cpf'],
-                'inscritos.*.cim' => ['required', 'string', 'max:50', 'distinct', 'unique:inscritos,cim'],
+                'inscritos.*.cim' => ['required', 'string', 'max:50', 'regex:/^[0-9]+$/', 'distinct', 'unique:inscritos,cim'],
                 'inscritos.*.grau' => ['required', 'in:AM,CM,MM,MI,OT'],
                 'inscritos.*.loja_id' => ['required', 'exists:lojas,id'],
             ],
@@ -282,7 +282,7 @@ class InscricaoMultiplos extends Component
             'email' => ['required', 'email', 'max:150'],
             'telefone' => ['required', 'string', 'max:50'],
             'cpf' => ['required', 'string', 'max:20'],
-            'cim' => ['required', 'string', 'max:50'],
+            'cim' => ['required', 'string', 'max:50', 'regex:/^[0-9]+$/'],
             'grau' => ['required', 'in:AM,CM,MM,MI,OT'],
             'loja_id' => ['required', 'exists:lojas,id'],
         ];
@@ -297,6 +297,7 @@ class InscricaoMultiplos extends Component
             'telefone.required' => 'Informe o telefone.',
             'cpf.required' => 'Informe o CPF.',
             'cim.required' => 'Informe o CIM.',
+            'cim.regex' => 'CIM deve conter apenas números (sem pontos).',
             'grau.required' => 'Selecione o grau maçônico.',
             'loja_id.required' => 'Selecione a Loja.',
             'loja_id.exists' => 'Loja não encontrada.',
@@ -314,6 +315,7 @@ class InscricaoMultiplos extends Component
             'inscritos.*.cpf.distinct' => 'CPF duplicado na lista.',
             'inscritos.*.cim.unique' => 'CIM já cadastrado.',
             'inscritos.*.cim.distinct' => 'CIM duplicado na lista.',
+            'inscritos.*.cim.regex' => 'CIM deve conter apenas números (sem pontos).',
         ];
     }
 

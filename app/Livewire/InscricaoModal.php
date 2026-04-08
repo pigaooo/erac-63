@@ -122,8 +122,8 @@ class InscricaoModal extends Component
             'telefone' => ['required', 'string', 'max:50'],
             'cpf' => ['required', 'string', 'max:20', 'unique:inscritos,cpf'],
             'cim' => $isTipoEspecial
-                ? ['nullable', 'string', 'max:50']
-                : ['required', 'string', 'max:50', 'unique:inscritos,cim'],
+                ? ['nullable', 'string', 'max:50', 'regex:/^[0-9]+$/']
+                : ['required', 'string', 'max:50', 'regex:/^[0-9]+$/', 'unique:inscritos,cim'],
             'lojaId' => ['required', 'exists:lojas,id'],
         ], [
             'grau.required' => 'Selecione o tipo de visitante.',
@@ -136,6 +136,7 @@ class InscricaoModal extends Component
             'cpf.required' => 'Informe o CPF.',
             'cpf.unique' => 'CPF já cadastrado.',
             'cim.required' => 'Informe o CIM.',
+            'cim.regex' => 'CIM deve conter apenas números (sem pontos).',
             'cim.unique' => 'CIM já cadastrado.',
             'lojaId.required' => 'Selecione a Loja.',
             'lojaId.exists' => 'Loja não encontrada.',
