@@ -159,7 +159,7 @@
             </div>
 
             <div class="grid gap-4 lg:grid-cols-12">
-                <div class="lg:col-span-5 rounded-[1.75rem] border border-base-300 bg-base-200/50 p-6 flex flex-col gap-4 transition duration-300 hover:border-primary/40 hover:bg-base-200/80 hover:shadow-xl">
+                <div class="lg:col-span-4 rounded-[1.75rem] border border-base-300 bg-base-200/50 p-6 flex flex-col gap-4 transition duration-300 hover:border-primary/40 hover:bg-base-200/80 hover:shadow-xl">
                     <div class="flex items-center justify-between">
                         <div class="badge badge-primary badge-outline">Passo 1</div>
                         <span class="text-xs uppercase tracking-wide text-base-content/50">Cadastro</span>
@@ -196,7 +196,7 @@
                     </button>
                 </div>
 
-                <div class="lg:col-span-3 rounded-[1.75rem] border border-base-300 bg-gradient-to-br from-base-100 to-primary/5 p-6 flex flex-col gap-4 transition duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl">
+                <div class="lg:col-span-4 rounded-[1.75rem] border border-base-300 bg-gradient-to-br from-base-100 to-primary/5 p-6 flex flex-col gap-4 transition duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl">
                     <div class="flex items-center justify-between">
                         <div class="badge badge-primary badge-outline">Passo 3</div>
                         <span class="text-xs uppercase tracking-wide text-base-content/50">Check-in</span>
@@ -241,7 +241,7 @@
             </div>
 
             <div class="grid gap-4 lg:grid-cols-12">
-                <div class="lg:col-span-5 rounded-[1.75rem] border border-base-300 bg-base-200/50 p-6 flex flex-col gap-4 transition duration-300 hover:border-primary/40 hover:bg-base-200/80 hover:shadow-xl">
+                <div class="lg:col-span-4 rounded-[1.75rem] border border-base-300 bg-base-200/50 p-6 flex flex-col gap-4 transition duration-300 hover:border-primary/40 hover:bg-base-200/80 hover:shadow-xl">
                     <div class="flex items-center justify-between">
                         <div class="badge badge-primary badge-outline">Passo 1</div>
                         <span class="text-xs uppercase tracking-wide text-base-content/50">Lote</span>
@@ -278,7 +278,7 @@
                     </button>
                 </div>
 
-                <div class="lg:col-span-3 rounded-[1.75rem] border border-base-300 bg-gradient-to-br from-base-100 to-secondary/10 p-6 flex flex-col gap-4 transition duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl">
+                <div class="lg:col-span-4 rounded-[1.75rem] border border-base-300 bg-gradient-to-br from-base-100 to-secondary/10 p-6 flex flex-col gap-4 transition duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl">
                     <div class="flex items-center justify-between">
                         <div class="badge badge-primary badge-outline">Passo 3</div>
                         <span class="text-xs uppercase tracking-wide text-base-content/50">Validação</span>
