@@ -152,6 +152,18 @@ class InscritoResource extends Resource
                     }),
                 TernaryFilter::make('is_paied')
                     ->label('Pagos'),
+                SelectFilter::make('grau')
+                    ->label('Grau')
+                    ->options([
+                        'AM' => 'A.M.',
+                        'CM' => 'C.M.',
+                        'MM' => 'M.M.',
+                        'MI' => 'M.I.',
+                        'OT' => 'Outros',
+                        'VI' => 'Visitante',
+                        'CU' => 'Cunhada',
+                        'SO' => 'Sobrinho',
+                    ]),
                 SelectFilter::make('loja_id')
                     ->label('Loja')
                     ->relationship('loja', 'name')
