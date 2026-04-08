@@ -2,42 +2,19 @@
 
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\ExportsPdf\InscritoPdfExportController;
-use App\Models\Patrocinador;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    $patrocinadores = Patrocinador::query()
-        ->orderBy('name')
-        ->get();
+Route::get('/', [SiteController::class, 'home'])->name('home');
 
-    return view('pages.home', compact('patrocinadores'));
-})->name('home');
+Route::get('/localizacao', [SiteController::class, 'localizacao'])->name('localizacao');
 
-Route::get('/localizacao', function () {
-    $patrocinadores = Patrocinador::query()
-        ->orderBy('name')
-        ->get();
-
-    return view('pages.localizacao', compact('patrocinadores'));
-})->name('localizacao');
-
-Route::get('/programacao', function () {
-    $patrocinadores = Patrocinador::query()
-        ->orderBy('name')
-        ->get();
-
-    return view('pages.programacao', compact('patrocinadores'));
-})->name('programacao');
+Route::get('/programacao', [SiteController::class, 'programacao'])->name('programacao');
 
 Route::get('/inscricao', [SiteController::class, 'inscricao'])->name('inscricao');
 
-Route::get('/sobre', function () {
-    $patrocinadores = Patrocinador::query()
-        ->orderBy('name')
-        ->get();
+Route::get('/patrocinadores', [SiteController::class, 'patrocinadoresPage'])->name('patrocinadores');
 
-    return view('pages.sobre', compact('patrocinadores'));
-})->name('sobre');
+Route::get('/sobre', [SiteController::class, 'sobre'])->name('sobre');
 
 Route::middleware('auth')
     ->get('/admin/inscritos/export-pdf', InscritoPdfExportController::class)

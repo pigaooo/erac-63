@@ -25,6 +25,7 @@
                 <a href="{{ route('localizacao') }}" class="hover:text-primary">Localização</a>
                 <a href="{{ route('programacao') }}" class="hover:text-primary">Programação</a>
                 <a href="{{ route('inscricao') }}" class="hover:text-primary">Inscrição</a>
+                <a href="{{ route('patrocinadores') }}" class="hover:text-primary">Patrocinadores</a>
                 <a href="{{ route('sobre') }}" class="hover:text-primary">Sobre</a>
             </nav>
         </div>
@@ -64,6 +65,7 @@
                         <a href="{{ route('localizacao') }}" class="transition hover:text-primary">Localização</a>
                         <a href="{{ route('programacao') }}" class="transition hover:text-primary">Programação</a>
                         <a href="{{ route('inscricao') }}" class="transition hover:text-primary">Inscrição</a>
+                        <a href="{{ route('patrocinadores') }}" class="transition hover:text-primary">Patrocinadores</a>
                         <a href="{{ route('sobre') }}" class="transition hover:text-primary">Sobre</a>
                     </div>
                 </div>

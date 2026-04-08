@@ -48,6 +48,13 @@ class SiteController extends Controller
         ]);
     }
 
+    public function patrocinadoresPage()
+    {
+        return view('pages.patrocinadores', [
+            'patrocinadoresPorTipo' => $this->patrocinadoresAgrupados(),
+        ]);
+    }
+
     public function exportPdf(Request $request)
     {
         $query = Inscrito::query()->with('loja');
@@ -141,5 +148,15 @@ class SiteController extends Controller
                 ->orderBy('name')
                 ->get();
         });
+    }
+
+    protected function patrocinadoresAgrupados()
+    {
+        $ordem = ['Diamante', 'Ouro', 'Prata', 'Bronze', 'Apoio'];
+        $patrocinadores = $this->patrocinadores()->groupBy('tipo_patrocinio');
+
+        return collect($ordem)->mapWithKeys(fn (string $tipo) => [
+            $tipo => $patrocinadores->get($tipo, collect())->values(),
+        ]);
     }
 }

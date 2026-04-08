@@ -111,5 +111,52 @@ class DatabaseSeeder extends Seeder
                 'tipo_patrocinio' => 'Apoio',
             ],
         ]);
+
+        // Adiciona 10 patrocinadores gerados pela factory
+        Patrocinador::factory()->count(10)->create();
+
+        // Insere patrocinadores extras na categoria Bronze
+        Patrocinador::insert([
+            [
+                'id' => Str::ulid(),
+                'name' => 'Ateliê Bronze 1',
+                'email' => 'contato@ateliebronze1.test',
+                'telefone' => '(11) 99999-2006',
+                'endereco' => 'https://ateliebronze1.test',
+                'tipo_patrocinio' => 'Bronze',
+            ],
+            [
+                'id' => Str::ulid(),
+                'name' => 'Loja Bronze 2',
+                'email' => 'contato@lojabronze2.test',
+                'telefone' => '(11) 99999-2007',
+                'endereco' => 'https://lojabronze2.test',
+                'tipo_patrocinio' => 'Bronze',
+            ],
+            [
+                'id' => Str::ulid(),
+                'name' => 'Serviços Bronze 3',
+                'email' => 'contato@servicosbronze3.test',
+                'telefone' => '(11) 99999-2008',
+                'endereco' => 'https://servicosbronze3.test',
+                'tipo_patrocinio' => 'Bronze',
+            ],
+            [
+                'id' => Str::ulid(),
+                'name' => 'Grupo Bronze 4',
+                'email' => 'contato@grupobronze4.test',
+                'telefone' => '(11) 99999-2009',
+                'endereco' => 'https://grupobronze4.test',
+                'tipo_patrocinio' => 'Bronze',
+            ],
+            [
+                'id' => Str::ulid(),
+                'name' => 'Parceiro Bronze 5',
+                'email' => 'contato@parceirobronze5.test',
+                'telefone' => '(11) 99999-2010',
+                'endereco' => 'https://parceirobronze5.test',
+                'tipo_patrocinio' => 'Bronze',
+            ],
+        ]);
     }
 }

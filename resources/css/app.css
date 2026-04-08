@@ -16,6 +16,59 @@
     opacity: 1;
 }
 
+.sponsor-card {
+    position: relative;
+    isolation: isolate;
+}
+
+.sponsor-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+        radial-gradient(circle at top, rgb(255 255 255 / 0.75), transparent 48%),
+        linear-gradient(135deg, rgb(255 255 255 / 0.22), transparent 58%);
+    opacity: 0;
+    transform: scale(0.96);
+    transition: opacity 240ms ease, transform 240ms ease;
+}
+
+.sponsor-card::after {
+    content: "";
+    position: absolute;
+    inset: -120% auto auto -30%;
+    width: 40%;
+    height: 320%;
+    transform: rotate(18deg);
+    background: linear-gradient(180deg, transparent, rgb(255 255 255 / 0.55), transparent);
+    opacity: 0;
+    transition: transform 600ms ease, opacity 280ms ease;
+    pointer-events: none;
+}
+
+.sponsor-card:hover::before,
+.sponsor-card:focus-visible::before {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.sponsor-card:hover::after,
+.sponsor-card:focus-visible::after {
+    opacity: 1;
+    transform: translateX(230%) rotate(18deg);
+}
+
+.sponsor-name-chip {
+    transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+}
+
+.sponsor-name-chip:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 34px rgb(15 23 42 / 0.14);
+    border-color: rgb(255 255 255 / 0.24);
+}
+
 @media (max-width: 767px) {
     .scroll-reveal {
         opacity: 1;
@@ -27,5 +80,19 @@
     .scroll-reveal {
         opacity: 1;
         will-change: auto;
+    }
+
+    .sponsor-card::before,
+    .sponsor-card::after,
+    .sponsor-name-chip {
+        transition: none;
+    }
+
+    .sponsor-card:hover::before,
+    .sponsor-card:focus-visible::before,
+    .sponsor-card:hover::after,
+    .sponsor-card:focus-visible::after,
+    .sponsor-name-chip:hover {
+        transform: none;
     }
 }
