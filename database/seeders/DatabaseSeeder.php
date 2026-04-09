@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Loja;
 use App\Models\User;
+use App\Support\JsonSettingsService;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -31,6 +32,10 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('TSDFox0206!'),
             'is_ativo' => true,
         ]);
+
+        app(JsonSettingsService::class)->syncAllowedUsers(
+            User::query()->get(['name', 'email'])
+        );
 
         $userIds = User::query()->pluck('id');
 
