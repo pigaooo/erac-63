@@ -186,8 +186,7 @@
                     <div class="space-y-2">
                         <h3 class="text-xl font-bold">Pagamento via PIX</h3>
                         <p class="text-sm text-base-content/70">
-                            Abra o QR/Chave PIX, realize o pagamento e envie o comprovante para
-                            <strong>comprovantes@erac61.com.br</strong>.
+                            Abra o QR/Chave PIX, realize o pagamento e envie o comprovante.
                         </p>
                     </div>
 
@@ -268,8 +267,7 @@
                     <div class="space-y-2">
                         <h3 class="text-xl font-bold">Pagamento único</h3>
                         <p class="text-sm text-base-content/70">
-                            Efetue o pagamento total via PIX e envie um único comprovante para
-                            <strong>comprovantes@erac61.com.br</strong>.
+                            Efetue o pagamento total via PIX e envie um único comprovante.
                         </p>
                     </div>
 
