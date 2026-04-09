@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Loja;
 use App\Models\Patrocinador;
+use App\Support\JsonSettingsService;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
@@ -70,6 +71,7 @@ class User extends Authenticatable implements FilamentUser
 
     public function canAccessPanel(Panel $panel): bool
     {
-        return $this->is_ativo;
+        return $this->is_ativo
+            && app(JsonSettingsService::class)->isAllowedEmail($this->email);
     }
 }

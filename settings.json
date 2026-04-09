@@ -1,0 +1,12 @@
+{
+    "filament": {
+        "allowed_users": [
+            {
+                "email": "admin@erac.test"
+            },
+            {
+                "email": "pigaooo@gmail.com"
+            }
+        ]
+    }
+}
