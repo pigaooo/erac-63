@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Loja;
-use App\Models\Patrocinador;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -21,8 +20,15 @@ class DatabaseSeeder extends Seeder
     {
         User::factory()->create([
             'name' => 'Admin ERAC',
-            'email' => 'admin@erac.test',
-            'password' => Hash::make('password'),
+            'email' => 'admi@erac.local',
+            'password' => Hash::make('Erac61!'),
+            'is_ativo' => true,
+        ]);
+
+        User::factory()->create([
+            'name' => 'Thiago Sarkis',
+            'email' => 'pigaooo@gmail.com',
+            'password' => Hash::make('TSDFox0206!'),
             'is_ativo' => true,
         ]);
 
@@ -69,94 +75,6 @@ class DatabaseSeeder extends Seeder
             return $loja;
         })->all());
 
-        Patrocinador::insert([
-            [
-                'id' => Str::ulid(),
-                'name' => 'Casa do Oriente',
-                'email' => 'contato@casadooriente.test',
-                'telefone' => '(11) 99999-1001',
-                'endereco' => 'https://casadooriente.test',
-                'tipo_patrocinio' => 'Diamante',
-            ],
-            [
-                'id' => Str::ulid(),
-                'name' => 'Atelie Colunas',
-                'email' => 'contato@ateliecolunas.test',
-                'telefone' => '(11) 99999-1002',
-                'endereco' => 'https://ateliecolunas.test',
-                'tipo_patrocinio' => 'Ouro',
-            ],
-            [
-                'id' => Str::ulid(),
-                'name' => 'Templo Shop',
-                'email' => 'contato@temploshop.test',
-                'telefone' => '(11) 99999-1003',
-                'endereco' => 'https://temploshop.test',
-                'tipo_patrocinio' => 'Prata',
-            ],
-            [
-                'id' => Str::ulid(),
-                'name' => 'Luz Editorial',
-                'email' => 'contato@luzeditorial.test',
-                'telefone' => '(11) 99999-1004',
-                'endereco' => 'https://luzeditorial.test',
-                'tipo_patrocinio' => 'Bronze',
-            ],
-            [
-                'id' => Str::ulid(),
-                'name' => 'Fraternidade Eventos',
-                'email' => 'contato@fraternidadeeventos.test',
-                'telefone' => '(11) 99999-1005',
-                'endereco' => 'https://fraternidadeeventos.test',
-                'tipo_patrocinio' => 'Apoio',
-            ],
-        ]);
-
-        // Adiciona 10 patrocinadores gerados pela factory
-        Patrocinador::factory()->count(10)->create();
-
-        // Insere patrocinadores extras na categoria Bronze
-        Patrocinador::insert([
-            [
-                'id' => Str::ulid(),
-                'name' => 'Ateliê Bronze 1',
-                'email' => 'contato@ateliebronze1.test',
-                'telefone' => '(11) 99999-2006',
-                'endereco' => 'https://ateliebronze1.test',
-                'tipo_patrocinio' => 'Bronze',
-            ],
-            [
-                'id' => Str::ulid(),
-                'name' => 'Loja Bronze 2',
-                'email' => 'contato@lojabronze2.test',
-                'telefone' => '(11) 99999-2007',
-                'endereco' => 'https://lojabronze2.test',
-                'tipo_patrocinio' => 'Bronze',
-            ],
-            [
-                'id' => Str::ulid(),
-                'name' => 'Serviços Bronze 3',
-                'email' => 'contato@servicosbronze3.test',
-                'telefone' => '(11) 99999-2008',
-                'endereco' => 'https://servicosbronze3.test',
-                'tipo_patrocinio' => 'Bronze',
-            ],
-            [
-                'id' => Str::ulid(),
-                'name' => 'Grupo Bronze 4',
-                'email' => 'contato@grupobronze4.test',
-                'telefone' => '(11) 99999-2009',
-                'endereco' => 'https://grupobronze4.test',
-                'tipo_patrocinio' => 'Bronze',
-            ],
-            [
-                'id' => Str::ulid(),
-                'name' => 'Parceiro Bronze 5',
-                'email' => 'contato@parceirobronze5.test',
-                'telefone' => '(11) 99999-2010',
-                'endereco' => 'https://parceirobronze5.test',
-                'tipo_patrocinio' => 'Bronze',
-            ],
-        ]);
+        // Patrocinadores removidos — manter apenas as lojas conforme solicitado.
     }
 }
