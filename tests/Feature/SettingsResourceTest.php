@@ -119,7 +119,11 @@ class SettingsResourceTest extends TestCase
                     'allowed_users' => [
                         [
                             'name' => 'Admin ERAC',
-                            'email' => 'admin@erac.test',
+                            'email' => 'admi@erac.local',
+                        ],
+                        [
+                            'name' => 'Thiago Sarkis',
+                            'email' => 'pigaooo@gmail.com',
                         ],
                     ],
                 ],

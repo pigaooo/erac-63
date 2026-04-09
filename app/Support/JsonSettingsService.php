@@ -13,7 +13,26 @@ class JsonSettingsService
 
     public function path(): string
     {
-        return (string) config('settings.path', base_path('settings.json'));
+        $configuredPath = trim((string) config('settings.path', 'settings.json'));
+        $fallbackPath = base_path('settings.json');
+
+        if ($configuredPath === '') {
+            return $fallbackPath;
+        }
+
+        $resolvedPath = $this->isAbsolutePath($configuredPath)
+            ? $configuredPath
+            : base_path($configuredPath);
+
+        if (
+            $resolvedPath !== $fallbackPath
+            && ! $this->files->exists($resolvedPath)
+            && $this->files->exists($fallbackPath)
+        ) {
+            return $fallbackPath;
+        }
+
+        return $resolvedPath;
     }
 
     public function all(): array
@@ -165,5 +184,11 @@ class JsonSettingsService
         }
 
         $this->files->replace($path, $json . PHP_EOL);
+    }
+
+    private function isAbsolutePath(string $path): bool
+    {
+        return str_starts_with($path, DIRECTORY_SEPARATOR)
+            || preg_match('/^[A-Za-z]:\\\\/', $path) === 1;
     }
 }

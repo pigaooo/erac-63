@@ -19,6 +19,12 @@ trait InteractsWithSettingsFile
         config()->set('settings.path', $this->settingsTestPath);
 
         File::delete($this->settingsTestPath);
+        File::put($this->settingsTestPath, json_encode([
+            'filament' => [
+                'allowed_users' => [],
+            ],
+        ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . PHP_EOL);
+
         Settings::refreshState();
     }
 
