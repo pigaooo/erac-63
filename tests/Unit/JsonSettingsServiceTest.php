@@ -24,8 +24,10 @@ class JsonSettingsServiceTest extends TestCase
         parent::tearDown();
     }
 
-    public function test_retorna_estrutura_padrao_quando_arquivo_nao_existe(): void
+    public function test_retorna_estrutura_padrao_quando_arquivo_esta_vazio(): void
     {
+        file_put_contents($this->settingsTestPath, '');
+
         $settings = app(JsonSettingsService::class)->all();
 
         $this->assertSame([
