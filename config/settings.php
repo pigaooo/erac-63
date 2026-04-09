@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'path' => base_path('settings.json'),
+    'path' => env('SETTINGS_PATH', 'settings.json'),
 ];

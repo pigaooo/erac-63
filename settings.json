@@ -2,9 +2,11 @@
     "filament": {
         "allowed_users": [
             {
-                "email": "admin@erac.test"
+                "name": "Admin ERAC",
+                "email": "admi@erac.local"
             },
             {
+                "name": "Thiago Sarkis",
                 "email": "pigaooo@gmail.com"
             }
         ]
