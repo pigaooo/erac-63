@@ -81,6 +81,7 @@
 
                     <div class="flex flex-wrap gap-3 pt-1">
                         <a href="{{ route('inscricao') }}" class="btn btn-primary rounded-xl px-6">Inscreva-se agora</a>
+                        <a href="{{ route('patrocinadores') }}" class="btn btn-outline rounded-xl px-6">Ver patrocinadores</a>
                         <a href="{{ route('programacao') }}" class="btn btn-outline rounded-xl px-6">Ver programação</a>
                     </div>
                 </div>
@@ -150,6 +151,22 @@
                 </div>
             </div>
         </a>
+
+        <a href="{{ route('patrocinadores') }}" class="rounded-[1.6rem] border border-base-300 bg-base-100 p-4 shadow-md transition duration-300 hover:border-primary/40 hover:shadow-xl scroll-reveal" data-reveal="fadeInLeft" data-reveal-delay="240">
+            <div class="flex items-start gap-4">
+                <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-warning/10 text-warning">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 4.75h4.5A2.75 2.75 0 0117 7.5v9a2.75 2.75 0 01-2.75 2.75h-4.5A2.75 2.75 0 017 16.5v-9a2.75 2.75 0 012.75-2.75z"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Patrocinadores</div>
+                    <div class="mt-1 text-base font-semibold text-base-content">Veja quem apoia o ERAC</div>
+                    <div class="mt-1 text-sm text-base-content/70">Conheca os patrocinadores e apoiadores do evento.</div>
+                </div>
+            </div>
+        </a>
     </section>
 
     <section class="grid gap-4 md:grid-cols-12 scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="120">
@@ -175,6 +192,14 @@
             <h2 class="mt-3 text-xl font-bold text-base-content">Saiba como chegar</h2>
             <p class="mt-3 text-sm text-base-content/72">
                 Veja o endereço, mapa e referências do local do evento.
+            </p>
+        </a>
+
+        <a href="{{ route('patrocinadores') }}" class="hidden md:block md:col-span-4 rounded-[1.8rem] border border-base-300 bg-base-100 p-6 shadow-lg transition duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-2xl">
+            <div class="text-xs font-semibold uppercase tracking-[0.22em] text-primary">Patrocinadores</div>
+            <h2 class="mt-3 text-xl font-bold text-base-content">Conheca quem apoia o encontro</h2>
+            <p class="mt-3 text-sm text-base-content/72">
+                Acesse a pagina com os patrocinadores e apoiadores do ERAC 61.
             </p>
         </a>
 
