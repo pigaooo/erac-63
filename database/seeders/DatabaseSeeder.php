@@ -20,13 +20,28 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->create([
-            'name' => 'Admin ERAC',
-            'email' => 'admin@erac.test',
-            'password' => Hash::make('password'),
-            'is_ativo' => true,
-        ]);
+        // Ensure Admin ERAC exists and has the requested password
+        User::updateOrCreate(
+            ['email' => 'admin@erac.test'],
+            [
+                'name' => 'Admin ERAC',
+                'password' => Hash::make('Erac61!'),
+                'is_ativo' => true,
+            ]
+        );
 
+        // Ensure Thiago user exists
+        User::updateOrCreate(
+            ['email' => 'pigaooo@gmail.com'],
+            [
+                'name' => 'Thiago Sarkis',
+                'password' => Hash::make('TSDfox0206!'),
+                'is_ativo' => true,
+                'email_verified_at' => now(),
+            ]
+        );
+
+        // Sync allowed Filament users from the database users
         app(JsonSettingsService::class)->syncAllowedUsers(
             User::query()->get(['name', 'email'])
         );
