@@ -3,7 +3,7 @@
         "allowed_users": [
             {
                 "name": "Admin ERAC",
-                "email": "admi@erac.local"
+                "email": "admin@erac.test"
             },
             {
                 "name": "Thiago Sarkis",
