@@ -1,0 +1,18 @@
+---
+deployment:
+  tasks:
+    - export REPOPATH=/home2/thi19135/public_html/repositories/erac-63
+    - export DESTPATH=/home2/thi19135/public_html/erac-63
+    
+    # 1. Sincroniza usando o caminho com hífen
+    - /usr/bin/rsync -avz --exclude='.git' $REPOPATH/ $DESTPATH
+    
+    # 2. Entra na pasta de destino
+    - cd $DESTPATH
+    
+    # 3. Comandos Laravel (com limites de segurança)
+    - /bin/cp -n .env.example .env
+    - /usr/local/bin/ea-php83 -d memory_limit=512M /opt/cpanel/composer/bin/composer install --no-dev --optimize-autoloader --no-interaction
+    - /usr/local/bin/ea-php83 artisan key:generate --no-interaction
+    - /usr/local/bin/ea-php83 artisan migrate --force --seed --no-interaction
+    - /usr/local/bin/ea-php83 artisan optimize
