@@ -18,6 +18,7 @@ class InscricaoMultiplos extends Component
     public array $inscritos = [];
     public Collection $lojas;
     public ?string $flashMessage = null;
+    public ?string $successMessage = null;
 
     public string $name = '';
     public string $email = '';
@@ -52,6 +53,7 @@ class InscricaoMultiplos extends Component
 
         $this->resetErrorBag();
         $this->flashMessage = null;
+        $this->successMessage = null;
         $this->showModal = true;
     }
 
@@ -186,6 +188,7 @@ class InscricaoMultiplos extends Component
         app(InscritoEmailDispatcher::class)->dispatchRegistrationConfirmations($inscritos, true);
 
         $this->flashMessage = 'Inscritos cadastrados com sucesso.';
+        $this->successMessage = 'As inscrições foram enviadas com sucesso.';
         $this->dispatch('inscricao-alert', message: 'As inscrições foram enviadas com sucesso.');
 
         $this->inscritos = [];
@@ -193,6 +196,9 @@ class InscricaoMultiplos extends Component
         $this->loja_id = '';
         $this->lojaSearch = '';
         $this->showModal = false;
+
+        $message = 'As inscrições foram enviadas com sucesso.';
+        $this->js("window.dispatchEvent(new CustomEvent('inscricao-alert', { detail: { message: " . json_encode($message, JSON_UNESCAPED_UNICODE) . " } }))");
     }
 
     private function currentRow(): array

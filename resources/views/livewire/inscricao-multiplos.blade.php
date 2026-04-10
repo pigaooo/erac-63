@@ -1,4 +1,10 @@
 <div class="space-y-4">
+    @if ($successMessage)
+        <div class="alert alert-success text-sm">
+            {{ $successMessage }}
+        </div>
+    @endif
+
     @error('inscricoes')
         <div class="alert alert-warning text-sm">{{ $message }}</div>
     @enderror
