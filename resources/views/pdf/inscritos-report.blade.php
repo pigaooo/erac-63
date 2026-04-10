@@ -2,34 +2,39 @@
 <html lang="pt-BR">
 <head>
     <meta charset="utf-8">
-    <title>Relatório de inscritos</title>
+    <title>Relatorio de inscritos</title>
     <style>
         body {
             font-family: DejaVu Sans, sans-serif;
             color: #1f2937;
             font-size: 12px;
-            margin: 32px;
+            margin: 24px;
         }
 
         h1 {
-            margin: 0;
-            font-size: 24px;
+            margin: 0 0 6px;
+            font-size: 22px;
             color: #92400e;
         }
 
         .subtitle {
-            margin-top: 6px;
-            margin-bottom: 20px;
+            margin: 0 0 18px;
             color: #6b7280;
         }
 
         .summary {
-            display: block;
-            margin-bottom: 20px;
-            padding: 12px 14px;
+            margin-bottom: 18px;
+            padding: 10px 12px;
             background: #f9fafb;
             border: 1px solid #e5e7eb;
-            border-radius: 8px;
+        }
+
+        .summary-row {
+            margin: 0 0 4px;
+        }
+
+        .summary-row:last-child {
+            margin-bottom: 0;
         }
 
         .summary strong {
@@ -45,15 +50,14 @@
             text-align: left;
             font-size: 11px;
             text-transform: uppercase;
-            letter-spacing: 0.04em;
-            padding: 10px 8px;
+            padding: 8px 6px;
             background: #f3f4f6;
-            border-bottom: 1px solid #d1d5db;
+            border: 1px solid #d1d5db;
         }
 
         tbody td {
-            padding: 10px 8px;
-            border-bottom: 1px solid #e5e7eb;
+            padding: 8px 6px;
+            border: 1px solid #e5e7eb;
             vertical-align: top;
         }
 
@@ -66,15 +70,24 @@
             color: #b91c1c;
             font-weight: 700;
         }
+
+        .empty {
+            text-align: center;
+            color: #6b7280;
+        }
     </style>
 </head>
 <body>
-    <h1>{{ $reportTitle ?? 'Relatório de inscritos' }}</h1>
-    <div class="subtitle">61º Encontro Regional de Aprendizes e Companheiros</div>
+    <h1>{{ $reportTitle ?? 'Relatorio de inscritos' }}</h1>
+    <p class="subtitle">61o Encontro Regional de Aprendizes e Companheiros</p>
 
     <div class="summary">
-        <strong>Total de inscritos:</strong> {{ $inscritos->count() }}<br>
-        <strong>Gerado em:</strong> {{ $generatedAt->format('d/m/Y H:i') }}
+        <p class="summary-row">
+            <strong>Total de inscritos:</strong> {{ $inscritos->count() }}
+        </p>
+        <p class="summary-row">
+            <strong>Gerado em:</strong> {{ $generatedAt->format('d/m/Y H:i') }}
+        </p>
     </div>
 
     <table>
@@ -82,6 +95,7 @@
             <tr>
                 <th>Pago</th>
                 <th>Nome</th>
+                <th>Loja</th>
                 <th>Grau</th>
                 <th>E-mail</th>
                 <th>Telefone</th>
@@ -91,16 +105,17 @@
             @forelse ($inscritos as $inscrito)
                 <tr>
                     <td class="{{ $inscrito->is_paied ? 'paid' : 'unpaid' }}">
-                        {{ $inscrito->is_paied ? 'Sim' : 'Não' }}
+                        {{ $inscrito->is_paied ? 'Sim' : 'Nao' }}
                     </td>
                     <td>{{ $inscrito->name }}</td>
+                    <td>{{ $inscrito->loja?->name ?? '-' }}</td>
                     <td>{{ $inscrito->grau }}</td>
                     <td>{{ $inscrito->email }}</td>
                     <td>{{ $inscrito->telefone ?: '-' }}</td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="5">Nenhum inscrito encontrado para os filtros atuais.</td>
+                    <td class="empty" colspan="6">Nenhum inscrito encontrado para os filtros atuais.</td>
                 </tr>
             @endforelse
         </tbody>

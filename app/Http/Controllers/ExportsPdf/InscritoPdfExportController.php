@@ -92,6 +92,7 @@ class InscritoPdfExportController extends Controller
             'generatedAt' => now(),
             'reportTitle' => $reportTitle,
         ])
+            ->driver('dompdf')
             ->name("{$downloadName}.pdf")
             ->download();
     }
