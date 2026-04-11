@@ -14,6 +14,7 @@ echo =============================================
 echo.
 
 echo [1/4] Composer install (sem dependências de desenvolvimento)...
+call composer update
 call composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
 if %ERRORLEVEL% NEQ 0 (
   echo ERRO: composer install falhou.
