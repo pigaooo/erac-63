@@ -6,6 +6,7 @@ use App\Filament\Pages\Dashboard;
 use App\Filament\Widgets\EracOverview;
 use App\Filament\Widgets\InscritosPorGrauChart;
 use App\Filament\Widgets\RecentInscritosTable;
+use App\Livewire\Filament\AdminSidebar;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -29,6 +30,11 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->viteTheme('resources/css/filament/admin/theme.css')
+            ->sidebarCollapsibleOnDesktop()
+            ->sidebarWidth('17rem')
+            ->collapsedSidebarWidth('4.75rem')
+            ->sidebarLivewireComponent(AdminSidebar::class)
             ->brandName('ERAC 61 Admin')
             ->colors([
                 'primary' => Color::Amber,

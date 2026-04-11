@@ -1,0 +1,464 @@
+@import "../../../../vendor/filament/filament/resources/css/theme.css";
+@import "animate.css/animate.min.css";
+
+@source "../../../../app/Filament/**/*";
+@source "../../../../resources/views/filament/**/*";
+@source "../../../../resources/js/**/*";
+
+@plugin "daisyui" {
+    themes: false;
+}
+
+@theme {
+    --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+@layer base {
+    :root {
+        --site-shell-tint: rgb(245 158 11 / 0.08);
+        --site-surface-0: #0f172a;
+        --site-surface-1: #111827;
+        --site-surface-2: #1f2937;
+        --site-surface-3: #273449;
+        --site-border: rgb(148 163 184 / 0.18);
+        --site-text: #e5e7eb;
+        --site-text-muted: #94a3b8;
+        --site-heading: #f8fafc;
+        --site-highlight: #f59e0b;
+        --site-highlight-soft: rgb(245 158 11 / 0.16);
+    }
+
+    .fi-body {
+        font-family: var(--font-sans);
+        background:
+            radial-gradient(circle at top, var(--site-shell-tint) 0%, transparent 34%),
+            linear-gradient(180deg, #0b1120 0%, #111827 48%, #0f172a 100%);
+        color: var(--site-text);
+    }
+
+    .fi-body,
+    .fi-body .fi-simple-main-ctn,
+    .fi-body .fi-main,
+    .fi-body .fi-sidebar,
+    .fi-body .fi-topbar,
+    .fi-body .fi-page {
+        color: var(--site-text);
+    }
+}
+
+@layer components {
+    .fi-sidebar,
+    .fi-topbar,
+    .fi-main-ctn {
+        backdrop-filter: blur(18px);
+    }
+
+    .fi-sidebar,
+    .fi-topbar {
+        background: color-mix(in srgb, var(--site-surface-0) 88%, transparent);
+    }
+
+    .fi-section,
+    .fi-widget,
+    .fi-ta-ctn,
+    .fi-modal-window,
+    .fi-in-entry-wrp,
+    .fi-fo-field-wrp,
+    .fi-dropdown-panel,
+    .fi-tabs,
+    .fi-card {
+        border-radius: 1rem;
+        border: 1px solid var(--site-border);
+    }
+
+    .fi-section,
+    .fi-widget,
+    .fi-ta-ctn,
+    .fi-modal-window,
+    .fi-dropdown-panel,
+    .fi-tabs,
+    .fi-card {
+        background: color-mix(in srgb, var(--site-surface-1) 90%, white 10%);
+        box-shadow: 0 18px 44px rgb(2 6 23 / 0.28);
+    }
+
+    .fi-body .fi-input-wrp,
+    .fi-body .fi-select-input,
+    .fi-body .fi-textarea,
+    .fi-body input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+    .fi-body select,
+    .fi-body textarea {
+        border-color: var(--site-border);
+        background: color-mix(in srgb, var(--site-surface-2) 92%, black 8%);
+        color: var(--site-text);
+    }
+
+    .fi-body input::placeholder,
+    .fi-body textarea::placeholder {
+        color: var(--site-text-muted);
+    }
+
+    .fi-body .fi-btn-color-gray,
+    .fi-body .btn,
+    .fi-body .card,
+    .fi-body .alert,
+    .fi-body .badge,
+    .fi-body .tabs-boxed,
+    .fi-body .menu,
+    .fi-body .drawer-side {
+        color: var(--site-text);
+    }
+
+    .fi-body .card,
+    .fi-body .menu,
+    .fi-body .tabs-boxed,
+    .fi-body .alert {
+        border: 1px solid var(--site-border);
+        background: color-mix(in srgb, var(--site-surface-2) 94%, white 6%);
+    }
+
+    .fi-body .badge,
+    .fi-body .btn-ghost:hover,
+    .fi-body [class*="bg-white"],
+    .fi-body [class*="bg-gray-50"],
+    .fi-body [class*="bg-gray-100"] {
+        background: color-mix(in srgb, var(--site-surface-2) 94%, white 6%);
+    }
+
+    .fi-body [class*="text-gray-500"],
+    .fi-body [class*="text-gray-400"],
+    .fi-body [class*="text-slate-500"] {
+        color: var(--site-text-muted);
+    }
+
+    .fi-body [class*="text-gray-900"],
+    .fi-body [class*="text-white"] {
+        color: var(--site-heading);
+    }
+
+    .fi-body [class*="border-gray-200"],
+    .fi-body [class*="border-gray-300"],
+    .fi-body [class*="border-white/10"] {
+        border-color: var(--site-border);
+    }
+
+    .fi-body .fi-sidebar-item-btn:hover,
+    .fi-body .fi-sidebar-item-btn.fi-active,
+    .fi-body .fi-tabs-item[aria-selected="true"] {
+        background: var(--site-highlight-soft);
+        color: var(--site-heading);
+    }
+
+    .fi-body .fi-ac-btn-action,
+    .fi-body .fi-link {
+        color: var(--site-highlight);
+    }
+
+    .fi-body .fi-ta-table thead {
+        background: color-mix(in srgb, var(--site-surface-2) 95%, black 5%);
+    }
+
+    .fi-body .fi-ta-record {
+        transition: background-color 160ms ease, border-color 160ms ease;
+    }
+
+    .fi-body .fi-ta-record:hover {
+        background: color-mix(in srgb, var(--site-highlight-soft) 50%, transparent);
+    }
+
+    .mailbox-shell .fi-section {
+        background: color-mix(in srgb, var(--site-surface-1) 92%, white 8%);
+    }
+
+    .mailbox-toolbar-section .fi-section-content,
+    .mailbox-column-section .fi-section-content {
+        gap: 0;
+    }
+
+    .mailbox-stat-badge {
+        border-color: var(--site-border);
+        background: color-mix(in srgb, var(--site-surface-2) 94%, white 6%);
+        color: var(--site-text);
+    }
+
+    .mailbox-account-input,
+    .mailbox-search-input {
+        border-color: var(--site-border);
+        box-shadow: none;
+    }
+
+    .mailbox-folder-menu {
+        border: 1px solid var(--site-border);
+        background: color-mix(in srgb, var(--site-surface-2) 94%, white 6%);
+    }
+
+    .mailbox-folder-item .mailbox-folder-icon {
+        border: 1px solid color-mix(in srgb, var(--site-border) 80%, transparent);
+    }
+
+    .mailbox-folder-item.is-active .mailbox-folder-icon {
+        background: rgb(255 255 255 / 0.14);
+        color: white;
+    }
+
+    .mailbox-message-table .fi-ta-ctn {
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+    }
+
+    .mailbox-message-table .fi-ta-table {
+        table-layout: fixed;
+    }
+
+    .mailbox-message-table .fi-ta-header-cell {
+        padding-top: 0.85rem;
+        padding-bottom: 0.85rem;
+        font-size: 0.72rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+    }
+
+    .mailbox-message-table .mailbox-message-row {
+        border-bottom: 1px solid color-mix(in srgb, var(--site-border) 70%, transparent);
+    }
+
+    .mailbox-message-table .mailbox-message-row.is-unread {
+        background: color-mix(in srgb, var(--site-highlight-soft) 38%, transparent);
+    }
+
+    .mailbox-message-table .fi-ta-cell {
+        padding-top: 0.65rem;
+        padding-bottom: 0.65rem;
+        vertical-align: top;
+    }
+
+    .mailbox-message-table .fi-ta-text-item-label {
+        line-height: 1.2rem;
+    }
+
+    .mailbox-message-table .fi-ta-text-item-description {
+        margin-top: 0.15rem;
+        font-size: 0.74rem;
+        line-height: 1rem;
+    }
+
+    .mailbox-reader-section {
+        position: sticky;
+        top: 1rem;
+    }
+
+    .mailbox-reader .fi-in {
+        gap: 1rem;
+    }
+
+    .mailbox-message-body {
+        color: var(--site-text);
+    }
+
+    .mailbox-empty-reader {
+        color: var(--site-text);
+    }
+
+    .mailbox-actionbar-group .fi-btn,
+    .mailbox-actionbar-menu {
+        border-color: var(--site-border);
+    }
+
+    .mailbox-actionbar-menu {
+        min-height: 2.25rem;
+        border-radius: 0.9rem;
+        background: color-mix(in srgb, var(--site-surface-2) 92%, white 8%);
+        color: var(--site-text);
+    }
+
+    .mailbox-actionbar-menu:hover {
+        background: color-mix(in srgb, var(--site-highlight-soft) 45%, var(--site-surface-2));
+    }
+
+    .fi-fo-markdown-editor .EasyMDEContainer .editor-toolbar {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 0.25rem;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: thin;
+    }
+
+    .fi-fo-markdown-editor .EasyMDEContainer .editor-toolbar::-webkit-scrollbar {
+        height: 0.35rem;
+    }
+
+    .fi-fo-markdown-editor .EasyMDEContainer .editor-toolbar button,
+    .fi-fo-markdown-editor .EasyMDEContainer .editor-toolbar .separator {
+        flex-shrink: 0;
+    }
+
+    .mailbox-meta-group {
+        border: 1px solid color-mix(in srgb, var(--site-border) 85%, transparent);
+        border-radius: 1rem;
+        padding: 0.75rem;
+    }
+
+    .mailbox-meta-group--people {
+        background: color-mix(in srgb, #2563eb 10%, var(--site-surface-2));
+    }
+
+    .mailbox-meta-group--state {
+        background: color-mix(in srgb, #059669 9%, var(--site-surface-2));
+    }
+
+    .mailbox-meta-row {
+        display: grid;
+        grid-template-columns: 4.25rem minmax(0, 1fr);
+        gap: 0.75rem;
+        align-items: start;
+    }
+
+    .mailbox-meta-label {
+        padding-top: 0.125rem;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--site-text-muted);
+    }
+
+    .mailbox-meta-value {
+        min-width: 0;
+        font-size: 0.95rem;
+        line-height: 1.5rem;
+        color: var(--site-heading);
+        word-break: break-word;
+    }
+
+    .mailbox-meta-card {
+        border: 1px solid color-mix(in srgb, var(--site-border) 85%, transparent);
+        border-radius: 1rem;
+        background: color-mix(in srgb, var(--site-surface-2) 92%, white 8%);
+        padding: 0.875rem 1rem;
+    }
+
+    .mailbox-meta-card-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--site-text-muted);
+    }
+
+    .mailbox-attachment-card {
+        border: 1px solid color-mix(in srgb, var(--site-border) 85%, transparent);
+        border-radius: 1rem;
+        background: color-mix(in srgb, var(--site-surface-2) 92%, white 8%);
+        padding: 0.875rem 1rem;
+        cursor: pointer;
+    }
+
+    .mailbox-attachment-card:hover {
+        border-color: color-mix(in srgb, var(--site-highlight) 45%, var(--site-border));
+        background: color-mix(in srgb, var(--site-highlight-soft) 38%, var(--site-surface-2));
+    }
+
+    .mailbox-meta-inline {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.65rem;
+        align-items: center;
+    }
+
+    .mailbox-meta-chip {
+        display: inline-flex;
+        min-width: 0;
+        max-width: 100%;
+        align-items: center;
+        gap: 0.55rem;
+        border: 1px solid color-mix(in srgb, var(--site-border) 85%, transparent);
+        border-radius: 999px;
+        background: color-mix(in srgb, var(--site-surface-2) 92%, white 8%);
+        padding: 0.45rem 0.8rem;
+    }
+
+    .mailbox-meta-chip.is-compact {
+        padding-right: 0.7rem;
+    }
+
+    .mailbox-meta-chip-label {
+        flex-shrink: 0;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--site-text-muted);
+    }
+
+    .mailbox-meta-chip-value {
+        min-width: 0;
+        font-size: 0.88rem;
+        line-height: 1.25rem;
+        color: var(--site-heading);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .mailbox-attachment-preview {
+        overflow: hidden;
+        flex-shrink: 0;
+        width: 4.5rem;
+        height: 4.5rem;
+        border: 1px solid color-mix(in srgb, var(--site-border) 85%, transparent);
+        border-radius: 0.9rem;
+        background: color-mix(in srgb, var(--site-surface-1) 88%, white 12%);
+    }
+
+    .mailbox-attachment-preview-fallback {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+        color: var(--site-text-muted);
+    }
+
+    @media (max-width: 1024px) {
+        .mailbox-meta-group {
+            padding: 0.7rem;
+        }
+
+        .mailbox-meta-chip {
+            width: 100%;
+            border-radius: 1rem;
+        }
+
+        .mailbox-meta-chip-value {
+            white-space: normal;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .fi-body-has-sidebar-collapsible-on-desktop .fi-main-sidebar {
+            transition:
+                width 180ms ease,
+                transform 180ms ease,
+                box-shadow 180ms ease,
+                background-color 180ms ease;
+            overflow: hidden;
+        }
+
+        .fi-body-has-sidebar-collapsible-on-desktop .fi-main-sidebar:not(.fi-sidebar-open) {
+            box-shadow: 0 18px 40px rgb(2 6 23 / 0.12);
+        }
+
+        .fi-body-has-sidebar-collapsible-on-desktop .fi-main-sidebar.fi-sidebar-open {
+            box-shadow: 0 24px 54px rgb(2 6 23 / 0.3);
+        }
+
+        .fi-body-has-sidebar-collapsible-on-desktop .fi-topbar-collapse-sidebar-btn-ctn,
+        .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar-open-collapse-sidebar-btn,
+        .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar-close-collapse-sidebar-btn {
+            display: none;
+        }
+    }
+}

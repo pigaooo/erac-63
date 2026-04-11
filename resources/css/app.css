@@ -1,11 +1,23 @@
+@import "tailwindcss";
 @import "animate.css/animate.min.css";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@source "../../app/**/*.php";
+@source "../../resources/**/*.blade.php";
+@source "../../resources/**/*.js";
+@source "../../resources/**/*.vue";
+@source "../../storage/framework/views/*.php";
+@source "../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php";
+
+@plugin "daisyui" {
+    themes: dark --default, light;
+}
+
+@theme {
+    --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
 
 :root {
-    font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+    font-family: var(--font-sans);
 }
 
 .scroll-reveal {
