@@ -258,6 +258,27 @@ class ImapSyncService
         $this->syncFolderMessages($message->folder);
     }
 
+    public function deleteMessagePermanently(MailMessage $message): void
+    {
+        $message->loadMissing(['account', 'folder']);
+
+        $this->imapClient->deleteMessage(
+            $message->account,
+            $message->folder->remote_name,
+            $message->uid,
+        );
+
+        $sourceFolder = $message->folder;
+
+        DB::transaction(function () use ($message): void {
+            $message->attachments()->delete();
+            $message->events()->delete();
+            $message->delete();
+        });
+
+        $this->syncFolderMessages($sourceFolder);
+    }
+
     public function syncSentFolder(MailAccount $account): void
     {
         $folderName = $account->sent_folder_name;

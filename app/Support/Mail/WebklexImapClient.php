@@ -149,6 +149,30 @@ class WebklexImapClient implements ImapClient
         }
     }
 
+    public function deleteMessage(MailAccount $account, string $remoteFolder, int $uid): void
+    {
+        $client = $this->connect($account);
+
+        try {
+            $folder = $this->getFolder($client, $remoteFolder);
+            $message = $folder
+                ->messages()
+                ->setSequence(IMAP::ST_UID)
+                ->leaveUnread()
+                ->setFetchBody(false)
+                ->setFetchFlags(true)
+                ->getMessageByUid($uid);
+
+            $deleted = $message->delete(true);
+
+            if (! $deleted) {
+                throw new RuntimeException('Nao foi possivel deletar permanentemente a mensagem no servidor remoto.');
+            }
+        } finally {
+            $client->disconnect();
+        }
+    }
+
     private function connect(MailAccount $account): Client
     {
         try {

@@ -20,6 +20,8 @@ class FakeImapClient implements ImapClient
 
     public array $movedMessages = [];
 
+    public array $deletedMessages = [];
+
     public function testConnection(MailAccount $account): void
     {
     }
@@ -52,5 +54,10 @@ class FakeImapClient implements ImapClient
     public function moveMessage(MailAccount $account, string $fromRemoteFolder, int $uid, string $toRemoteFolder): void
     {
         $this->movedMessages[] = compact('fromRemoteFolder', 'uid', 'toRemoteFolder');
+    }
+
+    public function deleteMessage(MailAccount $account, string $remoteFolder, int $uid): void
+    {
+        $this->deletedMessages[] = compact('remoteFolder', 'uid');
     }
 }

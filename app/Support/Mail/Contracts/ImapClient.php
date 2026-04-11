@@ -26,4 +26,6 @@ interface ImapClient
     public function setMessageSeen(MailAccount $account, string $remoteFolder, int $uid, bool $seen): void;
 
     public function moveMessage(MailAccount $account, string $fromRemoteFolder, int $uid, string $toRemoteFolder): void;
+
+    public function deleteMessage(MailAccount $account, string $remoteFolder, int $uid): void;
 }

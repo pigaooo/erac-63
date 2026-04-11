@@ -17,7 +17,7 @@
                 </div>
 
                 <div class="flex flex-col gap-3 md:flex-row md:items-center">
-                    <label class="input input-bordered mailbox-account-input w-full min-w-[18rem] bg-white/80 dark:bg-white/[0.04]">
+                    <label class="input input-bordered mailbox-account-input w-full min-w-[18rem] bg-white/80 dark:bg-white/[0.04] ring-2 ring-primary-500/10 shadow-sm">
                         <x-filament::icon icon="heroicon-o-envelope" class="h-4 w-4 text-gray-400" />
 
                         <select
@@ -34,10 +34,6 @@
                     <div class="join">
                         <x-filament::button wire:click="syncNow" icon="heroicon-o-arrow-path" class="join-item">
                             Sincronizar
-                        </x-filament::button>
-
-                        <x-filament::button wire:click="composeNew" color="gray" icon="heroicon-o-pencil-square" class="join-item">
-                            Escrever
                         </x-filament::button>
                     </div>
                 </div>
@@ -85,9 +81,18 @@
                         @include('filament.pages.partials.mail-viewer-panel', ['page' => $this])
                     </x-filament::section>
                 @else
+                    @php
+                        $accountName = $this->selectedAccount?->name ?? $this->selectedAccount?->email_address ?? 'Nenhuma selecionada';
+                        $folderLabel = $this->selectedFolder?->display_name ?? '';
+                        $remoteName = strtolower($this->selectedFolder?->remote_name ?? $folderLabel);
+                        $isInbox = str_contains($remoteName, 'inbox') || strtolower($folderLabel) === 'inbox';
+                        $messagesHeading = $isInbox ? ('Email selecionado: ' . $accountName) : ($folderLabel ?: 'Mensagens');
+                        $messagesDescription = $this->selectedAccount?->email_address ?? 'Selecione uma conta para carregar a lista';
+                    @endphp
+
                     <x-filament::section
-                        :heading="$this->selectedFolder?->display_name ?? 'Mensagens'"
-                        :description="$this->selectedAccount?->email_address ?? 'Selecione uma conta para carregar a lista'"
+                        :heading="$messagesHeading"
+                        :description="$messagesDescription"
                         icon="heroicon-o-inbox-stack"
                         class="mailbox-column-section"
                     >

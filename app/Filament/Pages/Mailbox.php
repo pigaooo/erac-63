@@ -15,6 +15,7 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Actions\BulkAction;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Infolists\Components\IconEntry;
@@ -35,6 +36,7 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Facades\Storage;
@@ -281,8 +283,8 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
             ->columns([
                 IconColumn::make('is_seen')
                     ->label('Lido')
-                    ->icon(fn (bool $state): string => $state ? 'heroicon-o-envelope-open' : 'heroicon-s-envelope')
-                    ->color(fn (bool $state): string => $state ? 'gray' : 'warning')
+                    ->icon(fn (bool $state): string => $state ? 'heroicon-s-check' : 'heroicon-s-envelope')
+                    ->color(fn (bool $state): string => $state ? 'success' : 'warning')
                     ->alignCenter()
                     ->width('68px'),
                 TextColumn::make('subject')
@@ -324,6 +326,120 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
             ->recordClasses(fn (MailMessage $record): string => $record->is_seen
                 ? 'mailbox-message-row is-read'
                 : 'mailbox-message-row is-unread')
+            ->bulkActions([
+                BulkAction::make('deleteSelectedMessages')
+                    ->label('Deletar selecionadas')
+                    ->icon('heroicon-o-trash')
+                    ->color('warning')
+                    ->requiresConfirmation()
+                    ->deselectRecordsAfterCompletion()
+                    ->action(function (EloquentCollection $records, ImapSyncService $syncService): void {
+                        if ($records->isEmpty()) {
+                            return;
+                        }
+
+                        $junkFolder = $this->resolveJunkFolder();
+                        $movedToJunk = 0;
+                        $deletedPermanently = 0;
+
+                        foreach ($records as $message) {
+                            if (! $message instanceof MailMessage) {
+                                continue;
+                            }
+
+                            $message->loadMissing('folder');
+
+                            if ($this->isJunkFolder($message->folder)) {
+                                $syncService->deleteMessagePermanently($message);
+                                $deletedPermanently++;
+
+                                continue;
+                            }
+
+                            if ($junkFolder === null || $junkFolder->getKey() === $message->mail_folder_id) {
+                                continue;
+                            }
+
+                            $syncService->moveMessage($message, $junkFolder);
+                            $movedToJunk++;
+                        }
+
+                        $titles = [];
+
+                        if ($movedToJunk > 0) {
+                            $titles[] = $movedToJunk . ' movida(s) para Junk';
+                        }
+
+                        if ($deletedPermanently > 0) {
+                            $titles[] = $deletedPermanently . ' removida(s) permanentemente';
+                        }
+
+                        Notification::make()
+                            ->title($titles !== [] ? implode(' e ', $titles) . '.' : 'Nenhuma mensagem foi alterada.')
+                            ->success()
+                            ->send();
+
+                        $this->selectedMessageId = null;
+                        $this->resetTable();
+                    }),
+                BulkAction::make('moveSelectedMessages')
+                    ->label('Mover selecionadas')
+                    ->icon('heroicon-o-folder')
+                    ->color('gray')
+                    ->form([
+                        Select::make('destination_folder_id')
+                            ->label('Pasta de destino')
+                            ->required()
+                            ->options(fn (): array => $this->moveDestinationOptions()),
+                    ])
+                    ->deselectRecordsAfterCompletion()
+                    ->action(function (EloquentCollection $records, array $data, ImapSyncService $syncService): void {
+                        if ($records->isEmpty()) {
+                            return;
+                        }
+
+                        $destinationId = (int) ($data['destination_folder_id'] ?? 0);
+
+                        if ($destinationId < 1) {
+                            return;
+                        }
+
+                        $destination = MailFolder::query()
+                            ->where('mail_account_id', $this->selectedAccountId)
+                            ->where('is_active', true)
+                            ->find($destinationId);
+
+                        if ($destination === null) {
+                            Notification::make()
+                                ->title('Pasta de destino nao encontrada.')
+                                ->danger()
+                                ->send();
+
+                            return;
+                        }
+
+                        $movedCount = 0;
+
+                        foreach ($records as $message) {
+                            if (! $message instanceof MailMessage || $message->mail_folder_id === $destination->getKey()) {
+                                continue;
+                            }
+
+                            $syncService->moveMessage($message, $destination);
+                            $movedCount++;
+                        }
+
+                        Notification::make()
+                            ->title($movedCount > 0
+                                ? $movedCount . ' mensagem(ns) movida(s) para ' . $destination->display_name . '.'
+                                : 'Nenhuma mensagem foi movida.')
+                            ->success()
+                            ->send();
+
+                        $this->selectedMessageId = null;
+                        $this->resetTable();
+                    }),
+            ])
             ->paginated([10, 15, 25, 50, 100, 200])
             ->defaultPaginationPageOption(15)
             ->emptyStateHeading('Nenhuma mensagem encontrada nesta pasta.');
@@ -992,6 +1108,60 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
             ->title(Str::limit($exception->getMessage(), 220))
             ->danger()
             ->send();
+    }
+
+    private function resolveJunkFolder(): ?MailFolder
+    {
+        if ($this->selectedAccountId === null) {
+            return null;
+        }
+
+        $folders = $this->folders;
+
+        $junkBySpecialUse = $folders->first(function (MailFolder $folder): bool {
+            return in_array($folder->special_use, ['spam', 'trash'], true);
+        });
+
+        if ($junkBySpecialUse !== null) {
+            return $junkBySpecialUse;
+        }
+
+        return $folders->first(function (MailFolder $folder): bool {
+            $label = Str::lower($folder->display_name ?: $folder->remote_name);
+
+            return Str::contains($label, ['junk', 'spam', 'lixo', 'trash', 'lixeira']);
+        });
+    }
+
+    private function isJunkFolder(?MailFolder $folder): bool
+    {
+        if ($folder === null) {
+            return false;
+        }
+
+        if (in_array($folder->special_use, ['spam', 'trash'], true)) {
+            return true;
+        }
+
+        $label = Str::lower($folder->display_name ?: $folder->remote_name);
+
+        return Str::contains($label, ['junk', 'spam', 'lixo', 'trash', 'lixeira']);
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    private function moveDestinationOptions(): array
+    {
+        if ($this->selectedAccountId === null) {
+            return [];
+        }
+
+        return $this->folders
+            ->where('is_active', true)
+            ->where('is_selectable', true)
+            ->mapWithKeys(fn (MailFolder $folder): array => [$folder->getKey() => $folder->display_name])
+            ->all();
     }
 
     public function renderedSelectedMessageBody(): HtmlString
