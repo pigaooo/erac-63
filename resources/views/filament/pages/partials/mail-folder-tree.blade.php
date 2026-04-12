@@ -8,7 +8,8 @@
     @if ($folder)
         <button
             type="button"
-            wire:click="openFolder({{ $folder->id }})"
+            wire:click.prevent.stop="openFolder({{ $folder->id }})"
+            wire:key="mail-folder-{{ $folder->id }}"
             @class([
                 'mailbox-folder-item flex w-full items-center justify-between rounded-2xl border px-3 py-2.5 text-left text-sm transition',
                 'is-active bg-primary-600 text-white shadow-lg ring-1 ring-primary-400/40' => $selectedFolderId === $folder->id,

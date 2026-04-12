@@ -277,7 +277,7 @@
         background: color-mix(in srgb, var(--site-highlight-soft) 45%, var(--site-surface-2));
     }
 
-    .fi-fo-markdown-editor .EasyMDEContainer .editor-toolbar {
+    .fi-fo-rich-editor .fi-fo-rich-editor-toolbar {
         display: flex;
         flex-wrap: nowrap;
         gap: 0.25rem;
@@ -286,13 +286,20 @@
         scrollbar-width: thin;
     }
 
-    .fi-fo-markdown-editor .EasyMDEContainer .editor-toolbar::-webkit-scrollbar {
+    .fi-fo-rich-editor .fi-fo-rich-editor-toolbar::-webkit-scrollbar {
         height: 0.35rem;
     }
 
-    .fi-fo-markdown-editor .EasyMDEContainer .editor-toolbar button,
-    .fi-fo-markdown-editor .EasyMDEContainer .editor-toolbar .separator {
-        flex-shrink: 0;
+    .fi-fo-rich-editor .fi-fo-rich-editor-toolbar .fi-fo-rich-editor-toolbar-group {
+        display: contents;
+    }
+
+    .mailbox-reader .fi-fo-rich-editor .fi-fo-rich-editor-content {
+        min-height: 16rem;
+    }
+
+    .mailbox-reader .fi-fo-rich-editor .tiptap {
+        min-height: 14rem;
     }
 
     .mailbox-meta-group {

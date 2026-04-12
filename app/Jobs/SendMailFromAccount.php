@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\MailAccount;
+use App\Support\Mail\ImapSyncService;
 use App\Support\Mail\MailAccountManager;
 use App\Support\Mail\MailEventRecorder;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -39,6 +40,7 @@ class SendMailFromAccount implements ShouldQueue
     public function handle(
         MailAccountManager $mailAccountManager,
         MailEventRecorder $eventRecorder,
+        ImapSyncService $syncService,
     ): void {
         $account = MailAccount::query()->find($this->mailAccountId);
 
@@ -79,7 +81,15 @@ class SendMailFromAccount implements ShouldQueue
                 'to' => $this->to,
             ]);
 
-            SyncSentFolder::dispatch($account->getKey());
+            // Keep Sent updated right after sending, independent of external queue workers.
+            try {
+                $syncService->syncSentFolder($account);
+            } catch (Throwable $syncException) {
+                $eventRecorder->record($account, 'sync_failed', 'Falha ao sincronizar pasta de enviados apos envio.', payload: [
+                    'subject' => $this->subject,
+                    'message' => $syncException->getMessage(),
+                ]);
+            }
         } catch (Throwable $exception) {
             $account->forceFill([
                 'last_error_at' => now(),

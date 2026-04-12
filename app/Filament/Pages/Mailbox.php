@@ -5,16 +5,18 @@ namespace App\Filament\Pages;
 use App\Jobs\SendMailFromAccount;
 use App\Jobs\SyncMailAccountFolders;
 use App\Jobs\SyncMailFolderMessages;
+use App\Models\Inscrito;
 use App\Models\MailAccount;
+use App\Models\MailAttachment;
 use App\Models\MailEvent;
 use App\Models\MailFolder;
-use App\Models\MailAttachment;
 use App\Models\MailMessage;
 use App\Support\Mail\ImapSyncService;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\MarkdownEditor;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Actions\BulkAction;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Infolists\Components\IconEntry;
@@ -35,6 +37,7 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Facades\Storage;
@@ -80,6 +83,8 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
      */
     public array $composerData = [];
 
+    public string $composerRecipientInput = '';
+
     public ?string $composerInReplyTo = null;
 
     /**
@@ -104,33 +109,21 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
         return $schema
             ->statePath('composerData')
             ->components([
-                TextInput::make('to')
-                    ->label('Para')
-                    ->placeholder('nome@dominio.com, Outro <outro@dominio.com>')
-                    ->required(),
                 TextInput::make('subject')
                     ->label('Assunto')
                     ->required()
                     ->maxLength(255),
-                MarkdownEditor::make('body')
+                RichEditor::make('body')
                     ->label('Mensagem')
                     ->fileAttachmentsDisk('local')
                     ->fileAttachmentsDirectory('private/mail/outgoing/inline')
-                    ->toolbarButtons([[
-                        'bold',
-                        'italic',
-                        'strike',
-                        'link',
-                        'heading',
-                        'blockquote',
-                        'codeBlock',
-                        'bulletList',
-                        'orderedList',
-                        'table',
-                        'attachFiles',
-                        'undo',
-                        'redo',
-                    ]])
+                    ->toolbarButtons([
+                        'bold', 'italic', 'underline', 'strike', 'link',
+                        'h2', 'h3',
+                        'blockquote', 'bulletList', 'orderedList',
+                        'table', 'attachFiles',
+                        'undo', 'redo',
+                    ])
                     ->columnSpanFull()
                     ->required(),
                 FileUpload::make('attachments')
@@ -171,11 +164,17 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
                     ->columnSpanFull(),
                 TextEntry::make('to_addresses')
                     ->label('Para')
-                    ->state(fn (): string => $this->formatAddressesForDisplay($this->selectedMessage?->to_addresses ?? []))
+                    ->state(fn (): string => $this->formatInboundAddressForPrivacy(
+                        $this->selectedMessage?->to_addresses ?? [],
+                        $this->selectedMessage?->direction,
+                    ))
                     ->columnSpanFull(),
                 TextEntry::make('cc_addresses')
                     ->label('Cc')
-                    ->state(fn (): string => $this->formatAddressesForDisplay($this->selectedMessage?->cc_addresses ?? []))
+                    ->state(fn (): string => $this->formatInboundAddressForPrivacy(
+                        $this->selectedMessage?->cc_addresses ?? [],
+                        $this->selectedMessage?->direction,
+                    ))
                     ->placeholder('-'),
                 TextEntry::make('received_at')
                     ->label('Recebido em')
@@ -274,6 +273,45 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
         $this->resetTable();
     }
 
+    public function updatedComposerRecipientInput(string $value): void
+    {
+        $this->composerRecipientInput = $this->mergeComposerRecipientsFromInput($value);
+    }
+
+    public function commitComposerRecipientInput(): void
+    {
+        $this->composerRecipientInput = $this->mergeComposerRecipientsFromInput($this->composerRecipientInput, true);
+    }
+
+    public function removeComposerRecipient(string $address): void
+    {
+        $remainingRecipients = collect($this->parseAddressString((string) ($this->composerData['to'] ?? '')))
+            ->reject(fn (array $recipient): bool => Str::lower($recipient['address']) === Str::lower($address))
+            ->values()
+            ->all();
+
+        $this->composerData['to'] = $this->formatAddresses($remainingRecipients);
+    }
+
+    public function selectComposerSuggestion(string $email): void
+    {
+        if (! filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return;
+        }
+
+        $inscrito = Inscrito::query()
+            ->select(['name', 'email'])
+            ->where('email', $email)
+            ->first();
+
+        $this->mergeComposerRecipients([[
+            'address' => $email,
+            'name' => filled($inscrito?->name) ? $inscrito->name : null,
+        ]]);
+
+        $this->composerRecipientInput = '';
+    }
+
     public function table(Table $table): Table
     {
         return $table
@@ -281,8 +319,8 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
             ->columns([
                 IconColumn::make('is_seen')
                     ->label('Lido')
-                    ->icon(fn (bool $state): string => $state ? 'heroicon-o-envelope-open' : 'heroicon-s-envelope')
-                    ->color(fn (bool $state): string => $state ? 'gray' : 'warning')
+                    ->icon(fn (bool $state): string => $state ? 'heroicon-s-check' : 'heroicon-s-envelope')
+                    ->color(fn (bool $state): string => $state ? 'success' : 'warning')
                     ->alignCenter()
                     ->width('68px'),
                 TextColumn::make('subject')
@@ -324,6 +362,120 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
             ->recordClasses(fn (MailMessage $record): string => $record->is_seen
                 ? 'mailbox-message-row is-read'
                 : 'mailbox-message-row is-unread')
+            ->bulkActions([
+                BulkAction::make('deleteSelectedMessages')
+                    ->label('Deletar selecionadas')
+                    ->icon('heroicon-o-trash')
+                    ->color('warning')
+                    ->requiresConfirmation()
+                    ->deselectRecordsAfterCompletion()
+                    ->action(function (EloquentCollection $records, ImapSyncService $syncService): void {
+                        if ($records->isEmpty()) {
+                            return;
+                        }
+
+                        $junkFolder = $this->resolveJunkFolder();
+                        $movedToJunk = 0;
+                        $deletedPermanently = 0;
+
+                        foreach ($records as $message) {
+                            if (! $message instanceof MailMessage) {
+                                continue;
+                            }
+
+                            $message->loadMissing('folder');
+
+                            if ($this->isJunkFolder($message->folder)) {
+                                $syncService->deleteMessagePermanently($message);
+                                $deletedPermanently++;
+
+                                continue;
+                            }
+
+                            if ($junkFolder === null || $junkFolder->getKey() === $message->mail_folder_id) {
+                                continue;
+                            }
+
+                            $syncService->moveMessage($message, $junkFolder);
+                            $movedToJunk++;
+                        }
+
+                        $titles = [];
+
+                        if ($movedToJunk > 0) {
+                            $titles[] = $movedToJunk . ' movida(s) para Junk';
+                        }
+
+                        if ($deletedPermanently > 0) {
+                            $titles[] = $deletedPermanently . ' removida(s) permanentemente';
+                        }
+
+                        Notification::make()
+                            ->title($titles !== [] ? implode(' e ', $titles) . '.' : 'Nenhuma mensagem foi alterada.')
+                            ->success()
+                            ->send();
+
+                        $this->selectedMessageId = null;
+                        $this->refreshMailboxCollections();
+                    }),
+                BulkAction::make('moveSelectedMessages')
+                    ->label('Mover selecionadas')
+                    ->icon('heroicon-o-folder')
+                    ->color('gray')
+                    ->form([
+                        Select::make('destination_folder_id')
+                            ->label('Pasta de destino')
+                            ->required()
+                            ->options(fn (): array => $this->moveDestinationOptions()),
+                    ])
+                    ->deselectRecordsAfterCompletion()
+                    ->action(function (EloquentCollection $records, array $data, ImapSyncService $syncService): void {
+                        if ($records->isEmpty()) {
+                            return;
+                        }
+
+                        $destinationId = (int) ($data['destination_folder_id'] ?? 0);
+
+                        if ($destinationId < 1) {
+                            return;
+                        }
+
+                        $destination = MailFolder::query()
+                            ->where('mail_account_id', $this->selectedAccountId)
+                            ->where('is_active', true)
+                            ->find($destinationId);
+
+                        if ($destination === null) {
+                            Notification::make()
+                                ->title('Pasta de destino nao encontrada.')
+                                ->danger()
+                                ->send();
+
+                            return;
+                        }
+
+                        $movedCount = 0;
+
+                        foreach ($records as $message) {
+                            if (! $message instanceof MailMessage || $message->mail_folder_id === $destination->getKey()) {
+                                continue;
+                            }
+
+                            $syncService->moveMessage($message, $destination);
+                            $movedCount++;
+                        }
+
+                        Notification::make()
+                            ->title($movedCount > 0
+                                ? $movedCount . ' mensagem(ns) movida(s) para ' . $destination->display_name . '.'
+                                : 'Nenhuma mensagem foi movida.')
+                            ->success()
+                            ->send();
+
+                        $this->selectedMessageId = null;
+                        $this->refreshMailboxCollections();
+                    }),
+            ])
             ->paginated([10, 15, 25, 50, 100, 200])
             ->defaultPaginationPageOption(15)
             ->emptyStateHeading('Nenhuma mensagem encontrada nesta pasta.');
@@ -488,17 +640,75 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
         return (int) ($this->selectedFolder?->unread_messages_count ?? 0);
     }
 
-    public function syncNow(): void
+    /**
+     * @return array<int, array{address:string,name:?string}>
+     */
+    public function getComposerRecipientsProperty(): array
     {
-        if ($this->selectedAccountId === null) {
+        return $this->parseAddressString((string) ($this->composerData['to'] ?? ''));
+    }
+
+    public function getComposerRecipientSuggestionsProperty(): Collection
+    {
+        $term = trim($this->composerRecipientInput);
+
+        if (mb_strlen($term) < 2 || Str::contains($term, ['<', '>'])) {
+            return collect();
+        }
+
+        $search = '%' . str_replace(['\\', '%', '_'], ['\\\\', '\\%', '\\_'], $term) . '%';
+        $selectedAddresses = collect($this->composerRecipients)
+            ->map(fn (array $recipient): string => Str::lower($recipient['address']))
+            ->all();
+
+        return Inscrito::query()
+            ->select(['name', 'email'])
+            ->whereNotNull('email')
+            ->where('email', '!=', '')
+            ->where(function (Builder $query) use ($search): void {
+                $query
+                    ->where('name', 'like', $search)
+                    ->orWhere('email', 'like', $search);
+            })
+            ->orderBy('name')
+            ->limit(8)
+            ->get()
+            ->reject(fn (Inscrito $inscrito): bool => in_array(Str::lower((string) $inscrito->email), $selectedAddresses, true))
+            ->map(fn (Inscrito $inscrito): array => [
+                'name' => (string) $inscrito->name,
+                'email' => (string) $inscrito->email,
+            ])
+            ->values();
+    }
+
+    public function syncNow(ImapSyncService $syncService): void
+    {
+        $account = $this->selectedAccount;
+
+        if ($account === null) {
             return;
         }
 
         try {
-            SyncMailAccountFolders::dispatch($this->selectedAccountId);
+            $folders = $syncService->runSafe(
+                fn () => $syncService->syncFolders($account),
+                $account,
+                'sync_failed',
+                'Falha ao sincronizar pastas da conta ' . $account->name . '.',
+            );
 
             if ($this->selectedFolderId !== null) {
-                SyncMailFolderMessages::dispatch($this->selectedFolderId);
+                $selectedFolder = $folders->firstWhere('id', $this->selectedFolderId)
+                    ?? MailFolder::query()->find($this->selectedFolderId);
+
+                if ($selectedFolder !== null) {
+                    $syncService->runSafe(
+                        fn () => $syncService->syncFolderMessages($selectedFolder),
+                        $account,
+                        'sync_failed',
+                        'Falha ao sincronizar mensagens da pasta ' . $selectedFolder->display_name . '.',
+                    );
+                }
             }
         } catch (Throwable $exception) {
             $this->notifyFailure($exception);
@@ -506,15 +716,25 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
             return;
         }
 
+        $this->refreshMailboxCollections();
+
         Notification::make()
-            ->title('Sincronizacao enviada para a fila.')
+            ->title('Sincronizacao concluida.')
             ->success()
             ->send();
     }
 
     public function openFolder(int $folderId): void
     {
+        if ($this->selectedFolderId === $folderId && $this->selectedMessageId === null && ! $this->showComposer) {
+            return;
+        }
+
         $this->selectedFolderId = $folderId;
+        $this->selectedMessageId = null;
+        $this->moveDestinationId = null;
+        $this->showComposer = false;
+        $this->resetTable();
     }
 
     public function openMessageFromTable(MailMessage $record, ImapSyncService $syncService): void
@@ -584,6 +804,8 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
         $this->selectedMessageId = null;
         $this->moveDestinationId = null;
 
+        $this->refreshMailboxCollections();
+
         Notification::make()
             ->title('Mensagem movida.')
             ->success()
@@ -647,6 +869,7 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
             $message->headers['references'] ?? null,
             $message->remote_message_id,
         ]));
+        $this->composerRecipientInput = '';
 
         $this->composerForm->fill([
             'to' => $this->formatAddresses($message->from_addresses ?? []),
@@ -668,6 +891,7 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
         $this->showComposer = true;
         $this->composerInReplyTo = null;
         $this->composerReferences = [];
+        $this->composerRecipientInput = '';
         $this->composerForm->fill([
             'to' => '',
             'subject' => Str::startsWith((string) $message->subject, 'Fwd:') ? (string) $message->subject : 'Fwd: ' . $message->subject,
@@ -680,6 +904,28 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
     public function sendComposer(): void
     {
         if ($this->selectedAccountId === null) {
+            return;
+        }
+
+        $this->composerRecipientInput = $this->mergeComposerRecipientsFromInput($this->composerRecipientInput, true);
+
+        if ($this->composerRecipientInput !== '') {
+            Notification::make()
+                ->title('Revise o campo Para e informe apenas destinatarios validos.')
+                ->danger()
+                ->send();
+
+            return;
+        }
+
+        $recipients = $this->composerRecipients;
+
+        if ($recipients === []) {
+            Notification::make()
+                ->title('Informe ao menos um destinatario valido.')
+                ->danger()
+                ->send();
+
             return;
         }
 
@@ -698,22 +944,24 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
             ];
         }
 
-        SendMailFromAccount::dispatch(
-            $this->selectedAccountId,
-            $this->parseAddressString((string) ($data['to'] ?? '')),
-            (string) ($data['subject'] ?? ''),
-            $body !== '' ? Str::markdown($body) : null,
-            $body !== '' ? $body : null,
-            [],
-            [],
-            [],
-            $attachmentPayload,
-            $this->composerInReplyTo,
-            $this->composerReferences,
-        );
+        foreach ($recipients as $recipient) {
+            SendMailFromAccount::dispatch(
+                $this->selectedAccountId,
+                [$recipient],
+                (string) ($data['subject'] ?? ''),
+                $body !== '' ? $body : null,
+                $body !== '' ? strip_tags($body) : null,
+                [],
+                [],
+                [],
+                $attachmentPayload,
+                $this->composerInReplyTo,
+                $this->composerReferences,
+            );
+        }
 
         Notification::make()
-            ->title('Envio colocado na fila.')
+            ->title(count($recipients) > 1 ? 'Envios colocados na fila.' : 'Envio colocado na fila.')
             ->success()
             ->send();
 
@@ -740,6 +988,7 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
     private function resetComposer(): void
     {
         $this->composerData = $this->defaultComposerData();
+        $this->composerRecipientInput = '';
         $this->composerInReplyTo = null;
         $this->composerReferences = [];
 
@@ -783,6 +1032,30 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
         $formatted = $this->formatAddresses($addresses);
 
         return $formatted !== '' ? $formatted : '-';
+    }
+
+    /**
+     * @param  array<int, array{address:string,name:?string}>  $addresses
+     */
+    private function formatInboundAddressForPrivacy(array $addresses, ?string $direction): string
+    {
+        if ($addresses === []) {
+            return '-';
+        }
+
+        if ($direction !== 'inbound') {
+            return $this->formatAddressesForDisplay($addresses);
+        }
+
+        $first = [$addresses[0]];
+        $hiddenCount = max(count($addresses) - 1, 0);
+        $visible = $this->formatAddresses($first);
+
+        if ($hiddenCount <= 0) {
+            return $visible !== '' ? $visible : '-';
+        }
+
+        return sprintf('%s (+%d oculto%s)', $visible, $hiddenCount, $hiddenCount > 1 ? 's' : '');
     }
 
     /**
@@ -902,6 +1175,54 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
         }, $parts)));
     }
 
+    private function mergeComposerRecipientsFromInput(string $input, bool $finalize = false): string
+    {
+        $normalized = str_replace(["\r\n", "\n", ';'], ',', $input);
+        $hasTrailingDelimiter = preg_match('/,\s*$/', $normalized) === 1;
+        $segments = array_values(array_filter(array_map('trim', explode(',', $normalized)), fn (string $segment): bool => $segment !== ''));
+        $pending = '';
+
+        if (! $finalize && ! $hasTrailingDelimiter && $segments !== []) {
+            $pending = array_pop($segments) ?? '';
+        }
+
+        $validRecipients = [];
+        $invalidSegments = [];
+
+        foreach ($segments as $segment) {
+            $parsedRecipients = $this->parseAddressString($segment);
+
+            if ($parsedRecipients === []) {
+                $invalidSegments[] = $segment;
+
+                continue;
+            }
+
+            array_push($validRecipients, ...$parsedRecipients);
+        }
+
+        if ($validRecipients !== []) {
+            $this->mergeComposerRecipients($validRecipients);
+        }
+
+        return implode(', ', array_filter([...$invalidSegments, $pending]));
+    }
+
+    /**
+     * @param  array<int, array{address:string,name:?string}>  $recipients
+     */
+    private function mergeComposerRecipients(array $recipients): void
+    {
+        $existing = $this->parseAddressString((string) ($this->composerData['to'] ?? ''));
+        $merged = collect([...$existing, ...$recipients])
+            ->filter(fn (array $recipient): bool => filled($recipient['address']))
+            ->unique(fn (array $recipient): string => Str::lower($recipient['address']))
+            ->values()
+            ->all();
+
+        $this->composerData['to'] = $this->formatAddresses($merged);
+    }
+
     private function buildReplyMarkdown(MailMessage $message): string
     {
         $header = [
@@ -994,6 +1315,67 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
             ->send();
     }
 
+    private function refreshMailboxCollections(): void
+    {
+        unset($this->folders, $this->folderTree, $this->selectedFolder, $this->moveDestinations, $this->messages);
+
+        $this->resetTable();
+    }
+
+    private function resolveJunkFolder(): ?MailFolder
+    {
+        if ($this->selectedAccountId === null) {
+            return null;
+        }
+
+        $folders = $this->folders;
+
+        $junkBySpecialUse = $folders->first(function (MailFolder $folder): bool {
+            return in_array($folder->special_use, ['spam', 'trash'], true);
+        });
+
+        if ($junkBySpecialUse !== null) {
+            return $junkBySpecialUse;
+        }
+
+        return $folders->first(function (MailFolder $folder): bool {
+            $label = Str::lower($folder->display_name ?: $folder->remote_name);
+
+            return Str::contains($label, ['junk', 'spam', 'lixo', 'trash', 'lixeira']);
+        });
+    }
+
+    private function isJunkFolder(?MailFolder $folder): bool
+    {
+        if ($folder === null) {
+            return false;
+        }
+
+        if (in_array($folder->special_use, ['spam', 'trash'], true)) {
+            return true;
+        }
+
+        $label = Str::lower($folder->display_name ?: $folder->remote_name);
+
+        return Str::contains($label, ['junk', 'spam', 'lixo', 'trash', 'lixeira']);
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    private function moveDestinationOptions(): array
+    {
+        if ($this->selectedAccountId === null) {
+            return [];
+        }
+
+        return $this->folders
+            ->where('is_active', true)
+            ->where('is_selectable', true)
+            ->mapWithKeys(fn (MailFolder $folder): array => [$folder->getKey() => $folder->display_name])
+            ->all();
+    }
+
     public function renderedSelectedMessageBody(): HtmlString
     {
         $message = $this->selectedMessage;
@@ -1002,8 +1384,21 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
             return new HtmlString('');
         }
 
-        if (filled($message->html_body)) {
-            return new HtmlString($message->html_body);
+        $htmlBody = trim((string) ($message->html_body ?? ''));
+
+        if ($htmlBody !== '') {
+            return new HtmlString($htmlBody);
+        }
+
+        $textBodyRaw = trim((string) ($message->text_body ?? ''));
+
+        if ($textBodyRaw !== '') {
+            $decodedText = html_entity_decode($textBodyRaw, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+            $htmlCandidate = Str::contains($decodedText, '<') ? $decodedText : $textBodyRaw;
+
+            if (preg_match('/<\s*(table|tbody|tr|td|th|p|div|br|ul|ol|li|h[1-6])\b/i', $htmlCandidate) === 1) {
+                return new HtmlString($htmlCandidate);
+            }
         }
 
         $textBody = e((string) $message->text_body);
