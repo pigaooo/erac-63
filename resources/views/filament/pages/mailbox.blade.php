@@ -17,11 +17,13 @@
                 </div>
 
                 <div class="flex flex-col gap-3 md:flex-row md:items-center">
-                    <label class="input input-bordered mailbox-account-input w-full min-w-[18rem] bg-white/80 dark:bg-white/[0.04] ring-2 ring-primary-500/10 shadow-sm">
+                    <label class="input input-bordered mailbox-account-input w-full min-w-[18rem] bg-white/80 dark:bg-white/[0.04] ring-2 ring-primary-500/10 shadow-sm" wire:loading.class="opacity-70" wire:target="syncNow">
                         <x-filament::icon icon="heroicon-o-envelope" class="h-4 w-4 text-gray-400" />
 
                         <select
                             wire:model.live="selectedAccountId"
+                            wire:loading.attr="disabled"
+                            wire:target="syncNow"
                             class="w-full bg-transparent text-sm focus:outline-none"
                         >
                             <option value="">Selecione uma conta</option>
@@ -32,8 +34,11 @@
                     </label>
 
                     <div class="join">
-                        <x-filament::button wire:click="syncNow" icon="heroicon-o-arrow-path" class="join-item">
-                            Sincronizar
+                        <x-filament::button wire:click="syncNow" wire:loading.attr="disabled" wire:target="syncNow" :disabled="$this->selectedAccount === null" class="join-item min-w-[11rem]">
+                            <span class="inline-flex items-center gap-2">
+                                <span wire:loading.remove wire:target="syncNow">Sincronizar</span>
+                                <span wire:loading wire:target="syncNow">Sincronizando...</span>
+                            </span>
                         </x-filament::button>
                     </div>
                 </div>
