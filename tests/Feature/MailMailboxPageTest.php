@@ -4,6 +4,8 @@ namespace Tests\Feature;
 
 use App\Filament\Pages\Mailbox;
 use App\Jobs\SendMailFromAccount;
+use App\Models\Inscrito;
+use App\Models\Loja;
 use App\Models\MailAccount;
 use App\Models\MailFolder;
 use App\Models\MailMessage;
@@ -111,6 +113,93 @@ class MailMailboxPageTest extends TestCase
             return $job->mailAccountId === $account->id
                 && $job->subject === 'Assunto teste';
         });
+    }
+
+    public function test_envio_na_pagina_aceita_multiplos_destinatarios_separados_por_virgula(): void
+    {
+        Queue::fake();
+
+        $admin = $this->authenticateAdmin();
+        $account = MailAccount::query()->create($this->accountData());
+        MailFolder::query()->create([
+            'mail_account_id' => $account->id,
+            'remote_name' => 'INBOX',
+            'display_name' => 'Entrada',
+            'special_use' => 'inbox',
+            'is_active' => true,
+            'is_selectable' => true,
+        ]);
+
+        $this->actingAs($admin);
+
+        Livewire::test(Mailbox::class, ['account' => $account->id])
+            ->call('composeNew')
+            ->set('composerRecipientInput', 'primeiro@example.com, segundo@example.com,')
+            ->assertSet('composerRecipientInput', '')
+            ->set('composerData.subject', 'Assunto varios')
+            ->set('composerData.body', 'Corpo em markdown')
+            ->call('sendComposer')
+            ->assertSet('showComposer', false);
+
+        Queue::assertPushed(SendMailFromAccount::class, 2);
+
+        Queue::assertPushed(SendMailFromAccount::class, function (SendMailFromAccount $job) use ($account) {
+            return $job->mailAccountId === $account->id
+                && $job->subject === 'Assunto varios'
+                && collect($job->to)->pluck('address')->all() === ['primeiro@example.com']
+                && $job->bcc === [];
+        });
+
+        Queue::assertPushed(SendMailFromAccount::class, function (SendMailFromAccount $job) use ($account) {
+            return $job->mailAccountId === $account->id
+                && $job->subject === 'Assunto varios'
+                && collect($job->to)->pluck('address')->all() === ['segundo@example.com']
+                && $job->bcc === [];
+        });
+    }
+
+    public function test_composer_sugere_inscritos_e_adiciona_destinatario_ao_selecionar(): void
+    {
+        $admin = $this->authenticateAdmin();
+        $account = MailAccount::query()->create($this->accountData());
+        MailFolder::query()->create([
+            'mail_account_id' => $account->id,
+            'remote_name' => 'INBOX',
+            'display_name' => 'Entrada',
+            'special_use' => 'inbox',
+            'is_active' => true,
+            'is_selectable' => true,
+        ]);
+
+        $loja = Loja::query()->create([
+            'name' => 'Loja Central',
+            'numero_loja' => 1,
+            'email' => 'loja@example.com',
+            'is_ativo' => true,
+            'user_id' => $admin->id,
+        ]);
+
+        $inscrito = Inscrito::query()->create([
+            'name' => 'Carlos Silva',
+            'email' => 'carlos.silva@example.com',
+            'telefone' => '(11) 99999-9999',
+            'cpf' => '123.456.789-10',
+            'cim' => '123456',
+            'grau' => 'MM',
+            'loja_id' => $loja->id,
+            'is_paied' => false,
+        ]);
+
+        $this->actingAs($admin);
+
+        Livewire::test(Mailbox::class, ['account' => $account->id])
+            ->call('composeNew')
+            ->set('composerRecipientInput', 'carlos')
+            ->assertSee($inscrito->name)
+            ->assertSee($inscrito->email)
+            ->call('selectComposerSuggestion', $inscrito->email)
+            ->assertSet('composerRecipientInput', '')
+            ->assertSet('composerData.to', 'Carlos Silva <carlos.silva@example.com>');
     }
 
     private function authenticateAdmin(): User

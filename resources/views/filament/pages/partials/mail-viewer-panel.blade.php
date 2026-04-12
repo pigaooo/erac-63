@@ -13,23 +13,21 @@
         </div>
 
         <div class="rounded-[1.5rem] border border-gray-200/80 bg-white/85 p-4 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
-            {{ $page->composerForm }}
+            @include('filament.pages.partials.mail-composer-to', ['page' => $page])
+
+            <div class="mt-4">
+                {{ $page->composerForm }}
+            </div>
         </div>
 
-        <div class="flex items-center justify-between gap-3 rounded-[1.25rem] border border-gray-200/80 bg-gray-50/80 px-4 py-3 dark:border-white/10 dark:bg-white/[0.04]">
-            <div class="text-xs text-gray-500 dark:text-gray-400">
-                Markdown sera convertido para HTML no envio.
-            </div>
+        <div class="flex items-center justify-end gap-3 rounded-[1.25rem] border border-gray-200/80 bg-gray-50/80 px-4 py-3 dark:border-white/10 dark:bg-white/[0.04]">
+            <x-filament::button type="button" color="gray" wire:click="closeComposer">
+                Fechar
+            </x-filament::button>
 
-            <div class="flex items-center gap-3">
-                <x-filament::button type="button" color="gray" wire:click="closeComposer">
-                    Fechar
-                </x-filament::button>
-
-                <x-filament::button type="submit" icon="heroicon-o-paper-airplane">
-                    Enviar
-                </x-filament::button>
-            </div>
+            <x-filament::button type="submit" icon="heroicon-o-paper-airplane">
+                Enviar
+            </x-filament::button>
         </div>
     </form>
 @elseif ($page->selectedMessage)

@@ -5,14 +5,15 @@ namespace App\Filament\Pages;
 use App\Jobs\SendMailFromAccount;
 use App\Jobs\SyncMailAccountFolders;
 use App\Jobs\SyncMailFolderMessages;
+use App\Models\Inscrito;
 use App\Models\MailAccount;
+use App\Models\MailAttachment;
 use App\Models\MailEvent;
 use App\Models\MailFolder;
-use App\Models\MailAttachment;
 use App\Models\MailMessage;
 use App\Support\Mail\ImapSyncService;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\MarkdownEditor;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Actions\BulkAction;
@@ -82,6 +83,8 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
      */
     public array $composerData = [];
 
+    public string $composerRecipientInput = '';
+
     public ?string $composerInReplyTo = null;
 
     /**
@@ -106,33 +109,21 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
         return $schema
             ->statePath('composerData')
             ->components([
-                TextInput::make('to')
-                    ->label('Para')
-                    ->placeholder('nome@dominio.com, Outro <outro@dominio.com>')
-                    ->required(),
                 TextInput::make('subject')
                     ->label('Assunto')
                     ->required()
                     ->maxLength(255),
-                MarkdownEditor::make('body')
+                RichEditor::make('body')
                     ->label('Mensagem')
                     ->fileAttachmentsDisk('local')
                     ->fileAttachmentsDirectory('private/mail/outgoing/inline')
-                    ->toolbarButtons([[
-                        'bold',
-                        'italic',
-                        'strike',
-                        'link',
-                        'heading',
-                        'blockquote',
-                        'codeBlock',
-                        'bulletList',
-                        'orderedList',
-                        'table',
-                        'attachFiles',
-                        'undo',
-                        'redo',
-                    ]])
+                    ->toolbarButtons([
+                        'bold', 'italic', 'underline', 'strike', 'link',
+                        'h2', 'h3',
+                        'blockquote', 'bulletList', 'orderedList',
+                        'table', 'attachFiles',
+                        'undo', 'redo',
+                    ])
                     ->columnSpanFull()
                     ->required(),
                 FileUpload::make('attachments')
@@ -173,11 +164,17 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
                     ->columnSpanFull(),
                 TextEntry::make('to_addresses')
                     ->label('Para')
-                    ->state(fn (): string => $this->formatAddressesForDisplay($this->selectedMessage?->to_addresses ?? []))
+                    ->state(fn (): string => $this->formatInboundAddressForPrivacy(
+                        $this->selectedMessage?->to_addresses ?? [],
+                        $this->selectedMessage?->direction,
+                    ))
                     ->columnSpanFull(),
                 TextEntry::make('cc_addresses')
                     ->label('Cc')
-                    ->state(fn (): string => $this->formatAddressesForDisplay($this->selectedMessage?->cc_addresses ?? []))
+                    ->state(fn (): string => $this->formatInboundAddressForPrivacy(
+                        $this->selectedMessage?->cc_addresses ?? [],
+                        $this->selectedMessage?->direction,
+                    ))
                     ->placeholder('-'),
                 TextEntry::make('received_at')
                     ->label('Recebido em')
@@ -274,6 +271,45 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
     public function updatedMessageSearch(): void
     {
         $this->resetTable();
+    }
+
+    public function updatedComposerRecipientInput(string $value): void
+    {
+        $this->composerRecipientInput = $this->mergeComposerRecipientsFromInput($value);
+    }
+
+    public function commitComposerRecipientInput(): void
+    {
+        $this->composerRecipientInput = $this->mergeComposerRecipientsFromInput($this->composerRecipientInput, true);
+    }
+
+    public function removeComposerRecipient(string $address): void
+    {
+        $remainingRecipients = collect($this->parseAddressString((string) ($this->composerData['to'] ?? '')))
+            ->reject(fn (array $recipient): bool => Str::lower($recipient['address']) === Str::lower($address))
+            ->values()
+            ->all();
+
+        $this->composerData['to'] = $this->formatAddresses($remainingRecipients);
+    }
+
+    public function selectComposerSuggestion(string $email): void
+    {
+        if (! filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return;
+        }
+
+        $inscrito = Inscrito::query()
+            ->select(['name', 'email'])
+            ->where('email', $email)
+            ->first();
+
+        $this->mergeComposerRecipients([[
+            'address' => $email,
+            'name' => filled($inscrito?->name) ? $inscrito->name : null,
+        ]]);
+
+        $this->composerRecipientInput = '';
     }
 
     public function table(Table $table): Table
@@ -604,6 +640,47 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
         return (int) ($this->selectedFolder?->unread_messages_count ?? 0);
     }
 
+    /**
+     * @return array<int, array{address:string,name:?string}>
+     */
+    public function getComposerRecipientsProperty(): array
+    {
+        return $this->parseAddressString((string) ($this->composerData['to'] ?? ''));
+    }
+
+    public function getComposerRecipientSuggestionsProperty(): Collection
+    {
+        $term = trim($this->composerRecipientInput);
+
+        if (mb_strlen($term) < 2 || Str::contains($term, ['<', '>'])) {
+            return collect();
+        }
+
+        $search = '%' . str_replace(['\\', '%', '_'], ['\\\\', '\\%', '\\_'], $term) . '%';
+        $selectedAddresses = collect($this->composerRecipients)
+            ->map(fn (array $recipient): string => Str::lower($recipient['address']))
+            ->all();
+
+        return Inscrito::query()
+            ->select(['name', 'email'])
+            ->whereNotNull('email')
+            ->where('email', '!=', '')
+            ->where(function (Builder $query) use ($search): void {
+                $query
+                    ->where('name', 'like', $search)
+                    ->orWhere('email', 'like', $search);
+            })
+            ->orderBy('name')
+            ->limit(8)
+            ->get()
+            ->reject(fn (Inscrito $inscrito): bool => in_array(Str::lower((string) $inscrito->email), $selectedAddresses, true))
+            ->map(fn (Inscrito $inscrito): array => [
+                'name' => (string) $inscrito->name,
+                'email' => (string) $inscrito->email,
+            ])
+            ->values();
+    }
+
     public function syncNow(ImapSyncService $syncService): void
     {
         $account = $this->selectedAccount;
@@ -792,6 +869,7 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
             $message->headers['references'] ?? null,
             $message->remote_message_id,
         ]));
+        $this->composerRecipientInput = '';
 
         $this->composerForm->fill([
             'to' => $this->formatAddresses($message->from_addresses ?? []),
@@ -813,6 +891,7 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
         $this->showComposer = true;
         $this->composerInReplyTo = null;
         $this->composerReferences = [];
+        $this->composerRecipientInput = '';
         $this->composerForm->fill([
             'to' => '',
             'subject' => Str::startsWith((string) $message->subject, 'Fwd:') ? (string) $message->subject : 'Fwd: ' . $message->subject,
@@ -825,6 +904,28 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
     public function sendComposer(): void
     {
         if ($this->selectedAccountId === null) {
+            return;
+        }
+
+        $this->composerRecipientInput = $this->mergeComposerRecipientsFromInput($this->composerRecipientInput, true);
+
+        if ($this->composerRecipientInput !== '') {
+            Notification::make()
+                ->title('Revise o campo Para e informe apenas destinatarios validos.')
+                ->danger()
+                ->send();
+
+            return;
+        }
+
+        $recipients = $this->composerRecipients;
+
+        if ($recipients === []) {
+            Notification::make()
+                ->title('Informe ao menos um destinatario valido.')
+                ->danger()
+                ->send();
+
             return;
         }
 
@@ -843,22 +944,24 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
             ];
         }
 
-        SendMailFromAccount::dispatch(
-            $this->selectedAccountId,
-            $this->parseAddressString((string) ($data['to'] ?? '')),
-            (string) ($data['subject'] ?? ''),
-            $body !== '' ? Str::markdown($body) : null,
-            $body !== '' ? $body : null,
-            [],
-            [],
-            [],
-            $attachmentPayload,
-            $this->composerInReplyTo,
-            $this->composerReferences,
-        );
+        foreach ($recipients as $recipient) {
+            SendMailFromAccount::dispatch(
+                $this->selectedAccountId,
+                [$recipient],
+                (string) ($data['subject'] ?? ''),
+                $body !== '' ? $body : null,
+                $body !== '' ? strip_tags($body) : null,
+                [],
+                [],
+                [],
+                $attachmentPayload,
+                $this->composerInReplyTo,
+                $this->composerReferences,
+            );
+        }
 
         Notification::make()
-            ->title('Envio colocado na fila.')
+            ->title(count($recipients) > 1 ? 'Envios colocados na fila.' : 'Envio colocado na fila.')
             ->success()
             ->send();
 
@@ -885,6 +988,7 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
     private function resetComposer(): void
     {
         $this->composerData = $this->defaultComposerData();
+        $this->composerRecipientInput = '';
         $this->composerInReplyTo = null;
         $this->composerReferences = [];
 
@@ -928,6 +1032,30 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
         $formatted = $this->formatAddresses($addresses);
 
         return $formatted !== '' ? $formatted : '-';
+    }
+
+    /**
+     * @param  array<int, array{address:string,name:?string}>  $addresses
+     */
+    private function formatInboundAddressForPrivacy(array $addresses, ?string $direction): string
+    {
+        if ($addresses === []) {
+            return '-';
+        }
+
+        if ($direction !== 'inbound') {
+            return $this->formatAddressesForDisplay($addresses);
+        }
+
+        $first = [$addresses[0]];
+        $hiddenCount = max(count($addresses) - 1, 0);
+        $visible = $this->formatAddresses($first);
+
+        if ($hiddenCount <= 0) {
+            return $visible !== '' ? $visible : '-';
+        }
+
+        return sprintf('%s (+%d oculto%s)', $visible, $hiddenCount, $hiddenCount > 1 ? 's' : '');
     }
 
     /**
@@ -1045,6 +1173,54 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
                 'name' => $name !== '' ? $name : null,
             ];
         }, $parts)));
+    }
+
+    private function mergeComposerRecipientsFromInput(string $input, bool $finalize = false): string
+    {
+        $normalized = str_replace(["\r\n", "\n", ';'], ',', $input);
+        $hasTrailingDelimiter = preg_match('/,\s*$/', $normalized) === 1;
+        $segments = array_values(array_filter(array_map('trim', explode(',', $normalized)), fn (string $segment): bool => $segment !== ''));
+        $pending = '';
+
+        if (! $finalize && ! $hasTrailingDelimiter && $segments !== []) {
+            $pending = array_pop($segments) ?? '';
+        }
+
+        $validRecipients = [];
+        $invalidSegments = [];
+
+        foreach ($segments as $segment) {
+            $parsedRecipients = $this->parseAddressString($segment);
+
+            if ($parsedRecipients === []) {
+                $invalidSegments[] = $segment;
+
+                continue;
+            }
+
+            array_push($validRecipients, ...$parsedRecipients);
+        }
+
+        if ($validRecipients !== []) {
+            $this->mergeComposerRecipients($validRecipients);
+        }
+
+        return implode(', ', array_filter([...$invalidSegments, $pending]));
+    }
+
+    /**
+     * @param  array<int, array{address:string,name:?string}>  $recipients
+     */
+    private function mergeComposerRecipients(array $recipients): void
+    {
+        $existing = $this->parseAddressString((string) ($this->composerData['to'] ?? ''));
+        $merged = collect([...$existing, ...$recipients])
+            ->filter(fn (array $recipient): bool => filled($recipient['address']))
+            ->unique(fn (array $recipient): string => Str::lower($recipient['address']))
+            ->values()
+            ->all();
+
+        $this->composerData['to'] = $this->formatAddresses($merged);
     }
 
     private function buildReplyMarkdown(MailMessage $message): string
@@ -1208,8 +1384,21 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
             return new HtmlString('');
         }
 
-        if (filled($message->html_body)) {
-            return new HtmlString($message->html_body);
+        $htmlBody = trim((string) ($message->html_body ?? ''));
+
+        if ($htmlBody !== '') {
+            return new HtmlString($htmlBody);
+        }
+
+        $textBodyRaw = trim((string) ($message->text_body ?? ''));
+
+        if ($textBodyRaw !== '') {
+            $decodedText = html_entity_decode($textBodyRaw, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+            $htmlCandidate = Str::contains($decodedText, '<') ? $decodedText : $textBodyRaw;
+
+            if (preg_match('/<\s*(table|tbody|tr|td|th|p|div|br|ul|ol|li|h[1-6])\b/i', $htmlCandidate) === 1) {
+                return new HtmlString($htmlCandidate);
+            }
         }
 
         $textBody = e((string) $message->text_body);
