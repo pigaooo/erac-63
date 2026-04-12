@@ -380,7 +380,7 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
                             ->send();
 
                         $this->selectedMessageId = null;
-                        $this->resetTable();
+                        $this->refreshMailboxCollections();
                     }),
                 BulkAction::make('moveSelectedMessages')
                     ->label('Mover selecionadas')
@@ -437,7 +437,7 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
                             ->send();
 
                         $this->selectedMessageId = null;
-                        $this->resetTable();
+                        $this->refreshMailboxCollections();
                     }),
             ])
             ->paginated([10, 15, 25, 50, 100, 200])
@@ -604,17 +604,34 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
         return (int) ($this->selectedFolder?->unread_messages_count ?? 0);
     }
 
-    public function syncNow(): void
+    public function syncNow(ImapSyncService $syncService): void
     {
-        if ($this->selectedAccountId === null) {
+        $account = $this->selectedAccount;
+
+        if ($account === null) {
             return;
         }
 
         try {
-            SyncMailAccountFolders::dispatch($this->selectedAccountId);
+            $folders = $syncService->runSafe(
+                fn () => $syncService->syncFolders($account),
+                $account,
+                'sync_failed',
+                'Falha ao sincronizar pastas da conta ' . $account->name . '.',
+            );
 
             if ($this->selectedFolderId !== null) {
-                SyncMailFolderMessages::dispatch($this->selectedFolderId);
+                $selectedFolder = $folders->firstWhere('id', $this->selectedFolderId)
+                    ?? MailFolder::query()->find($this->selectedFolderId);
+
+                if ($selectedFolder !== null) {
+                    $syncService->runSafe(
+                        fn () => $syncService->syncFolderMessages($selectedFolder),
+                        $account,
+                        'sync_failed',
+                        'Falha ao sincronizar mensagens da pasta ' . $selectedFolder->display_name . '.',
+                    );
+                }
             }
         } catch (Throwable $exception) {
             $this->notifyFailure($exception);
@@ -622,15 +639,25 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
             return;
         }
 
+        $this->refreshMailboxCollections();
+
         Notification::make()
-            ->title('Sincronizacao enviada para a fila.')
+            ->title('Sincronizacao concluida.')
             ->success()
             ->send();
     }
 
     public function openFolder(int $folderId): void
     {
+        if ($this->selectedFolderId === $folderId && $this->selectedMessageId === null && ! $this->showComposer) {
+            return;
+        }
+
         $this->selectedFolderId = $folderId;
+        $this->selectedMessageId = null;
+        $this->moveDestinationId = null;
+        $this->showComposer = false;
+        $this->resetTable();
     }
 
     public function openMessageFromTable(MailMessage $record, ImapSyncService $syncService): void
@@ -699,6 +726,8 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
 
         $this->selectedMessageId = null;
         $this->moveDestinationId = null;
+
+        $this->refreshMailboxCollections();
 
         Notification::make()
             ->title('Mensagem movida.')
@@ -1108,6 +1137,13 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
             ->title(Str::limit($exception->getMessage(), 220))
             ->danger()
             ->send();
+    }
+
+    private function refreshMailboxCollections(): void
+    {
+        unset($this->folders, $this->folderTree, $this->selectedFolder, $this->moveDestinations, $this->messages);
+
+        $this->resetTable();
     }
 
     private function resolveJunkFolder(): ?MailFolder
