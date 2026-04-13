@@ -55,7 +55,14 @@
                             <div class="timeline-end mb-8 w-full rounded-2xl border border-base-300 bg-base-200/50 p-4 shadow-xs transition duration-300 hover:border-primary/40 hover:bg-base-200/80 hover:shadow-lg">
                                 <time class="text-sm font-semibold text-primary">{{ $item['hora'] }}</time>
                                 <div class="mt-1 text-base font-semibold">{{ $item['titulo'] }}</div>
-                                <div class="text-sm text-base-content/70">{{ $item['descricao'] }}</div>
+                                @if(isset($item['hora']) && $item['hora'] === '09:10 às 11:30')
+                                    <ul class="list-disc list-inside mt-2 text-sm text-base-content/70 space-y-1">
+                                        <li>{{ $item['descricao'] }}</li>
+                                        <li class="font-bold">Para as cunhadas atividades como, palestras e ou oficinas.</li>
+                                    </ul>
+                                @else
+                                    <div class="text-sm text-base-content/70">{{ $item['descricao'] }}</div>
+                                @endif
                             </div>
 
                             @if($index < count($cronograma) - 1)
@@ -70,18 +77,27 @@
         <div class="md:col-span-5 grid gap-4">
             <div class="rounded-2xl border border-base-300 bg-gradient-to-br from-primary/10 to-base-100 p-6 shadow-sm transition duration-500 hover:-translate-y-1 hover:shadow-xl scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="280">
                 <div class="text-sm font-semibold text-primary">Visão geral</div>
-                <div class="text-2xl font-bold">No dia do Evento</div>
+                    <div class="text-2xl font-bold">Grande Secretaria de Cultura do GOSP</div>
+                    <p class="mt-2 text-sm text-base-content/80">A seguir, um resumo da missão e das ações de curadoria que orientam a construção da programação e dos conteúdos apresentados.</p>
 
-                <div class="mt-4 grid grid-cols-2 gap-3 text-sm">
-                    <div class="rounded-xl bg-base-100/70 border border-base-300 p-3 transition duration-300 hover:scale-[1.02] hover:border-primary/40 hover:shadow-md">
-                        <div class="text-base font-semibold">Manhã</div>
-                        <div class="text-xs text-base-content/70">Credenciamento, abertura oficial, trabalhos em salas, retorno ao plenário e encerramento</div>
+                    <div class="mt-4 text-sm text-base-content/80">
+                        <div class="rounded-2xl border border-base-300 bg-base-100 p-4 shadow-sm">
+                            <div class="font-semibold">Resumo</div>
+                            <p class="mt-1">A Grande Secretaria de Cultura do GOSP organiza e seleciona os trabalhos apresentados para garantir coerência pedagógica, padronização de conteúdos e qualidade metodológica, visando aprimorar a formação de aprendizes e companheiros.</p>
+                        </div>
+
+                        <div class="mt-4 grid gap-4 md:grid-cols-2">
+                            <div class="rounded-2xl border border-base-300 bg-base-100 p-4 shadow-sm">
+                                <div class="font-semibold">Estratégia</div>
+                                <p class="mt-1">Curadoria temática, seleção de conteúdos e orientação metodológica para palestras e oficinas.</p>
+                            </div>
+
+                            <div class="rounded-2xl border border-base-300 bg-base-100 p-4 shadow-sm">
+                                <div class="font-semibold">Impacto</div>
+                                <p class="mt-1">Formação mais sólida, integração entre Lojas e promoção de práticas que favoreçam o desenvolvimento intelectual e prático dos membros.</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="rounded-xl bg-base-100/70 border border-base-300 p-3 transition duration-300 hover:scale-[1.02] hover:border-primary/40 hover:shadow-md">
-                        <div class="text-base font-semibold">Tarde</div>
-                        <div class="text-xs text-base-content/70">Almoço fraterno, confraternização e convivência entre as Lojas participantes</div>
-                    </div>
-                </div>
             </div>
 
             <div class="rounded-2xl border border-base-300 bg-base-100/80 p-6 shadow-sm space-y-3 transition duration-500 hover:-translate-y-1 hover:shadow-xl scroll-reveal" data-reveal="fadeInUp" data-reveal-delay="340">
@@ -89,8 +105,14 @@
                 <ul class="space-y-2 text-sm text-base-content/80">
                     <li class="flex items-center gap-2 transition duration-300 hover:translate-x-1"><span class="h-2 w-2 rounded-full bg-primary animate-pulse"></span> Início e fim claros para todos</li>
                     <li class="flex items-center gap-2 transition duration-300 hover:translate-x-1"><span class="h-2 w-2 rounded-full bg-primary animate-pulse"></span> Alimentação organizada, com café da manhã e almoço</li>
-                    <li class="flex items-center gap-2 transition duration-300 hover:translate-x-1"><span class="h-2 w-2 rounded-full bg-primary animate-pulse"></span> Tempo padronizado por Loja para manter fluidez nas salas</li>
-                    <li class="flex items-center gap-2 transition duration-300 hover:translate-x-1"><span class="h-2 w-2 rounded-full bg-primary animate-pulse"></span> Síntese final em plenário antes do encerramento</li>
+                    <li class="flex items-center gap-2 transition duration-300 hover:translate-x-1"><span class="h-2 w-2 rounded-full bg-primary animate-pulse"></span> Janela oficial das salas: 09h10 às 11h30 (2h20)</li>
+                    <li class="flex items-center gap-2 transition duration-300 hover:translate-x-1"><span class="h-2 w-2 rounded-full bg-primary animate-pulse"></span> Trabalhos em salas temáticas com tempo padronizado por Loja</li>
+                    <li class="flex items-center gap-2 transition duration-300 hover:translate-x-1"><span class="h-2 w-2 rounded-full bg-primary animate-pulse"></span> Curadoria realizada pela Grande Secretaria de Cultura do GOSP</li>
+                    <li class="flex items-center gap-2 transition duration-300 hover:translate-x-1"><span class="h-2 w-2 rounded-full bg-primary animate-pulse"></span> Unificação e padronização de temas e conteúdos essenciais</li>
+                    <li class="flex items-center gap-2 transition duration-300 hover:translate-x-1"><span class="h-2 w-2 rounded-full bg-primary animate-pulse"></span> Palestras e oficinas dedicadas às Cunhadas (Palestras, oficinas)</li>
+                    <li class="flex items-center gap-2 transition duration-300 hover:translate-x-1"><span class="h-2 w-2 rounded-full bg-primary animate-pulse"></span> Síntese final em plenário para integração das salas</li>
+                    <li class="flex items-center gap-2 transition duration-300 hover:translate-x-1"><span class="h-2 w-2 rounded-full bg-primary animate-pulse"></span> Diversidade de abordagens com foco em aplicabilidade prática</li>
+                    <li class="flex items-center gap-2 transition duration-300 hover:translate-x-1"><span class="h-2 w-2 rounded-full bg-primary animate-pulse"></span> Integração entre Lojas e promoção do debate coletivo</li>
                 </ul>
             </div>
         </div>
@@ -100,8 +122,9 @@
         <div class="md:col-span-4 rounded-2xl border border-base-300 bg-base-100/80 p-5 shadow-sm space-y-3 transition duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl">
             <div class="text-sm font-semibold text-primary">Atividades</div>
             <div class="space-y-2 text-sm text-base-content/80">
-                <div class="font-semibold text-base">Abertura ritual e institucional</div>
-                <p>Composição do Oriente, execução ritualística e palavra das autoridades.</p>
+                <div class="font-semibold text-base">Abertura institucional</div>
+                <p>Abertura institucional, palavras dos patrocinadores.</p>
+                <p class="mt-2 font-semibold">Para as Cunhadas: Palestras, oficinas</p>
                 <div class="font-semibold text-base">Trabalhos em salas</div>
                 <p>Apresentações temáticas com perguntas, debate coletivo e síntese por sala.</p>
             </div>
