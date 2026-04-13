@@ -50,6 +50,11 @@ class AdminPanelProvider extends PanelProvider
                 InscritosPorGrauChart::class,
                 RecentInscritosTable::class,
             ])
+            ->navigationGroups([
+                'Cadastros',
+                'Email',
+                'Sistema',
+            ])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

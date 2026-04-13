@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Filament\Resources\MailAccountResource\Pages\CreateMailAccount;
-use App\Filament\Resources\MailAccountResource\Pages\EditMailAccount;
+use App\Filament\Resources\MailAccounts\Pages\CreateMailAccount;
+use App\Filament\Resources\MailAccounts\Pages\EditMailAccount;
 use App\Models\MailAccount;
 use App\Models\User;
 use Filament\Facades\Filament;
