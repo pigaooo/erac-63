@@ -52,13 +52,13 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
 
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-inbox-stack';
 
-    protected static ?string $navigationLabel = 'Caixa postal';
+    protected static ?string $navigationLabel = 'Gerenciador de emails';
 
     protected static string | \UnitEnum | null $navigationGroup = 'Email';
 
     protected static ?int $navigationSort = 2;
 
-    protected static ?string $title = 'Caixa postal';
+    protected static ?string $title = 'Gerenciador de emails';
 
     protected static ?string $slug = 'mailbox';
 
@@ -344,7 +344,7 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
 
                         return $address ?: $name ?: 'Sem remetente';
                     })
-                    ->wrap(false)
+                    ->limit(56)
                     ->tooltip(fn (MailMessage $record): string => data_get($record->from_addresses, '0.name')
                         && data_get($record->from_addresses, '0.address')
                         ? data_get($record->from_addresses, '0.name') . ': ' . data_get($record->from_addresses, '0.address')
@@ -478,6 +478,7 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
             ])
             ->paginated([10, 15, 25, 50, 100, 200])
             ->defaultPaginationPageOption(15)
+            ->stackedOnMobile()
             ->emptyStateHeading('Nenhuma mensagem encontrada nesta pasta.');
     }
 

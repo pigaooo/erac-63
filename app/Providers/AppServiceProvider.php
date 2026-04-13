@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Models\Inscrito;
+use App\Models\Patrocinador;
 use App\Observers\InscritoObserver;
+use App\Observers\PatrocinadorObserver;
 use App\Support\Mail\Contracts\ImapClient;
 use App\Support\Mail\WebklexImapClient;
 use Illuminate\Support\ServiceProvider;
@@ -24,5 +26,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Inscrito::observe(InscritoObserver::class);
+        Patrocinador::observe(PatrocinadorObserver::class);
     }
 }

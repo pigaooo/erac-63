@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Patrocinador;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
@@ -53,6 +54,48 @@ class PatrocinadoresPageTest extends TestCase
         $response->assertOk();
         $response->assertSee($apoiador->name);
         $response->assertDontSee('href="https://nao-deve-aparecer.test"', false);
+    }
+
+    public function test_edicao_de_tipo_invalida_cache_da_pagina_publica(): void
+    {
+        Cache::forget('site.patrocinadores');
+
+        $patrocinador = $this->createPatrocinador('Casa Mutavel', 'Ouro');
+
+        $primeiraResposta = $this->get(route('patrocinadores'));
+
+        $primeiraResposta->assertOk();
+        $primeiraResposta->assertSee('Patrocinadores ouro', false);
+        $primeiraResposta->assertSee($patrocinador->name);
+
+        $patrocinador->update([
+            'tipo_patrocinio' => 'Diamante',
+        ]);
+
+        $segundaResposta = $this->get(route('patrocinadores'));
+
+        $segundaResposta->assertOk();
+        $segundaResposta->assertSee('Patrocinadores diamante', false);
+        $segundaResposta->assertSee($patrocinador->name);
+    }
+
+    public function test_exclusao_invalida_cache_e_remove_patrocinador_da_pagina_publica(): void
+    {
+        Cache::forget('site.patrocinadores');
+
+        $patrocinador = $this->createPatrocinador('Casa Removida', 'Bronze');
+
+        $primeiraResposta = $this->get(route('patrocinadores'));
+
+        $primeiraResposta->assertOk();
+        $primeiraResposta->assertSee($patrocinador->name);
+
+        $patrocinador->delete();
+
+        $segundaResposta = $this->get(route('patrocinadores'));
+
+        $segundaResposta->assertOk();
+        $segundaResposta->assertDontSee($patrocinador->name);
     }
 
     private function createPatrocinador(string $name, string $tipo, ?string $endereco = 'https://empresa.test'): Patrocinador

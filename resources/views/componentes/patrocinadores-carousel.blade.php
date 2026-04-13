@@ -11,7 +11,7 @@
         <div id="patrocinadores-carousel" class="carousel rounded-box w-full bg-base-100/80 border border-base-300 shadow-sm scroll-smooth">
             @foreach($patrocinadores as $patrocinador)
                 @php
-                    $logoUrl = $patrocinador->getFirstMediaUrl('logo', 'thumb') ?: $patrocinador->getFirstMediaUrl('logo');
+                    $logoUrl = $patrocinador->getFirstMediaUrl('logo');
                 @endphp
                 <div class="carousel-item w-1/2 lg:w-1/3 p-3">
                     <a
@@ -35,7 +35,7 @@
         <div id="patrocinadores-carousel-mobile" class="carousel rounded-box w-full bg-base-100/80 border border-base-300 shadow-sm scroll-smooth">
             @foreach($patrocinadores as $patrocinador)
                 @php
-                    $logoUrl = $patrocinador->getFirstMediaUrl('logo', 'thumb') ?: $patrocinador->getFirstMediaUrl('logo');
+                    $logoUrl = $patrocinador->getFirstMediaUrl('logo');
                 @endphp
                 <div class="carousel-item w-full p-3">
                     <a
