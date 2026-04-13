@@ -39,7 +39,10 @@ class UserForm
                             ->label('Usuario ativo')
                             ->default(true),
                     ])
-                    ->columns(2),
+                    ->columns([
+                        'default' => 1,
+                        'md' => 2,
+                    ]),
             ]);
     }
 }

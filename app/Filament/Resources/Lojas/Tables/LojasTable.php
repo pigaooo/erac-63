@@ -45,6 +45,7 @@ class LojasTable
             ])
             ->toolbarActions([
                 DeleteBulkAction::make(),
-            ]);
+            ])
+            ->stackedOnMobile();
     }
 }

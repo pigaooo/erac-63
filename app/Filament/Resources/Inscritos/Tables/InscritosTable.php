@@ -151,6 +151,7 @@ class InscritosTable
                         ]));
                     }),
                 DeleteBulkAction::make(),
-            ]);
+            ])
+            ->stackedOnMobile();
     }
 }

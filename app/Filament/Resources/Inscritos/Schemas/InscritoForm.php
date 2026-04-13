@@ -59,7 +59,10 @@ class InscritoForm
                         Toggle::make('is_paied')
                             ->label('Pagamento confirmado'),
                     ])
-                    ->columns(2),
+                    ->columns([
+                        'default' => 1,
+                        'md' => 2,
+                    ]),
             ]);
     }
 }

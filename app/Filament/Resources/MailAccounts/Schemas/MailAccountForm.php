@@ -23,7 +23,10 @@ class MailAccountForm
                         Toggle::make('is_active')->label('Conta ativa')->default(true),
                         TextInput::make('sync_interval_minutes')->label('Intervalo de sincronizacao (minutos)')->numeric()->default(5)->minValue(1)->required(),
                     ])
-                    ->columns(2),
+                    ->columns([
+                        'default' => 1,
+                        'md' => 2,
+                    ]),
                 Section::make('IMAP')
                     ->schema([
                         Toggle::make('use_imap_credentials_for_smtp')
@@ -70,7 +73,10 @@ class MailAccountForm
                             ->maxLength(255)
                             ->helperText('Obrigatorio para o modulo de email do Filament. Informe o dominio que o cliente SMTP deve anunciar no EHLO/HELO, por exemplo erac61.com.br.'),
                     ])
-                    ->columns(2),
+                    ->columns([
+                        'default' => 1,
+                        'md' => 2,
+                    ]),
                 Section::make('SMTP')
                     ->schema([
                         TextInput::make('smtp_host')
@@ -93,7 +99,10 @@ class MailAccountForm
                             ->dehydrated(fn ($state): bool => filled($state)),
                     ])
                     ->hidden(fn (Get $get): bool => (bool) $get('use_imap_credentials_for_smtp'))
-                    ->columns(2),
+                    ->columns([
+                        'default' => 1,
+                        'md' => 2,
+                    ]),
                 Section::make('Pastas especiais')
                     ->schema([
                         TextInput::make('inbox_folder_name')->label('Entrada')->default('INBOX')->required(),
@@ -102,7 +111,10 @@ class MailAccountForm
                         TextInput::make('spam_folder_name')->label('Spam'),
                         TextInput::make('trash_folder_name')->label('Lixeira'),
                     ])
-                    ->columns(2),
+                    ->columns([
+                        'default' => 1,
+                        'md' => 2,
+                    ]),
             ]);
     }
 }

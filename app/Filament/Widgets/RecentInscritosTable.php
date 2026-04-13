@@ -39,6 +39,7 @@ class RecentInscritosTable extends TableWidget
                     ->label('Cadastro')
                     ->dateTime('d/m/Y H:i')
                     ->sortable(),
-            ]);
+            ])
+            ->stackedOnMobile();
     }
 }

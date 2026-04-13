@@ -37,7 +37,10 @@ class LojaForm
                         Hidden::make('user_id')
                             ->default(fn () => Auth::id()),
                     ])
-                    ->columns(2),
+                    ->columns([
+                        'default' => 1,
+                        'md' => 2,
+                    ]),
             ]);
     }
 }

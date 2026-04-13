@@ -46,6 +46,7 @@ class PatrocinadoresTable
             ])
             ->toolbarActions([
                 DeleteBulkAction::make(),
-            ]);
+            ])
+            ->stackedOnMobile();
     }
 }

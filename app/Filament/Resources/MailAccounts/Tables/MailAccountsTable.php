@@ -51,6 +51,7 @@ class MailAccountsTable
             ])
             ->toolbarActions([
                 DeleteBulkAction::make(),
-            ]);
+            ])
+            ->stackedOnMobile();
     }
 }

@@ -18,6 +18,7 @@ class MailEventsTable
                 TextColumn::make('type')->label('Tipo')->badge(),
                 TextColumn::make('summary')->label('Resumo')->wrap(),
                 IconColumn::make('is_read')->label('Lido')->boolean(),
-            ]);
+            ])
+            ->stackedOnMobile();
     }
 }

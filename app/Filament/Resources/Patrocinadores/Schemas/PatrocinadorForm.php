@@ -56,7 +56,10 @@ class PatrocinadorForm
                         Hidden::make('user_id')
                             ->default(fn () => auth()->id()),
                     ])
-                    ->columns(2),
+                    ->columns([
+                        'default' => 1,
+                        'md' => 2,
+                    ]),
             ]);
     }
 }

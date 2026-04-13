@@ -43,6 +43,7 @@ class UsersTable
             ])
             ->toolbarActions([
                 DeleteBulkAction::make(),
-            ]);
+            ])
+            ->stackedOnMobile();
     }
 }
