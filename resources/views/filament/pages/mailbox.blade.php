@@ -6,7 +6,7 @@
         class="mailbox-shell space-y-4"
     >
         <x-filament::section class="mailbox-toolbar-section">
-            <div class="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
+            <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                 <div class="space-y-1">
                     <div class="text-xs font-semibold uppercase tracking-[0.24em] text-gray-500 dark:text-gray-400">
                         Gerenciador de emails
@@ -43,7 +43,7 @@
                             type="button"
                             color="gray"
                             icon="heroicon-o-folder"
-                            class="xl:hidden"
+                            class="md:hidden"
                             x-on:click="mobileFoldersOpen = true"
                         >
                             Pastas
@@ -82,7 +82,7 @@
             x-cloak
             x-show="mobileFoldersOpen"
             x-transition.opacity
-            class="mailbox-mobile-sheet-overlay fixed inset-0 z-40 bg-slate-950/70 xl:hidden"
+            class="mailbox-mobile-sheet-overlay fixed inset-0 z-40 bg-slate-950/70 md:hidden"
             x-on:click="mobileFoldersOpen = false"
         ></div>
 
@@ -95,7 +95,7 @@
             x-transition:leave="transition ease-in duration-150"
             x-transition:leave-start="translate-y-0 opacity-100"
             x-transition:leave-end="translate-y-full opacity-0"
-            class="mailbox-mobile-sheet fixed inset-x-0 bottom-0 z-50 max-h-[78vh] overflow-y-auto rounded-t-[1.75rem] border border-white/10 bg-slate-950/95 p-4 shadow-2xl xl:hidden"
+            class="mailbox-mobile-sheet fixed inset-x-0 bottom-0 z-50 max-h-[78vh] overflow-y-auto rounded-t-[1.75rem] border border-white/10 bg-slate-950/95 p-4 shadow-2xl md:hidden"
         >
             <div class="mb-4 flex items-center justify-between gap-3">
                 <div>
@@ -111,8 +111,8 @@
             @include('filament.pages.partials.mail-folders-panel', ['page' => $this])
         </div>
 
-        <div class="grid gap-4 xl:grid-cols-[15rem_minmax(0,1fr)]">
-            <div class="hidden space-y-4 xl:block">
+        <div class="grid gap-4 md:grid-cols-[15rem_minmax(0,1fr)]">
+            <div class="hidden space-y-4 md:block">
                 <x-filament::section
                     heading="Pastas"
                     description="Explorer da conta sincronizada"
