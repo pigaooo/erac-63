@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Filament\Resources\SettingsResource;
-use App\Filament\Resources\SettingsResource\Pages\EditSettings;
+use App\Filament\Resources\Settings\Pages\EditSettings;
+use App\Filament\Resources\Settings\SettingsResource;
 use App\Models\Settings;
 use App\Models\User;
 use Database\Seeders\DatabaseSeeder;

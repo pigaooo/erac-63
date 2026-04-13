@@ -9,6 +9,7 @@
         <button
             type="button"
             wire:click.prevent.stop="openFolder({{ $folder->id }})"
+            x-on:click="$dispatch('mailbox-folder-selected')"
             wire:key="mail-folder-{{ $folder->id }}"
             @class([
                 'mailbox-folder-item flex w-full items-center justify-between rounded-2xl border px-3 py-2.5 text-left text-sm transition',

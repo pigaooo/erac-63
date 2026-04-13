@@ -1,7 +1,7 @@
 @php
     use Illuminate\Support\Str;
 
-    $logoUrl = $patrocinador->getFirstMediaUrl('logo', 'thumb') ?: $patrocinador->getFirstMediaUrl('logo');
+    $logoUrl = $patrocinador->getFirstMediaUrl('logo');
     $href = null;
 
     if ($patrocinador->endereco) {
