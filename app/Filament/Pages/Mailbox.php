@@ -344,7 +344,7 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
 
                         return $address ?: $name ?: 'Sem remetente';
                     })
-                    ->wrap(false)
+                    ->limit(56)
                     ->tooltip(fn (MailMessage $record): string => data_get($record->from_addresses, '0.name')
                         && data_get($record->from_addresses, '0.address')
                         ? data_get($record->from_addresses, '0.name') . ': ' . data_get($record->from_addresses, '0.address')
@@ -478,6 +478,7 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
             ])
             ->paginated([10, 15, 25, 50, 100, 200])
             ->defaultPaginationPageOption(15)
+            ->stackedOnMobile()
             ->emptyStateHeading('Nenhuma mensagem encontrada nesta pasta.');
     }
 

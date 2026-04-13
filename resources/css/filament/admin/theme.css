@@ -216,6 +216,11 @@
         table-layout: fixed;
     }
 
+    .mailbox-message-table .fi-ta-table.fi-ta-table-stacked-on-mobile {
+        table-layout: auto;
+        max-width: 100%;
+    }
+
     .mailbox-message-table .fi-ta-header-cell {
         padding-top: 0.85rem;
         padding-bottom: 0.85rem;
@@ -236,6 +241,22 @@
         padding-top: 0.65rem;
         padding-bottom: 0.65rem;
         vertical-align: top;
+    }
+
+    .mailbox-message-table .fi-ta-cell-content {
+        min-width: 0;
+    }
+
+    .mailbox-message-table .fi-ta-table.fi-ta-table-stacked-on-mobile .fi-ta-cell,
+    .mailbox-message-table .fi-ta-table.fi-ta-table-stacked-on-mobile .fi-ta-cell-content,
+    .mailbox-message-table .fi-ta-table.fi-ta-table-stacked-on-mobile .fi-ta-text,
+    .mailbox-message-table .fi-ta-table.fi-ta-table-stacked-on-mobile .fi-ta-text-item,
+    .mailbox-message-table .fi-ta-table.fi-ta-table-stacked-on-mobile .fi-ta-text-description {
+        min-width: 0;
+        max-width: 100%;
+        white-space: normal;
+        overflow-wrap: anywhere;
+        word-break: break-word;
     }
 
     .mailbox-message-table .fi-ta-text-item-label {
@@ -479,11 +500,30 @@
         }
 
         .mailbox-message-table {
-            overflow-x: auto;
+            overflow-x: hidden;
         }
 
-        .mailbox-message-table .fi-ta-table {
-            min-width: 38rem;
+        .mailbox-message-table .fi-ta {
+            min-width: 0;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .mailbox-message-table .fi-ta-table,
+        .mailbox-message-table .fi-ta-content,
+        .mailbox-message-table .fi-ta-ctn {
+            min-width: 0;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .mailbox-message-table .fi-ta-record {
+            width: 100%;
+        }
+
+        .mailbox-message-table .fi-ta-cell {
+            padding-top: 0.45rem;
+            padding-bottom: 0.45rem;
         }
 
         .mailbox-mobile-sheet {
@@ -530,8 +570,10 @@
             padding-right: 1rem;
         }
 
-        .mailbox-message-table .fi-ta-table {
-            min-width: 34rem;
+        .mailbox-message-table .fi-ta-table,
+        .mailbox-message-table .fi-ta-content,
+        .mailbox-message-table .fi-ta-ctn {
+            min-width: 0;
         }
     }
 
