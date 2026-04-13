@@ -5,6 +5,7 @@ namespace App\Filament\Resources\MailAccounts\Tables;
 use App\Filament\Resources\MailAccounts\MailAccountResource;
 use App\Models\MailAccount;
 use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -30,24 +31,28 @@ class MailAccountsTable
                     ->label('Abrir caixa')
                     ->icon('heroicon-o-inbox')
                     ->url(fn (MailAccount $record): string => MailAccountResource::getMailboxUrl($record)),
-                Action::make('testImap')
-                    ->label('Testar IMAP')
-                    ->icon('heroicon-o-server-stack')
-                    ->action(fn (MailAccount $record) => MailAccountResource::sendTestImapNotification($record)),
-                Action::make('testSmtp')
-                    ->label('Testar SMTP')
-                    ->icon('heroicon-o-paper-airplane')
-                    ->action(fn (MailAccount $record) => MailAccountResource::sendTestSmtpNotification($record)),
-                Action::make('syncFolders')
-                    ->label('Sincronizar pastas')
-                    ->icon('heroicon-o-arrow-path')
-                    ->action(fn (MailAccount $record) => MailAccountResource::queueFolderSync($record)),
-                Action::make('syncMessages')
-                    ->label('Sincronizar mensagens')
-                    ->icon('heroicon-o-arrow-down-tray')
-                    ->action(fn (MailAccount $record) => MailAccountResource::queueMessageSync($record)),
-                EditAction::make(),
-                DeleteAction::make(),
+                ActionGroup::make([
+                    Action::make('testImap')
+                        ->label('Testar IMAP')
+                        ->icon('heroicon-o-server-stack')
+                        ->action(fn (MailAccount $record) => MailAccountResource::sendTestImapNotification($record)),
+                    Action::make('testSmtp')
+                        ->label('Testar SMTP')
+                        ->icon('heroicon-o-paper-airplane')
+                        ->action(fn (MailAccount $record) => MailAccountResource::sendTestSmtpNotification($record)),
+                    Action::make('syncFolders')
+                        ->label('Sincronizar pastas')
+                        ->icon('heroicon-o-arrow-path')
+                        ->action(fn (MailAccount $record) => MailAccountResource::queueFolderSync($record)),
+                    Action::make('syncMessages')
+                        ->label('Sincronizar mensagens')
+                        ->icon('heroicon-o-arrow-down-tray')
+                        ->action(fn (MailAccount $record) => MailAccountResource::queueMessageSync($record)),
+                    EditAction::make(),
+                    DeleteAction::make(),
+                ])
+                    ->label('Mais')
+                    ->icon('heroicon-o-ellipsis-horizontal'),
             ])
             ->toolbarActions([
                 DeleteBulkAction::make(),
