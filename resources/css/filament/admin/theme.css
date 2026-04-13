@@ -170,6 +170,10 @@
         background: color-mix(in srgb, var(--site-surface-1) 92%, white 8%);
     }
 
+    .mailbox-shell {
+        min-width: 0;
+    }
+
     .mailbox-toolbar-section .fi-section-content,
     .mailbox-column-section .fi-section-content {
         gap: 0;
@@ -430,6 +434,70 @@
     }
 
     @media (max-width: 1024px) {
+        .mailbox-shell {
+            gap: 0.75rem;
+        }
+
+        .mailbox-toolbar-section .fi-section-content,
+        .mailbox-column-section .fi-section-content {
+            padding-left: 0.9rem;
+            padding-right: 0.9rem;
+        }
+
+        .mailbox-reader-section {
+            position: static;
+            top: auto;
+        }
+
+        .mailbox-actionbar {
+            padding: 0.75rem;
+        }
+
+        .mailbox-actionbar > .flex {
+            width: 100%;
+            justify-content: flex-start;
+        }
+
+        .mailbox-actionbar-group {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .mailbox-actionbar-group .fi-btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .mailbox-actionbar .dropdown {
+            width: 100%;
+        }
+
+        .mailbox-actionbar-menu {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .mailbox-message-table {
+            overflow-x: auto;
+        }
+
+        .mailbox-message-table .fi-ta-table {
+            min-width: 38rem;
+        }
+
+        .mailbox-mobile-sheet {
+            padding-bottom: max(1rem, env(safe-area-inset-bottom));
+        }
+
+        .mailbox-reader .fi-fo-rich-editor .fi-fo-rich-editor-content {
+            min-height: 12rem;
+        }
+
+        .mailbox-reader .fi-fo-rich-editor .tiptap {
+            min-height: 10rem;
+        }
+
         .mailbox-meta-group {
             padding: 0.7rem;
         }
@@ -441,6 +509,29 @@
 
         .mailbox-meta-chip-value {
             white-space: normal;
+        }
+
+        .mailbox-attachment-preview {
+            width: 3.75rem;
+            height: 3.75rem;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .mailbox-toolbar-section .fi-section-content,
+        .mailbox-column-section .fi-section-content {
+            padding-left: 0.75rem;
+            padding-right: 0.75rem;
+        }
+
+        .mailbox-empty-reader {
+            min-height: 52vh;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        .mailbox-message-table .fi-ta-table {
+            min-width: 34rem;
         }
     }
 

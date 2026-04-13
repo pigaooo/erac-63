@@ -36,6 +36,8 @@ class AdminPanelProvider extends PanelProvider
             ->collapsedSidebarWidth('4.75rem')
             ->sidebarLivewireComponent(AdminSidebar::class)
             ->brandName('ERAC 61 Admin')
+            ->brandLogo(asset('images/logo-2647.png'))
+            ->brandLogoHeight('5rem')
             ->colors([
                 'primary' => Color::Amber,
             ])

@@ -52,13 +52,13 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
 
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-inbox-stack';
 
-    protected static ?string $navigationLabel = 'Caixa postal';
+    protected static ?string $navigationLabel = 'Gerenciador de emails';
 
     protected static string | \UnitEnum | null $navigationGroup = 'Email';
 
     protected static ?int $navigationSort = 2;
 
-    protected static ?string $title = 'Caixa postal';
+    protected static ?string $title = 'Gerenciador de emails';
 
     protected static ?string $slug = 'mailbox';
 
