@@ -2,27 +2,29 @@
 
 namespace App\Livewire;
 
+use App\Models\Grau;
 use App\Models\Inscrito;
 use App\Models\Loja;
 use App\Support\InscricaoCalendar;
 use App\Support\InscritoEmailDispatcher;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 
 class InscricaoModal extends Component
 {
-    private const TIPOS_ESPECIAIS = ['OT', 'VI', 'CU', 'SO'];
-
     public bool $showModal = false;
     public string $nome = '';
     public string $email = '';
     public string $telefone = '';
     public string $cpf = '';
     public string $cim = '';
-    public string $grau = '';
+    public string $grauId = '';
     public string $lojaId = '';
     public string $lojaSearch = '';
-    public $lojas;
+    public Collection $graus;
+    public Collection $lojas;
     public ?string $flashMessage = null;
     public int $formKey = 0;
     public bool $inscricoesAbertas = false;
@@ -31,7 +33,20 @@ class InscricaoModal extends Component
     public function mount(): void
     {
         $this->syncInscricoesStatus();
+        $this->loadGraus();
         $this->loadLojas();
+    }
+
+    public function loadGraus(): void
+    {
+        $this->graus = Schema::hasTable('graus')
+            ? Grau::query()
+                ->select('id', 'nome', 'tipo_especial')
+                ->ativos()
+                ->disponiveisNoFormularioIndividual()
+                ->ordenados()
+                ->get()
+            : collect();
     }
 
     public function loadLojas(): void
@@ -62,7 +77,7 @@ class InscricaoModal extends Component
         $this->showModal = false;
     }
 
-    public function updatedGrau(string $value): void
+    public function updatedGrauId(string $value): void
     {
         if ($this->isTipoEspecial($value)) {
             $this->cim = '';
@@ -116,7 +131,7 @@ class InscricaoModal extends Component
         }
 
         $validated = $this->validate([
-            'grau' => ['required', 'in:AM,CM,MM,MI,OT,VI,CU,SO'],
+            'grauId' => ['required', Rule::in($this->grauIdsDisponiveis())],
             'nome' => ['required', 'string', 'min:3', 'max:150'],
             'email' => ['required', 'email', 'max:150', 'unique:inscritos,email'],
             'telefone' => ['required', 'string', 'max:50'],
@@ -126,8 +141,8 @@ class InscricaoModal extends Component
                 : ['required', 'string', 'max:50', 'regex:/^[0-9]+$/', 'unique:inscritos,cim'],
             'lojaId' => ['required', 'exists:lojas,id'],
         ], [
-            'grau.required' => 'Selecione o tipo de visitante.',
-            'grau.in' => 'Selecione um tipo de visitante válido.',
+            'grauId.required' => 'Selecione o grau ou categoria.',
+            'grauId.in' => 'Selecione um grau ou categoria válido.',
             'nome.required' => 'Informe o nome completo.',
             'email.required' => 'Informe o e-mail.',
             'email.email' => 'E-mail inválido.',
@@ -150,7 +165,7 @@ class InscricaoModal extends Component
             'telefone' => $validated['telefone'],
             'cpf' => $validated['cpf'],
             'cim' => $cim,
-            'grau' => $validated['grau'],
+            'grau_id' => $validated['grauId'],
             'loja_id' => $validated['lojaId'],
             'is_paied' => false,
         ]);
@@ -168,7 +183,7 @@ class InscricaoModal extends Component
 
     private function resetFormFields(): void
     {
-        $this->reset(['nome', 'email', 'telefone', 'cpf', 'cim', 'grau', 'lojaId', 'lojaSearch']);
+        $this->reset(['nome', 'email', 'telefone', 'cpf', 'cim', 'grauId', 'lojaId', 'lojaSearch']);
         $this->formKey++;
     }
 
@@ -183,7 +198,17 @@ class InscricaoModal extends Component
 
     private function isTipoEspecial(?string $value = null): bool
     {
-        return in_array($value ?? $this->grau, self::TIPOS_ESPECIAIS, true);
+        return (bool) ($this->graus->firstWhere('id', $value ?? $this->grauId)?->tipo_especial ?? false);
+    }
+
+    public function grauSelecionadoEhTipoEspecial(): bool
+    {
+        return $this->isTipoEspecial();
+    }
+
+    private function grauIdsDisponiveis(): array
+    {
+        return $this->graus->pluck('id')->all();
     }
 
     public function render()

@@ -2,10 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Mail\IndividualRegistrationConfirmationMail;
+use App\Models\Grau;
+use App\Models\Inscrito;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
-use App\Models\Inscrito;
-use App\Mail\IndividualRegistrationConfirmationMail;
 
 class SendTestMail extends Command
 {
@@ -23,8 +24,15 @@ class SendTestMail extends Command
             'telefone' => '(11) 99999-9999',
             'cpf' => '000.000.000-00',
             'cim' => '123',
-            'grau' => 'AM',
         ]);
+
+        $grau = Grau::query()->where('codigo', 'AM')->first() ?? new Grau([
+            'codigo' => 'AM',
+            'nome' => 'A∴M∴',
+        ]);
+
+        $ins->grau_id = $grau->id;
+        $ins->setRelation('grau', $grau);
 
         $ins->loja = (object)['name' => 'Loja Teste'];
 

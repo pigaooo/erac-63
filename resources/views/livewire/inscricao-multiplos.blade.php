@@ -244,18 +244,16 @@
                             <span class="label-text">Grau maçônico</span>
                         </div>
                         <select
-                            wire:key="grau-{{ $formKey }}"
+                            wire:key="grau-id-{{ $formKey }}"
                             class="select select-bordered"
-                            wire:model.defer="grau"
+                            wire:model.defer="grau_id"
                         >
                             <option value="">Selecione</option>
-                            <option value="AM">A∴M∴</option>
-                            <option value="CM">C∴M∴</option>
-                            <option value="MM">M∴M∴</option>
-                            <option value="MI">M∴I∴</option>
-                            <option value="OT">Outros</option>
+                            @foreach ($graus as $grau)
+                                <option value="{{ $grau->id }}">{{ $grau->nome }}</option>
+                            @endforeach
                         </select>
-                        @error('grau')
+                        @error('grau_id')
                             <span class="mt-1 text-xs text-error">{{ $message }}</span>
                         @enderror
                     </label>
@@ -311,7 +309,7 @@
                                     <td>{{ $inscrito['telefone'] }}</td>
                                     <td>{{ $inscrito['cpf'] }}</td>
                                     <td>{{ $inscrito['cim'] }}</td>
-                                    <td>{{ $inscrito['grau'] }}</td>
+                                    <td>{{ $graus->firstWhere('id', $inscrito['grau_id'])?->nome ?? '-' }}</td>
                                     <td>
                                         @php
                                             $lojaTabela = $lojas->firstWhere('id', $inscrito['loja_id']);

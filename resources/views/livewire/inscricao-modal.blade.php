@@ -30,27 +30,22 @@
             <form class="space-y-4" wire:submit.prevent="submit">
                 <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                     <label class="form-control w-full md:col-span-2">
-                        <div class="label"><span class="label-text">Tipo de visitante</span></div>
+                        <div class="label"><span class="label-text">Grau / categoria</span></div>
                         <select
-                            wire:key="grau-{{ $formKey }}"
+                            wire:key="grau-id-{{ $formKey }}"
                             class="select select-bordered"
-                            wire:model.live="grau"
+                            wire:model.live="grauId"
                             required
                         >
                             <option value="">Selecione</option>
-                            <option value="AM">A∴M∴</option>
-                            <option value="CM">C∴M∴</option>
-                            <option value="MM">M∴M∴</option>
-                            <option value="MI">M∴I∴</option>
-                            <option value="OT">Outros</option>
-                            <option value="VI">Visitante</option>
-                            <option value="CU">Cunhada</option>
-                            <option value="SO">Sobrinho</option>
+                            @foreach ($graus as $grau)
+                                <option value="{{ $grau->id }}">{{ $grau->nome }}</option>
+                            @endforeach
                         </select>
-                        @error('grau') <span class="mt-1 text-xs text-error">{{ $message }}</span> @enderror
+                        @error('grauId') <span class="mt-1 text-xs text-error">{{ $message }}</span> @enderror
                     </label>
 
-                    @if (! in_array($grau, ['OT', 'VI', 'CU', 'SO'], true))
+                    @if (! $this->grauSelecionadoEhTipoEspecial())
                         <label class="form-control w-full md:col-span-2">
                             <div class="label"><span class="label-text">Loja</span></div>
                             @if ($lojas->count())
@@ -178,7 +173,7 @@
                         @error('cpf') <span class="mt-1 text-xs text-error">{{ $message }}</span> @enderror
                     </label>
 
-                    @if (! in_array($grau, ['OT', 'VI', 'CU', 'SO'], true))
+                    @if (! $this->grauSelecionadoEhTipoEspecial())
                         <label class="form-control w-full">
                             <div class="label"><span class="label-text">CIM</span></div>
                             <input

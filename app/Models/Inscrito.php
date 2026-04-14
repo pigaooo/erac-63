@@ -20,7 +20,7 @@ class Inscrito extends Model
         'telefone',
         'cpf',
         'cim',
-        'grau',
+        'grau_id',
         'loja_id',
         'is_paied',
         'registration_confirmation_sent_at',
@@ -29,6 +29,7 @@ class Inscrito extends Model
 
     protected $casts = [
         'id' => 'string',
+        'grau_id' => 'string',
         'loja_id' => 'string',
         'is_paied' => 'boolean',
         'registration_confirmation_sent_at' => 'datetime',
@@ -37,18 +38,12 @@ class Inscrito extends Model
 
     public function getGrauDescricaoAttribute()
     {
-        $map = [
-            'AM' => 'A∴M∴',
-            'CM' => 'C∴M∴',
-            'MM' => 'M∴M∴',
-            'MI' => 'M∴I∴',
-            'OT' => 'Outros',
-            'VI' => 'Visitante',
-            'CU' => 'Cunhada',
-            'SO' => 'Sobrinho',
-        ];
+        return $this->grau?->nome ?? '-';
+    }
 
-        return $map[$this->grau] ?? $this->grau;
+    public function grau()
+    {
+        return $this->belongsTo(Grau::class);
     }
 
     public function loja()

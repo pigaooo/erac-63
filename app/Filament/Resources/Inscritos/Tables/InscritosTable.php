@@ -36,9 +36,10 @@ class InscritosTable
                     ->label('Loja')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('grau')
+                TextColumn::make('grau.nome')
                     ->label('Grau')
                     ->badge()
+                    ->searchable()
                     ->sortable(),
                 TextColumn::make('email')
                     ->label('E-mail')
@@ -75,18 +76,11 @@ class InscritosTable
                     }),
                 TernaryFilter::make('is_paied')
                     ->label('Pagos'),
-                SelectFilter::make('grau')
+                SelectFilter::make('grau_id')
                     ->label('Grau')
-                    ->options([
-                        'AM' => 'A.M.',
-                        'CM' => 'C.M.',
-                        'MM' => 'M.M.',
-                        'MI' => 'M.I.',
-                        'OT' => 'Outros',
-                        'VI' => 'Visitante',
-                        'CU' => 'Cunhada',
-                        'SO' => 'Sobrinho',
-                    ]),
+                    ->relationship('grau', 'nome')
+                    ->searchable()
+                    ->preload(),
                 SelectFilter::make('loja_id')
                     ->label('Loja')
                     ->relationship('loja', 'name')
@@ -129,7 +123,7 @@ class InscritosTable
                         });
 
                         $inscritos = Inscrito::query()
-                            ->with('loja')
+                            ->with(['loja', 'grau'])
                             ->whereKey($ids)
                             ->get();
 

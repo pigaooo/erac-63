@@ -15,7 +15,7 @@ class RecentInscritosTable extends TableWidget
     public function table(Table $table): Table
     {
         return $table
-            ->query(Inscrito::query()->with('loja')->latest())
+            ->query(Inscrito::query()->with(['loja', 'grau'])->latest())
             ->defaultPaginationPageOption(5)
             ->columns([
                 TextColumn::make('name')
@@ -29,8 +29,9 @@ class RecentInscritosTable extends TableWidget
                     ->label('Loja')
                     ->placeholder('-')
                     ->searchable(),
-                TextColumn::make('grau')
+                TextColumn::make('grau.nome')
                     ->label('Grau')
+                    ->placeholder('-')
                     ->badge(),
                 IconColumn::make('is_paied')
                     ->label('Pago')

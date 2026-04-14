@@ -57,7 +57,7 @@ class SiteController extends Controller
 
     public function exportPdf(Request $request)
     {
-        $query = Inscrito::query()->with('loja');
+        $query = Inscrito::query()->with(['loja', 'grau']);
         $downloadName = 'inscritos-erac';
         $reportTitle = 'Relatorio de inscritos';
         $selectedIds = collect($request->input('ids', []))
@@ -87,6 +87,14 @@ class SiteController extends Controller
         if ($selectedIds->isEmpty() && filled(data_get($filters, 'name.name'))) {
             $name = trim((string) data_get($filters, 'name.name'));
             $query->where('name', 'like', "%{$name}%");
+        }
+
+        $grauId = $selectedIds->isEmpty()
+            ? data_get($filters, 'grau_id.value', data_get($filters, 'grau_id'))
+            : null;
+
+        if ($selectedIds->isEmpty() && filled($grauId)) {
+            $query->where('grau_id', $grauId);
         }
 
         $lojaId = $selectedIds->isEmpty()

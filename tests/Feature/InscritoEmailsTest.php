@@ -6,6 +6,7 @@ use App\Jobs\SendPaymentConfirmationEmail;
 use App\Jobs\SendRegistrationConfirmationEmail;
 use App\Livewire\InscricaoModal;
 use App\Livewire\InscricaoMultiplos;
+use App\Models\Grau;
 use App\Models\Inscrito;
 use App\Models\Loja;
 use App\Models\User;
@@ -28,8 +29,8 @@ class InscritoEmailsTest extends TestCase
             ->set('email', 'individual@example.com')
             ->set('telefone', '(11) 99999-9999')
             ->set('cpf', '111.111.111-11')
-            ->set('cim', 'CIM-001')
-            ->set('grau', 'AM')
+            ->set('cim', '100001')
+            ->set('grauId', $this->grauId('AM'))
             ->set('lojaId', $loja->id)
             ->call('submit');
 
@@ -50,8 +51,8 @@ class InscritoEmailsTest extends TestCase
                     'email' => 'um@example.com',
                     'telefone' => '(11) 99999-9991',
                     'cpf' => '111.111.111-11',
-                    'cim' => 'CIM-101',
-                    'grau' => 'AM',
+                    'cim' => '100101',
+                    'grau_id' => $this->grauId('AM'),
                     'loja_id' => $loja->id,
                 ],
                 [
@@ -59,8 +60,8 @@ class InscritoEmailsTest extends TestCase
                     'email' => 'dois@example.com',
                     'telefone' => '(11) 99999-9992',
                     'cpf' => '222.222.222-22',
-                    'cim' => 'CIM-102',
-                    'grau' => 'MM',
+                    'cim' => '100102',
+                    'grau_id' => $this->grauId('MM'),
                     'loja_id' => $loja->id,
                 ],
             ])
@@ -82,8 +83,8 @@ class InscritoEmailsTest extends TestCase
             'email' => 'pago@example.com',
             'telefone' => '(11) 99999-9999',
             'cpf' => '333.333.333-33',
-            'cim' => 'CIM-201',
-            'grau' => 'AM',
+            'cim' => '100201',
+            'grau_id' => $this->grauId('AM'),
             'loja_id' => $loja->id,
             'is_paied' => false,
         ]);
@@ -114,5 +115,10 @@ class InscritoEmailsTest extends TestCase
             'is_ativo' => true,
             'user_id' => $user->id,
         ]);
+    }
+
+    private function grauId(string $codigo): string
+    {
+        return (string) Grau::query()->where('codigo', $codigo)->value('id');
     }
 }

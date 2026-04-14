@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Grau;
 use App\Models\Inscrito;
 use App\Models\Loja;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -26,7 +27,7 @@ class InscritoFactory extends Factory
             'telefone' => fake()->numerify('(##) #####-####'),
             'cpf' => fake()->unique()->numerify('###.###.###-##'),
             'cim' => fake()->unique()->numerify('######'),
-            'grau' => fake()->randomElement(['AM', 'CM', 'MM', 'MI', 'OT']),
+            'grau_id' => Grau::query()->inRandomOrder()->value('id'),
             'loja_id' => Loja::query()->inRandomOrder()->value('id'),
             'is_paied' => fake()->boolean(35),
         ];

@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Filament\Pages\Mailbox;
 use App\Jobs\SendMailFromAccount;
+use App\Models\Grau;
 use App\Models\Inscrito;
 use App\Models\Loja;
 use App\Models\MailAccount;
@@ -185,7 +186,7 @@ class MailMailboxPageTest extends TestCase
             'telefone' => '(11) 99999-9999',
             'cpf' => '123.456.789-10',
             'cim' => '123456',
-            'grau' => 'MM',
+            'grau_id' => Grau::query()->where('codigo', 'MM')->value('id'),
             'loja_id' => $loja->id,
             'is_paied' => false,
         ]);

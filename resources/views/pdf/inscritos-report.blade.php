@@ -109,7 +109,7 @@
                     </td>
                     <td>{{ $inscrito->name }}</td>
                     <td>{{ $inscrito->loja?->name ?? '-' }}</td>
-                    <td>{{ $inscrito->grau }}</td>
+                    <td>{{ $inscrito->grau_descricao }}</td>
                     <td>{{ $inscrito->email }}</td>
                     <td>{{ $inscrito->telefone ?: '-' }}</td>
                 </tr>

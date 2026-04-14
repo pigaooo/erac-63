@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Grau;
 use App\Models\Loja;
 use App\Models\User;
 use App\Support\JsonSettingsService;
@@ -47,6 +48,8 @@ class DatabaseSeeder extends Seeder
 
         $userIds = User::query()->pluck('id');
 
+       
+
         $nomesLojas = [
             'Acacia de Ubatuba',
             'Amor a Ordem Respeitada',
@@ -87,7 +90,128 @@ class DatabaseSeeder extends Seeder
 
             return $loja;
         })->all());
-
+        Grau::insert([
+            [
+                'id' => (string) Str::ulid(),
+                'codigo' => 'AM',
+                'nome' => 'A∴M∴',
+                'ordem' => 10,
+                'ativo' => true,
+                'tipo_especial' => false,
+                'disponivel_formulario_individual' => true,
+                'disponivel_formulario_multiplos' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => (string) Str::ulid(),
+                'codigo' => 'CM',
+                'nome' => 'C∴M∴',
+                'ordem' => 20,
+                'ativo' => true,
+                'tipo_especial' => false,
+                'disponivel_formulario_individual' => true,
+                'disponivel_formulario_multiplos' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => (string) Str::ulid(),
+                'codigo' => 'MM',
+                'nome' => 'M∴M∴',
+                'ordem' => 30,
+                'ativo' => true,
+                'tipo_especial' => false,
+                'disponivel_formulario_individual' => true,
+                'disponivel_formulario_multiplos' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => (string) Str::ulid(),
+                'codigo' => 'MI',
+                'nome' => 'M∴I∴',
+                'ordem' => 40,
+                'ativo' => true,
+                'tipo_especial' => false,
+                'disponivel_formulario_individual' => true,
+                'disponivel_formulario_multiplos' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => (string) Str::ulid(),
+                'codigo' => 'OT',
+                'nome' => 'Outros',
+                'ordem' => 50,
+                'ativo' => true,
+                'tipo_especial' => true,
+                'disponivel_formulario_individual' => true,
+                'disponivel_formulario_multiplos' => true,
+                'created_at' => now(),  
+                'updated_at' => now(),
+            ],
+            [
+                'id' => (string) Str::ulid(),
+                'codigo' => 'VI',
+                'nome' => 'Visitante',
+                'ordem' => 60,
+                'ativo' => true,
+                'tipo_especial' => true,
+                'disponivel_formulario_individual' => true,  
+                'disponivel_formulario_multiplos' => false,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => (string) Str::ulid(),
+                'codigo' => 'CU',
+                'nome' => 'Cunhada',
+                'ordem' => 70,
+                'ativo' => true,
+                'tipo_especial' => true,
+                'disponivel_formulario_individual' => true,
+                'disponivel_formulario_multiplos' => false,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => (string) Str::ulid(),
+                'codigo' => 'SO',
+                'nome' => 'Sobrinho',
+                'ordem' => 80,
+                'ativo' => true,
+                'tipo_especial' => true,
+                'disponivel_formulario_individual' => true,
+                'disponivel_formulario_multiplos' => false,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => (string) Str::ulid(),
+                'codigo' => 'EX',
+                'nome' => 'Expositor',
+                'ordem' => 90,
+                'ativo' => true,
+                'tipo_especial' => true,
+                'disponivel_formulario_individual' => true,
+                'disponivel_formulario_multiplos' => false,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => (string) Str::ulid(),
+                'codigo' => 'PA',
+                'nome' => 'Patrocinador',
+                'ordem' => 100,
+                'ativo' => true,
+                'tipo_especial' => true,
+                'disponivel_formulario_individual' => true,
+                'disponivel_formulario_multiplos' => false,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ]);
         // Patrocinadores removidos — manter apenas as lojas conforme solicitado.
     }
 }

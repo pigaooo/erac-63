@@ -40,15 +40,11 @@ class InscritoForm
                             ->required()
                             ->maxLength(255)
                             ->unique(ignoreRecord: true),
-                        Select::make('grau')
+                        Select::make('grau_id')
                             ->label('Grau')
-                            ->options([
-                                'AM' => 'Aâˆ´Mâˆ´',
-                                'CM' => 'Câˆ´Mâˆ´',
-                                'MM' => 'Mâˆ´Mâˆ´',
-                                'MI' => 'Mâˆ´Iâˆ´',
-                                'OT' => 'Outros',
-                            ])
+                            ->relationship('grau', 'nome')
+                            ->searchable()
+                            ->preload()
                             ->required(),
                         Select::make('loja_id')
                             ->label('Loja')

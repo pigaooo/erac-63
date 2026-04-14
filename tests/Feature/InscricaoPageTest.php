@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Livewire\InscricaoModal;
 use App\Livewire\InscricaoMultiplos;
+use App\Models\Grau;
 use App\Models\Loja;
 use App\Models\User;
 use Carbon\CarbonImmutable;
@@ -44,7 +45,7 @@ class InscricaoPageTest extends TestCase
             ->set('email', 'teste@example.com')
             ->set('telefone', '(11) 99999-9999')
             ->set('cpf', '000.000.000-00')
-            ->set('grau', 'AM')
+            ->set('grauId', $this->grauId('AM'))
             ->set('lojaId', $loja->id)
             ->call('submit')
             ->assertHasErrors(['inscricoes']);
@@ -63,8 +64,8 @@ class InscricaoPageTest extends TestCase
                 'email' => 'teste-lote@example.com',
                 'telefone' => '(11) 99999-9999',
                 'cpf' => '000.000.000-00',
-                'cim' => 'CIM-001',
-                'grau' => 'AM',
+                'cim' => '100001',
+                'grau_id' => $this->grauId('AM'),
                 'loja_id' => $loja->id,
             ]])
             ->call('submit')
@@ -84,5 +85,10 @@ class InscricaoPageTest extends TestCase
             'is_ativo' => true,
             'user_id' => $user->id,
         ]);
+    }
+
+    private function grauId(string $codigo): string
+    {
+        return (string) Grau::query()->where('codigo', $codigo)->value('id');
     }
 }

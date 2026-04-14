@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Grau;
 use App\Models\Inscrito;
 use App\Models\Loja;
 use App\Support\InscricaoCalendar;
@@ -10,12 +11,14 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 
 class InscricaoMultiplos extends Component
 {
     public bool $showModal = false;
     public array $inscritos = [];
+    public Collection $graus;
     public Collection $lojas;
     public ?string $flashMessage = null;
     public ?string $successMessage = null;
@@ -25,7 +28,7 @@ class InscricaoMultiplos extends Component
     public string $telefone = '';
     public string $cpf = '';
     public string $cim = '';
-    public string $grau = '';
+    public string $grau_id = '';
     public string $loja_id = '';
     public string $lojaSearch = '';
     public int $formKey = 0;
@@ -35,7 +38,20 @@ class InscricaoMultiplos extends Component
     public function mount(): void
     {
         $this->syncInscricoesStatus();
+        $this->loadGraus();
         $this->loadLojas();
+    }
+
+    public function loadGraus(): void
+    {
+        $this->graus = Schema::hasTable('graus')
+            ? Grau::query()
+                ->select('id', 'nome')
+                ->ativos()
+                ->disponiveisNoFormularioMultiplos()
+                ->ordenados()
+                ->get()
+            : collect();
     }
 
     public function loadLojas(): void
@@ -152,7 +168,7 @@ class InscricaoMultiplos extends Component
                 'inscritos.*.telefone' => ['required', 'string', 'max:50'],
                 'inscritos.*.cpf' => ['required', 'string', 'max:20', 'distinct', 'unique:inscritos,cpf'],
                 'inscritos.*.cim' => ['required', 'string', 'max:50', 'regex:/^[0-9]+$/', 'distinct', 'unique:inscritos,cim'],
-                'inscritos.*.grau' => ['required', 'in:AM,CM,MM,MI,OT'],
+                'inscritos.*.grau_id' => ['required', Rule::in($this->grauIdsDisponiveis())],
                 'inscritos.*.loja_id' => ['required', 'exists:lojas,id'],
             ],
             $this->batchMessages()
@@ -169,7 +185,7 @@ class InscricaoMultiplos extends Component
                     'telefone' => $row['telefone'],
                     'cpf' => $row['cpf'],
                     'cim' => $row['cim'],
-                    'grau' => $row['grau'],
+                    'grau_id' => $row['grau_id'],
                     'loja_id' => $row['loja_id'],
                     'is_paied' => false,
                     'created_at' => $timestamp,
@@ -181,7 +197,7 @@ class InscricaoMultiplos extends Component
         Inscrito::query()->insert($payload);
 
         $inscritos = Inscrito::query()
-            ->with('loja')
+            ->with(['loja', 'grau'])
             ->whereIn('id', collect($payload)->pluck('id'))
             ->get();
 
@@ -209,7 +225,7 @@ class InscricaoMultiplos extends Component
             'telefone' => $this->telefone,
             'cpf' => $this->cpf,
             'cim' => $this->cim,
-            'grau' => $this->grau,
+            'grau_id' => $this->grau_id,
             'loja_id' => $this->loja_id,
         ]);
     }
@@ -221,7 +237,7 @@ class InscricaoMultiplos extends Component
         $this->telefone = '';
         $this->cpf = '';
         $this->cim = '';
-        $this->grau = '';
+        $this->grau_id = '';
         $this->formKey++;
     }
 
@@ -233,7 +249,7 @@ class InscricaoMultiplos extends Component
             'telefone' => trim((string) ($row['telefone'] ?? '')),
             'cpf' => trim((string) ($row['cpf'] ?? '')),
             'cim' => trim((string) ($row['cim'] ?? '')),
-            'grau' => trim((string) ($row['grau'] ?? '')),
+            'grau_id' => trim((string) ($row['grau_id'] ?? '')),
             'loja_id' => (string) ($row['loja_id'] ?? ''),
         ];
     }
@@ -289,7 +305,7 @@ class InscricaoMultiplos extends Component
             'telefone' => ['required', 'string', 'max:50'],
             'cpf' => ['required', 'string', 'max:20'],
             'cim' => ['required', 'string', 'max:50', 'regex:/^[0-9]+$/'],
-            'grau' => ['required', 'in:AM,CM,MM,MI,OT'],
+            'grau_id' => ['required', Rule::in($this->grauIdsDisponiveis())],
             'loja_id' => ['required', 'exists:lojas,id'],
         ];
     }
@@ -304,7 +320,8 @@ class InscricaoMultiplos extends Component
             'cpf.required' => 'Informe o CPF.',
             'cim.required' => 'Informe o CIM.',
             'cim.regex' => 'CIM deve conter apenas números (sem pontos).',
-            'grau.required' => 'Selecione o grau maçônico.',
+            'grau_id.required' => 'Selecione o grau.',
+            'grau_id.in' => 'Selecione um grau válido.',
             'loja_id.required' => 'Selecione a Loja.',
             'loja_id.exists' => 'Loja não encontrada.',
         ];
@@ -322,7 +339,14 @@ class InscricaoMultiplos extends Component
             'inscritos.*.cim.unique' => 'CIM já cadastrado.',
             'inscritos.*.cim.distinct' => 'CIM duplicado na lista.',
             'inscritos.*.cim.regex' => 'CIM deve conter apenas números (sem pontos).',
+            'inscritos.*.grau_id.required' => 'Selecione o grau de todos os inscritos.',
+            'inscritos.*.grau_id.in' => 'Existe um grau inválido na lista.',
         ];
+    }
+
+    private function grauIdsDisponiveis(): array
+    {
+        return $this->graus->pluck('id')->all();
     }
 
     public function render()
