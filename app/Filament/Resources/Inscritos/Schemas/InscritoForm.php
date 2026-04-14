@@ -7,6 +7,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Filament\Support\RawJs;
 
 class InscritoForm
 {
@@ -29,9 +30,13 @@ class InscritoForm
                         TextInput::make('telefone')
                             ->label('Telefone')
                             ->tel()
+                            ->mask(RawJs::make(<<<'JS'
+                                $input.replace(/\D/g, '').length > 10 ? '(99) 99999-9999' : '(99) 9999-9999'
+                            JS))
                             ->maxLength(50),
                         TextInput::make('cpf')
                             ->label('CPF')
+                            ->mask('999.999.999-99')
                             ->required()
                             ->maxLength(20)
                             ->unique(ignoreRecord: true),
