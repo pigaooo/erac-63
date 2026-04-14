@@ -6,7 +6,7 @@
             <div class="text-sm font-medium text-gray-900 dark:text-white">Para</div>
 
             <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                Separe emails por virgula ou Enter. Inscritos cadastrados aparecem como sugestao enquanto voce digita.
+                Separe emails por vírgula ou use Enter. No mobile, utilize o botão "Adicionar" abaixo. Inscritos cadastrados aparecem como sugestão enquanto você digita.
             </p>
         </div>
 
@@ -53,6 +53,17 @@
             />
         </label>
 
+        <div class="mt-3 md:hidden">
+            <x-filament::button
+                type="button"
+                wire:click="commitComposerRecipientInput"
+                icon="heroicon-o-plus"
+                class="w-full justify-center"
+            >
+                Adicionar
+            </x-filament::button>
+        </div>
+
         @if ($page->composerRecipientSuggestions->isNotEmpty())
             <div class="mt-3 overflow-hidden rounded-[1rem] border border-gray-200/80 bg-white/95 shadow-sm dark:border-white/10 dark:bg-slate-900/95">
                 @foreach ($page->composerRecipientSuggestions as $suggestion)
@@ -78,7 +89,7 @@
             </div>
         @elseif (filled($page->composerRecipientInput))
             <div class="mt-2 text-xs text-gray-500 dark:text-gray-400">
-                Pressione Enter para adicionar manualmente o endereco atual.
+                No desktop, pressione Enter para adicionar. No mobile, toque em "Adicionar" abaixo.
             </div>
         @endif
     </div>
