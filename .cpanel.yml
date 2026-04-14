@@ -1,7 +1,7 @@
 ---
 deployment:
   tasks:
-    - export REPOPATH=/home2/thi19135/public_html/repositories/erac-63
+    - export REPOPATH=/home2/thi19135/repositories/erac-63
     - export DESTPATH=/home2/thi19135/public_html/erac-63
     
     # 1. Sincroniza usando o caminho com hífen
