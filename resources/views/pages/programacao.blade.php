@@ -30,7 +30,7 @@
                 @php
                     $cronograma = [
                         ['hora' => '07:30 às 08:20', 'titulo' => 'Café da manhã e credenciamento', 'descricao' => 'Recepção dos participantes, identificação por Loja e acolhimento inicial.'],
-                        ['hora' => '08:30 às 09:30', 'titulo' => 'Abertura institucional', 'descricao' => 'Palavra da Mesa, composição da mesa e apresentação dos patrocinadores.'],
+                        ['hora' => '08:30 às 09:10', 'titulo' => 'Abertura institucional', 'descricao' => 'Palavra da Mesa, composição da mesa e apresentação dos patrocinadores.'],
                         ['hora' => '09:10 às 11:30', 'titulo' => 'Trabalhos em salas', 'descricao' => 'Apresentações temáticas por sala, com tempo padronizado por Loja, perguntas e debate coletivo.'],
                         ['hora' => '11:30 às 11:40', 'titulo' => 'Retorno ao plenário', 'descricao' => 'Reorganização dos participantes para a etapa final conjunta.'],
                         ['hora' => '11:40 às 12:00', 'titulo' => 'Encerramento oficial', 'descricao' => 'Síntese geral do encontro e palavra final da coordenação regional.'],
