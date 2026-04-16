@@ -2,17 +2,17 @@
 <div id="pix-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
     <div class="relative max-w-md w-full rounded-2xl border border-base-300 bg-base-100 shadow-2xl p-6 space-y-4">
         <button id="close-pix" type="button" class="btn btn-sm btn-circle absolute right-3 top-3">✕</button>
-        <div class="text-sm font-semibold text-primary">Pagamento PIX (demo)</div>
+        <div class="text-sm font-semibold text-primary">Pagamento PIX</div>
         <div class="rounded-xl border border-dashed border-base-300 bg-base-200/60 p-8 text-center text-base-content/60">QR Code aqui</div>
         <div class="text-sm space-y-1">
-            <div class="font-semibold">Chave PIX (teste):</div>
+            <div class="font-semibold">Chave PIX:</div>
             <div class="flex flex-col sm:flex-row sm:items-center gap-3">
-                <div id="pix-key" class="text-base break-all">pix@fontedevida.com</div>
+                <div id="pix-key" class="text-base break-all">inscricao@erac61.com.br</div>
                 <button
                     type="button"
                     class="btn btn-sm btn-outline btn-primary w-full sm:w-auto"
                     data-copy-button
-                    data-copy-text="pix@fontedevida.com"
+                    data-copy-text="inscricao@erac61.com.br"
                     aria-label="Copiar chave PIX"
                     title="Copiar chave PIX"
                 >
@@ -22,7 +22,7 @@
                     </svg>
                 </button>
             </div>
-            <div class="text-xs text-base-content/60">Substitua pela chave real quando definida.</div>
+        
         </div>
         <div class="rounded-xl border border-primary/30 bg-primary/10 p-3 text-sm font-semibold text-primary">
             <div class="text-center">Após pagar, envie o comprovante para</div>

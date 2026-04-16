@@ -58,6 +58,7 @@
                                     x-data="{
                                         open: false,
                                         search: @js($lojaSelecionadaNome),
+                                        selectedId: @js((string) $lojaId),
                                         options: @js($lojaOptions),
                                         normalize(value) { return (value || '').toLowerCase().trim() },
                                         get filteredOptions() {
@@ -66,11 +67,13 @@
                                         handleInput() {
                                             this.open = true
                                             const match = this.options.find(option => this.normalize(option.name) === this.normalize(this.search))
+                                            this.selectedId = match ? match.id : ''
                                             $wire.set('lojaSearch', this.search)
-                                            $wire.set('lojaId', match ? match.id : '')
+                                            $wire.set('lojaId', this.selectedId)
                                         },
                                         selectOption(option) {
                                             this.search = option.name
+                                            this.selectedId = option.id
                                             this.open = false
                                             $wire.set('lojaSearch', option.name)
                                             $wire.set('lojaId', option.id)
@@ -81,28 +84,40 @@
                                     }"
                                     @click.outside="closeDropdown()"
                                 >
-                                    <input
-                                        type="text"
-                                        placeholder="Pesquisar loja..."
-                                        class="input input-bordered w-full"
-                                        x-model="search"
-                                        @focus="open = true"
-                                        @input="handleInput()"
-                                        required
-                                    />
+                                    <div class="relative">
+                                        <input
+                                            type="text"
+                                            placeholder="Pesquisar loja..."
+                                            class="input input-bordered w-full pr-10"
+                                            x-model="search"
+                                            @focus="open = true"
+                                            @input="handleInput()"
+                                            required
+                                        />
+                                        <span class="pointer-events-none absolute inset-y-0 right-3 flex items-center text-base-content/45">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.512a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                            </svg>
+                                        </span>
+                                    </div>
 
                                     <ul
                                         x-show="open"
-                                        x-cloak
-                                        class="dropdown-content z-[70] menu menu-vertical flex-nowrap p-2 shadow bg-base-100 rounded-box w-full mt-2 max-h-60 overflow-y-auto border border-base-300"
+                                        x-transition.opacity.duration.120ms
+                                        class="dropdown-content z-[70] mt-2 w-full rounded-box border border-base-300 bg-base-100 p-2 shadow-xl max-h-60 overflow-y-auto"
                                     >
                                         <template x-for="option in filteredOptions" :key="option.id">
-                                            <li>
-                                                <a href="#" @click.prevent="selectOption(option)" x-text="option.name"></a>
+                                            <li class="list-none">
+                                                <button
+                                                    type="button"
+                                                    class="btn btn-ghost btn-sm justify-start w-full normal-case font-medium"
+                                                    @click="selectOption(option)"
+                                                    x-text="option.name"
+                                                ></button>
                                             </li>
                                         </template>
-                                        <li x-show="filteredOptions.length === 0" class="disabled text-base-content/60">
-                                            <a>Nenhuma loja encontrada</a>
+                                        <li x-show="filteredOptions.length === 0" class="list-none px-3 py-2 text-sm text-base-content/60">
+                                            Nenhuma loja encontrada.
                                         </li>
                                     </ul>
                                 </div>

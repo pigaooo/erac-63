@@ -55,6 +55,16 @@
                                 <span wire:loading wire:target="syncNow">Sincronizando...</span>
                             </span>
                         </x-filament::button>
+
+                        <x-filament::button
+                            type="button"
+                            color="primary"
+                            icon="heroicon-o-pencil-square"
+                            wire:click="composeNew"
+                            class="w-full justify-center md:hidden"
+                        >
+                            Escrever
+                        </x-filament::button>
                     </div>
                 </div>
             </div>
