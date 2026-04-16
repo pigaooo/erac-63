@@ -964,9 +964,9 @@ class Mailbox extends Page implements HasForms, HasInfolists, HasTable
        Notification::make()
         ->title(count($recipients) > 1 ? 'Envios colocados na fila.' : 'Envio colocado na fila.')
         ->body('Os emails foram enviados para a fila e serão processados em até 5 minutos.')
-        ->duration(12000)
         ->success()
-        ->send();
+        ->send()
+        ->duration(12000);
 
         $this->showComposer = false;
         $this->resetComposer();

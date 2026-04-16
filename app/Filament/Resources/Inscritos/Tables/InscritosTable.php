@@ -4,10 +4,12 @@ namespace App\Filament\Resources\Inscritos\Tables;
 
 use App\Models\Inscrito;
 use App\Support\InscritoEmailDispatcher;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\BulkAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Tables\Columns\TextColumn;
@@ -57,6 +59,8 @@ class InscritosTable
                 TextColumn::make('created_at')
                     ->label('Cadastro')
                     ->dateTime('d/m/Y H:i')
+                    ->width('9.5rem')
+                    ->wrap(false)
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
@@ -74,6 +78,27 @@ class InscritosTable
                             fn (Builder $query): Builder => $query->where('name', 'like', '%' . trim($data['name']) . '%'),
                         );
                     }),
+                Filter::make('created_at')
+                    ->label('Periodo do cadastro')
+                    ->schema([
+                        DatePicker::make('created_from')
+                            ->label('Cadastrado de')
+                            ->native(false),
+                        DatePicker::make('created_until')
+                            ->label('Cadastrado ate')
+                            ->native(false),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                filled($data['created_from'] ?? null),
+                                fn (Builder $query): Builder => $query->whereDate('created_at', '>=', $data['created_from']),
+                            )
+                            ->when(
+                                filled($data['created_until'] ?? null),
+                                fn (Builder $query): Builder => $query->whereDate('created_at', '<=', $data['created_until']),
+                            );
+                    }),
                 TernaryFilter::make('is_paied')
                     ->label('Pagos'),
                 SelectFilter::make('grau_id')
@@ -89,8 +114,12 @@ class InscritosTable
             ])
             ->defaultSort('created_at', 'desc')
             ->recordActions([
-                EditAction::make(),
-                DeleteAction::make(),
+                ActionGroup::make([
+                    EditAction::make(),
+                    DeleteAction::make(),
+                ])
+                    ->label('Mais')
+                    ->icon('heroicon-o-ellipsis-horizontal'),
             ])
             ->toolbarActions([
                 BulkAction::make('confirmPayments')
