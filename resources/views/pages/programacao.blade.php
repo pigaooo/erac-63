@@ -229,7 +229,7 @@
                 @foreach($sala1 as $item)
                     <div class="rounded-xl border border-blue-200 bg-white p-4 shadow-xs transition duration-300 hover:-translate-y-1 hover:shadow-lg dark:bg-blue-950/30 dark:border-blue-700 max-md:!bg-white max-md:!border-slate-200 max-md:shadow-md">
                         <div class="text-xs font-semibold text-blue-600 uppercase tracking-wide">{{ $item['loja'] }}</div>
-                        <div class="text-sm font-bold text-base-content/95 dark:text-base-content mt-2 leading-snug max-md:text-base max-md:!text-slate-900">{{ $item['tema'] }}</div>
+                        <div class="text-sm font-bold text-slate-700 dark:text-slate-100 mt-2 leading-snug max-md:text-base max-md:!text-slate-900">{{ $item['tema'] }}</div>
                     </div>
                 @endforeach
             </div>
@@ -260,7 +260,7 @@
                 @foreach($sala2 as $item)
                     <div class="rounded-xl border border-green-200 bg-white p-4 shadow-xs transition duration-300 hover:-translate-y-1 hover:shadow-lg dark:bg-green-950/30 dark:border-green-700 max-md:!bg-white max-md:!border-slate-200 max-md:shadow-md">
                         <div class="text-xs font-semibold text-green-600 uppercase tracking-wide">{{ $item['loja'] }}</div>
-                        <div class="text-sm font-bold text-base-content/95 dark:text-base-content mt-2 leading-snug max-md:text-base max-md:!text-slate-900">{{ $item['tema'] }}</div>
+                        <div class="text-sm font-bold text-slate-700 dark:text-slate-100 mt-2 leading-snug max-md:text-base max-md:!text-slate-900">{{ $item['tema'] }}</div>
                     </div>
                 @endforeach
             </div>
@@ -291,7 +291,7 @@
                 @foreach($sala3 as $item)
                     <div class="rounded-xl border border-yellow-200 bg-white p-4 shadow-xs transition duration-300 hover:-translate-y-1 hover:shadow-lg dark:bg-yellow-950/30 dark:border-yellow-700 max-md:!bg-white max-md:!border-slate-200 max-md:shadow-md">
                         <div class="text-xs font-semibold text-yellow-600 uppercase tracking-wide">{{ $item['loja'] }}</div>
-                        <div class="text-sm font-bold text-base-content/95 dark:text-base-content mt-2 leading-snug max-md:text-base max-md:!text-slate-900">{{ $item['tema'] }}</div>
+                        <div class="text-sm font-bold text-slate-700 dark:text-slate-100 mt-2 leading-snug max-md:text-base max-md:!text-slate-900">{{ $item['tema'] }}</div>
                     </div>
                 @endforeach
             </div>
@@ -323,7 +323,7 @@
                 @foreach($sala4 as $item)
                     <div class="rounded-xl border border-red-200 bg-white p-4 shadow-xs transition duration-300 hover:-translate-y-1 hover:shadow-lg dark:bg-red-950/30 dark:border-red-700 max-md:!bg-white max-md:!border-slate-200 max-md:shadow-md">
                         <div class="text-xs font-semibold text-red-600 uppercase tracking-wide">{{ $item['loja'] }}</div>
-                        <div class="text-sm font-bold text-base-content/95 dark:text-base-content mt-2 leading-snug max-md:text-base max-md:!text-slate-900">{{ $item['tema'] }}</div>
+                        <div class="text-sm font-bold text-slate-700 dark:text-slate-100 mt-2 leading-snug max-md:text-base max-md:!text-slate-900">{{ $item['tema'] }}</div>
                     </div>
                 @endforeach
             </div>
@@ -355,7 +355,7 @@
                 @foreach($sala5 as $item)
                     <div class="rounded-xl border border-purple-200 bg-white p-4 shadow-xs transition duration-300 hover:-translate-y-1 hover:shadow-lg dark:bg-purple-950/30 dark:border-purple-700 max-md:!bg-white max-md:!border-slate-200 max-md:shadow-md">
                         <div class="text-xs font-semibold text-purple-600 uppercase tracking-wide">{{ $item['loja'] }}</div>
-                        <div class="text-sm font-bold text-base-content/95 dark:text-base-content mt-2 leading-snug max-md:text-base max-md:!text-slate-900">{{ $item['tema'] }}</div>
+                        <div class="text-sm font-bold text-slate-700 dark:text-slate-100 mt-2 leading-snug max-md:text-base max-md:!text-slate-900">{{ $item['tema'] }}</div>
                     </div>
                 @endforeach
             </div>
