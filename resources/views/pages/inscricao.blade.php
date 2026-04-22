@@ -124,6 +124,16 @@
                             </div>
                         @endforeach
 
+                        <div class="rounded-[1.5rem] border border-secondary/30 bg-secondary/10 p-5 shadow-xs space-y-3 transition duration-300 hover:scale-[1.02] hover:border-secondary/50 hover:shadow-lg">
+                            <div class="flex items-center justify-between">
+                                <div class="badge badge-secondary badge-lg">Cunhadas e sobrinhos(as)</div>
+                            </div>
+                            <div class="text-3xl md:text-4xl font-black">R$ 105,00</div>
+                            <p class="text-sm text-base-content/70">
+                                Valor especial para cunhadas e sobrinhos(as).
+                            </p>
+                        </div>
+
                         <div class="rounded-[1.5rem] border border-error/30 bg-error/5 p-5 shadow-xs space-y-3 transition duration-300 hover:scale-[1.02] hover:border-error/50 hover:shadow-lg">
                             <div class="flex items-center justify-between">
                                 <div class="badge badge-error badge-lg">Prazo final</div>
