@@ -252,7 +252,7 @@
                 @php
                     $sala2 = [
                         ['loja' => 'Vigilantes de Taubaté', 'tema' => 'Idolatria de ideias, pessoas e cargos'],
-                        ['loja' => 'Fraternidade Acadêmica Irmão José Geraldo Trani Brandão', 'tema' => 'Dogmatização na Maçonaria'],
+                        ['loja' => 'Renascer Caçapava, 'tema' => 'Dogmatização na Maçonaria'],
                         ['loja' => 'Fraternidade Acadêmica Luciano Alfredo Vianna do Rio', 'tema' => 'Tradição: herança viva ou dogma?'],
                         ['loja' => 'Arquitetos da Harmonia', 'tema' => 'Câmaras de eco e viés de conforto'],
                     ];
