@@ -117,7 +117,9 @@
                                         </div>
                                     @endif
                                 </div>
-                                <div class="text-3xl md:text-4xl font-black">{{ $lote['valor'] }}</div>
+                                <div class="text-3xl md:text-4xl font-black">
+                                    {{ $isAtual ? 'R$ 125,00' : $lote['valor'] }}
+                                </div>
                                 <p class="text-sm text-base-content/70">
                                     De {{ $lote['periodo'] }}. {{ $lote['descricao'] }}
                                 </p>
